@@ -2,10 +2,10 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     pkg : grunt.file.readJSON 'package.json'
-    
+
     wiredep:
       options:
-        cwd: './bower_components'
+        cwd: './'
       target:
         src: './app/index.html'
         directory: './'
@@ -19,7 +19,7 @@ module.exports = (grunt) ->
         port: 3000
       server:
         options:
-          base: ['./app', './bower_components']
+          base: ['./app', './']
           open: true
 
     watch :

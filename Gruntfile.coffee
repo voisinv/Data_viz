@@ -8,7 +8,6 @@ module.exports = (grunt) ->
         cwd: './'
       target:
         src: './app/index.html'
-        directory: './'
         options:
           dependencies: true
     
@@ -30,21 +29,49 @@ module.exports = (grunt) ->
         files:[
           'Gruntfile.coffee'
           'bower.json'
-          'app/{,*/}*.*'
+          'app/index.html'
+          'app/scripts/{,*/}*.*'
           ]
-        tasks:'wiredep'
+        tasks:['wiredep', 'fileblocks']
 
+    fileblocks:
+      todos:
+        src:'./app/index.html'
+        blocks:
+          app:
+            src:[
+              './app/scripts/app.js',
+              './app/scripts/**/*.js'
+              ]
+
+        
+    coffee:
+      compile:
+        options:
+          join: false
+          bare:true
+        files:[
+          './app/scripts/app.js':'./dev/scripts/app.coffee'
+          './app/scripts/controllers/*.js':'./dev/scripts/controllers/*.coffee'
+          ]
+      glob_to_multiple:
+        expand: true,
+        flatten: true,
+        cwd: ['./dev/scripts/', './dev/scripts/controllers/']
+        src: '*.coffee',
+        dest: ['./app/scripts/', '.app/scripts/controllers']
+        ext: '.js'
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-wiredep'
+  grunt.loadNpmTasks 'grunt-file-blocks'
 
   grunt.registerTask 'server', ->
     grunt.task.run 'connect:server'
     grunt.task.run 'watch:all'
     
-  grunt.registerTask 'default', ->
-    console.log 'this is the default task'
 
   grunt.registerTask 'b', ->
-    grunt.task.run 'wiredep:target'
+    grunt.task.run 'coffee:glob_to_multiple'

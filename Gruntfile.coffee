@@ -30,6 +30,7 @@ module.exports = (grunt) ->
           'Gruntfile.coffee'
           'bower.json'
           'app/index.html'
+          'app/partials/*.*'
           'app/scripts/{,*/}*.*'
           ]
         tasks:['wiredep', 'fileblocks']

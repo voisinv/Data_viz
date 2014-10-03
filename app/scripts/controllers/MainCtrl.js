@@ -2,8 +2,8 @@ var MainCtrl =
 [
 '$scope',
 function($scope){
-	$scope.model = {value: 'hello world'}
-	 
+	
+
  
 }
 ]

@@ -12,8 +12,7 @@
     "AngularJS"
   ],
   "license": "MIT",
-  "ignore": [
-  ],
+  "ignore": [],
   "dependencies": {
     "angular": "1.2.24",
     "angular-ui": "~0.4.0",

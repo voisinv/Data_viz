@@ -6,11 +6,17 @@
 	<!-- endbower -->
 </head>
 <body ng-controller="MainCtrl">
-	blaeeeee
+	<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Profile</a></li>
+  <li><a href="#">Messages</a></li>
+</ul>
 
 	euhh ?
 
 	{{model.value}}
+
+	<div ui-view></div>
 
 	<!-- bower:js -->
 	<script src="../bower_components/angular/angular.js"></script>

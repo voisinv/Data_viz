@@ -1,9 +1,9 @@
-angular.module('controllers', [])
+angular.module('controllers', ['ui.bootstrap'])
 angular.module('directives', [])
 angular.module('services', [])
 angular.module('ngApp',
 	[
-	'angular-ui',
+	'ui-bootstrap',
 	'controllers',
 	'directives',
 	'services',

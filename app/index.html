@@ -2,26 +2,26 @@
 <head>
 	<title>Dataviz</title>
 	<!-- bower:css -->
-	<link rel="stylesheet" href="../bower_components/angular-ui/build/angular-ui.css" />
+	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
 	<!-- endbower -->
 </head>
 <body ng-controller="MainCtrl">
-	<ul class="nav nav-tabs" role="tablist">
-  <li class="active"><a href="#">Home</a></li>
-  <li><a href="#">Profile</a></li>
-  <li><a href="#">Messages</a></li>
-</ul>
+<div>
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+  <button class='btn btn-default' ng-click="addAlert()">Add Alert</button>
+</div>
 
-	euhh ?
+	euhh ? 
 
-	{{model.value}}
+	{{model.value}} 
 
 	<div ui-view></div>
 
 	<!-- bower:js -->
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/angular/angular.js"></script>
-	<script src="../bower_components/angular-ui/build/angular-ui.js"></script>
 	<script src="../bower_components/d3/d3.js"></script>
+	<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<!-- endbower -->
 
 
@@ -29,7 +29,6 @@
 	<script src="app/scripts/app.js"></script>
 	<script src="app/scripts/controllers/MainCtrl.js"></script>
 	<!-- endfileblock -->
-	<script src="//localhost:35729/livereload.js"></script>
 
 </body>
 

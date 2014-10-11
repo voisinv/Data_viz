@@ -15,3 +15,13 @@ angular
                 redirectTo: '/'
             });
 	});
+
+angular
+    .module('app')
+    .directive('testD3', function(){
+        return{
+            restrict: 'EA',
+            link: {
+            }
+        }
+    });

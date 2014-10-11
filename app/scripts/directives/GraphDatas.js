@@ -32,7 +32,7 @@ function graphDatas() {
 									.enter()
 									.append('circle')
 									.attr('class', 'circle')
-									.attr('r', function(d){return d.url.length * 40})
+									.attr('r', function(d){return d.urls.length * 40})
 									.call(force.drag);
  
 					console.log(svg); 

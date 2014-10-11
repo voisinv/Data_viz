@@ -4,19 +4,21 @@ function DataValues () {
     var values = [
         {
             'tagName': 'vélo',
-            'url': ['www.velo.fr','www.pedale.fr','www.cyclix.com']
+            'url': ['www.velo.fr']
         },{
             'tagName': 'germany',
-            'url': ['www.frankfurter-wurstchen.de','www.kalkbrenner.de']
+            'url': ['www.frankfurter-wurstchen.de']
         },{
              'tagName': 'muse',
              'url': ['www.grouppies-bellamy.com']
         }
     ];
 
-    DataValues.getData = function() {
-        console.log('dataaaaa');
+    DataValues.getTags = function() {
         return values;
+    }
+    DataValues.addTag = function(tag) {
+        values.push({'tagName': tag.tagName, 'url': tag.url});
     }
 
     return DataValues;

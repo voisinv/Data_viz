@@ -11,15 +11,35 @@
 </head>
 <body ng-controller="IndexCtrl as main">
 
-    <div>
-        <button ng-click="main.getTags()">get tags</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="new-tags-bar" class="box-content">
+                    <label>Ajouter un tag :</label>
+                    <input type="text" ng-model="tagName" placeholder="tag"/>
+                    <input type="text" ng-model="url" placeholder="url"/>
+                    <button class="btn btn-primary" ng-click="main.addTag(tagName, url)">add tags</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <a href="/views/main">main</a>
-    <a href="/views/view1">view1</a>
-    <a href="views/view2">view2</a>
-    <div ng-repeat="tag in main.tags">
-        <p>{{tag.tagName}}</p>
-        <p>{{tag.tagName}}</p>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9">
+                <div id="dataviz-view" class="box-content">
+                    <label>Vue Dataviz</label>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div id="tags-list" class="box-content">
+                    <label>Liste de tags</label>
+                    <ul>
+                        <li ng-repeat="tag in main.tags">{{tag.tagName}} - {{tag.url}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
 	<!--div ng-view></div-->

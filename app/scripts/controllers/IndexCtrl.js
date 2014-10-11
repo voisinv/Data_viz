@@ -1,9 +1,10 @@
 function IndexCtrl (DataValues) {
     vm = this;
-    vm.tags = [];
+    vm.tags = DataValues.getTags();
 
-    vm.getTags = function() {
-        vm.tags = DataValues.getData();
+    vm.addTag = function(name, url) {
+        var tag = {'tagName': name, 'url': url};
+        DataValues.addTag(tag);
     };
 }
 

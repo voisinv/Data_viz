@@ -8,8 +8,8 @@ angular
     .module('app', ['ngRoute', 'services', 'directives', 'controllers'])
 	.config(function($routeProvider){
 		$routeProvider
-		    .when('/', {
-		        templateUrl: 'views/main.html'
+		    .when('/main', {
+		        templateUrl: '../../app/views/main.html'
 		    })
 		    .otherwise({
                 redirectTo: '/'

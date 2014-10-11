@@ -1,3 +1,40 @@
+/* ---------- ------- ---------- *\
+              element
+\* ---------- ------- ---------- */
+
 body {
+    background-color: #FBF8EF;
+    padding: 5px;
+    font-size: 20px;
+}
+
+
+/* ------------ --- ------------ *\
+                Ids
+\* ------------ --- ------------ */
+
+#new-tags-bar {
+}
+
+#dataviz-view {
+    height: 900px;
+}
+
+#tags-list {
+}
+
+
+/* ----------- ----- ----------- *\
+               class
+\* ----------- ----- ----------- */
+
+.box-content {
     background-color: white;
+
+    margin: 10px 10px;
+    padding: 5px;
+
+    /*border: 1px solid black;*/
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #aaa;
 }

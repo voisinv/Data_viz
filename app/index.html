@@ -16,9 +16,9 @@
             <div class="col-sm-12">
                 <div id="new-tags-bar" class="box-content">
                     <label>Ajouter un tag :</label>
-                    <input type="text" ng-model="tagName" placeholder="tag"/>
-                    <input type="text" ng-model="url" placeholder="url"/>
-                    <button class="btn btn-primary" ng-click="main.addTag(tagName, url)">add tags</button>
+                    <input type="text" ng-model="main.tag.tagName" placeholder="tag"/>
+                    <input type="text" ng-model="main.tag.url" placeholder="url"/>
+                    <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
                 </div>
             </div>
         </div>
@@ -35,7 +35,14 @@
                 <div id="tags-list" class="box-content">
                     <label>Liste de tags</label>
                     <ul>
-                        <li ng-repeat="tag in main.tags">{{tag.tagName}} - {{tag.url}}</li>
+                        <li ng-repeat="tag in main.tags">
+                            <label>{{tag.tagName}}</label>
+                            <ul>
+                                <li ng-repeat="url in tag.urls">
+                                    {{url}}
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -31,7 +31,8 @@ module.exports = (grunt) ->
           'bower.json'
           'app/index.html'
           'app/partials/*.*'
-          'app/scripts/{,*/}*.*'
+          'app/scripts/{,*/}*.js'
+          'app/style/{,*/}*.css'
           ]
         tasks:['wiredep', 'fileblocks']
 
@@ -44,6 +45,8 @@ module.exports = (grunt) ->
               './app/scripts/app.js',
               './app/scripts/**/*.js'
               ]
+          style:
+            src: './app/style/**/*.css'
 
         
     coffee:
@@ -70,6 +73,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-file-blocks'
 
   grunt.registerTask 'server', ->
+    grunt.task.run 'fileblocks'
+    grunt.task.run 'wiredep'
     grunt.task.run 'connect:server'
     grunt.task.run 'watch:all'
     

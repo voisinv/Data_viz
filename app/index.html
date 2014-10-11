@@ -1,33 +1,42 @@
-<html ng-app>
+<html ng-app="app">
 <head>
 	<title>Dataviz</title>
 	<!-- bower:css -->
 	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
 	<!-- endbower -->
+
+    <!-- fileblock:css style -->
+    <link href="app/style/main.css" rel="stylesheet" />
+    <!-- endfileblock -->
 </head>
-<body ng-controller="MainCtrl">
-<div>
-	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-  <button class='btn btn-default' ng-click="addAlert()">Add Alert</button>
-</div>
- 
-	euhh ? bla bla yoooooooo
+<body ng-controller="IndexCtrl as main">
 
-	{{model.value}} 
+    <div>
+        <button ng-click="main.getTags()">get tags</button>
+    </div>
+    <a href="/views/main">main</a>
+    <a href="/views/view1">view1</a>
+    <a href="views/view2">view2</a>
+    <div ng-repeat="tag in main.tags">
+        <p>{{tag.tagName}}</p>
+        <p>{{tag.tagName}}</p>
+    </div>
 
-	<div ui-view></div> 
+	<!--div ng-view></div-->
 
 	<!-- bower:js -->
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/angular/angular.js"></script>
 	<script src="../bower_components/d3/d3.js"></script>
-	<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="../bower_components/angular-route/angular-route.js"></script>
 	<!-- endbower -->
 
 
 	<!-- fileblock:js app -->
 	<script src="app/scripts/app.js"></script>
-	<script src="app/scripts/controllers/MainCtrl.js"></script>
+	<script src="app/scripts/controllers/IndexCtrl.js"></script>
+	<script src="app/scripts/services/Data.js"></script>
 	<!-- endfileblock -->
 
 </body>

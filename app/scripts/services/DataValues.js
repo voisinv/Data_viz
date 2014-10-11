@@ -3,14 +3,14 @@ function DataValues () {
 
     var values = [
         {
-            'tagName': 'vélo',
-            'url': ['www.velo.fr']
+            tagName: 'vélo',
+            urls: ['www.velo.fr']
         },{
-            'tagName': 'germany',
-            'url': ['www.frankfurter-wurstchen.de']
+            tagName: 'germany',
+            urls: ['www.frankfurter-wurstchen.de']
         },{
-             'tagName': 'muse',
-             'url': ['www.grouppies-bellamy.com']
+            tagName: 'muse',
+            urls: ['www.grouppies-bellamy.com']
         }
     ];
 
@@ -18,7 +18,25 @@ function DataValues () {
         return values;
     }
     DataValues.addTag = function(tag) {
-        values.push({'tagName': tag.tagName, 'url': tag.url});
+        var isTagInList = DataValues.isTagInList(tag.tagName);
+        if(isTagInList === null)
+            values.push({tagName: tag.tagName, urls: [tag.url]});
+        else if(!DataValues.isUrlInList(values[isTagInList].urls, tag.url))
+            values[isTagInList].urls.push(tag.url);
+    }
+    DataValues.isTagInList = function(tagName) {
+        for(var i=0; i<values.length; i++) {
+            if(values[i].tagName === tagName)
+                return i;
+        }
+        return null;
+    }
+    DataValues.isUrlInList = function(urlsList ,url) {
+        for(var i=0; i<urlsList.length; i++) {
+            if(urlsList[i] === url)
+                return true;
+        }
+        return false;
     }
 
     return DataValues;

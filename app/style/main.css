@@ -52,4 +52,10 @@ body {
 .text-circle {
     color: white !important;
     background-color: white;
+    font-weight: bold;
+    text-align:center;
+}
+
+.text-circle:hover{
+    cursor:pointer;
 }

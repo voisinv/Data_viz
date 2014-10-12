@@ -19,6 +19,7 @@
                     <input type="text" ng-model="main.tag.tagName" placeholder="tag"/>
                     <input type="text" ng-model="main.tag.url" placeholder="url"/>
                     <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
+                    <button class="btn btn-primary" ng-click="main.clickOnTag()">list tags</button>
                 </div>
             </div>
         </div>
@@ -26,13 +27,13 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-9">
+            <div id="container-dataviz-view" class="col-sm-12">
                 <div id="dataviz-view" class="box-content">
                     <label>Vue Dataviz</label>
                     <div graph-datas></div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div ng-show="main.tagClicked" id="container-tag-list" class="">
                 <div id="tags-list" class="box-content">
                     <label>Liste de tags</label>
                     <ul>
@@ -56,6 +57,7 @@
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/angular/angular.js"></script>
 	<script src="../bower_components/d3/d3.js"></script>
+	<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="../bower_components/angular-route/angular-route.js"></script>
 	<!-- endbower -->
 
@@ -65,6 +67,7 @@
 	<script src="app/scripts/controllers/IndexCtrl.js"></script>
 	<script src="app/scripts/services/DataValues.js"></script>
 	<script src="app/scripts/directives/GraphDatas.js"></script>
+	<script src="app/scripts/directives/TestGraph.js"></script>
 	<!-- endfileblock -->
 
 </body>

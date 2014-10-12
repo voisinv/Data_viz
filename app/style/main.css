@@ -40,5 +40,16 @@ body {
 }
 
 .circle {
-    background-color:'#2ecc71';
+    fill : #1abc9c;
+    stroke: #16a085;
+    stroke-width: 5px;
+}
+
+.circle:hover{
+    cursor : pointer;
+}
+
+.text-circle {
+    color: white !important;
+    background-color: white;
 }

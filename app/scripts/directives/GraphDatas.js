@@ -35,7 +35,7 @@ function graphDatas() {
 
 				nodes.append('circle')
 					.attr('class', 'circle')
-					.attr('r', function(d,i){return d.urls.length * 50;});
+					.attr('r', function(d,i){return d.urls.length * 50;})
 
 				nodes.append('text')
 					.attr('class', 'text-circle')
@@ -44,10 +44,8 @@ function graphDatas() {
 					.attr('dy', '.2em')
 					.text(function(d){return d.tagName})
 
-				elem.call(force.drag);
-
 				force.on("tick", function() {
-					nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+					elem.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                 });
                 console.log(force)
             	force.start();

@@ -31,18 +31,27 @@ function graphDatas() {
 				var elem = svg.selectAll('g').data(scope.main.tags);
 
 				var nodes = elem.enter().append('g')
-								.call(force.drag);
+								.on('click', function(d){scope.clickOnTag(d)})
+								.call(force.drag)
+								.on('mouseenter', function(d){
+													d3.selectAll('g').attr('opacity', 0.5);
+													d3.select(this).attr('opacity', 1);
+								})
+								.on('mouseleave', function(d){
+													d3.selectAll('g').attr('opacity', 1);
+								})
 
 				nodes.append('circle')
 					.attr('class', 'circle')
 					.attr('r', function(d,i){return d.urls.length * 50;})
 
 				nodes.append('text')
-					.attr('class', 'text-circle')
 					.attr('font-size', function(d){return d.urls.length*20})
-					.attr('dx', function(d){return d.tagName.length * -5})
+					.attr('fill', 'white')
+					.attr('dx', function(d){return d.tagName.length * -6})
 					.attr('dy', '.2em')
-					.text(function(d){return d.tagName})
+					.attr('class', 'text-circle')
+					.text(function(d){return d.tagName.substr(0, 1).toUpperCase() + d.tagName.substr(1);})
 
 				force.on("tick", function() {
 					elem.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });

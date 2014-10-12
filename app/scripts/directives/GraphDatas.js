@@ -53,6 +53,7 @@ function graphDatas() {
 				*/
 				console.log('node');
 				console.log(nodes)
+
 				force.on("tick", function() {
                     elem
                     .attr("cx", function(d) { return d.x; })

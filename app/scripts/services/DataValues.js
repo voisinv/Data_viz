@@ -19,10 +19,11 @@ function DataValues () {
     }
     DataValues.addTag = function(tag) {
         var isTagInList = DataValues.isTagInList(tag.tagName);
-        if(isTagInList === null)
-            values.push({tagName: tag.tagName, urls: [tag.url]});
-        else if(!DataValues.isUrlInList(values[isTagInList].urls, tag.url))
-            values[isTagInList].urls.push(tag.url);
+        if(tag.tagName !== '' && tag.url !== '')
+            if(isTagInList === null)
+                values.push({tagName: tag.tagName, urls: [tag.url]});
+            else if(!DataValues.isUrlInList(values[isTagInList].urls, tag.url))
+                values[isTagInList].urls.push(tag.url);
     }
     DataValues.isTagInList = function(tagName) {
         for(var i=0; i<values.length; i++) {

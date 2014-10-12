@@ -19,7 +19,7 @@
                     <input type="text" ng-model="main.tag.tagName" placeholder="tag"/>
                     <input type="text" ng-model="main.tag.url" placeholder="url"/>
                     <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
-                    <button class="btn btn-primary" ng-click="main.clickOnTag()">list tags</button>
+                    <button class="btn btn-primary" ng-click="main.clickOnTag()">add tags</button>
                 </div>
             </div>
         </div>
@@ -29,21 +29,16 @@
         <div class="row">
             <div id="container-dataviz-view" class="col-sm-12">
                 <div id="dataviz-view" class="box-content">
-                    <label>Vue Dataviz</label>
+                    <label>Vue Dataviz - {{main.isTagSelected}}</label>
                     <div graph-datas></div>
                 </div>
             </div>
-            <div ng-show="main.tagClicked" id="container-tag-list" class="">
+            <div ng-show="main.isTagSelected" id="container-tag-list" class="">
                 <div id="tags-list" class="box-content">
-                    <label>Liste de tags</label>
+                    <label>Tag : {{main.tagSelected.tagName}}</label>
                     <ul>
-                        <li ng-repeat="tag in main.tags">
-                            <label>{{tag.tagName}}</label>
-                            <ul>
-                                <li ng-repeat="url in tag.urls">
-                                    {{url}}
-                                </li>
-                            </ul>
+                        <li ng-repeat="url in main.tags.urls">
+                            <label>{{url}}</label>
                         </li>
                     </ul>
                 </div>

@@ -1,20 +1,24 @@
-function IndexCtrl (DataValues) {
+function IndexCtrl (DataValues, $scope) {
     vm = this;
     vm.tags = DataValues.getTags();
-    vm.tag = {
+    vm.newTag = {
         tagName: '',
         url: ''
     };
-    vm.tagClicked = false;
+    vm.isTagSelected = false;
+    vm.tagSelected = {};
+
+    $scope.$watch('isTagSelected', function(newValue) { console.log(newValue); });
 
     vm.addTag = function() {
-        DataValues.addTag(vm.tag);
+        DataValues.addTag(vm.newTag);
     };
 
-    vm.clickOnTag = function(tag) {
+    vm.clickOnTag = function(tagName, urls) {
         angular.element('#container-dataviz-view').toggleClass('col-sm-12').toggleClass('col-sm-9');
+        vm.isTagSelected = !vm.isTagSelected;
         angular.element('#container-tag-list').toggleClass('col-sm-3');
-        vm.tagClicked = true;
+        vm.tagSelected = {tagName: tagName, urls: urls};
     };
 }
 

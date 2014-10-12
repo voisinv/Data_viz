@@ -1,3 +1,7 @@
+/*
+changements syntaxe todd motto virée : ligne 23 / 37 / 41
+*/
+
 function graphDatas() {
 	return {
 		restrict : 'A',
@@ -8,14 +12,14 @@ function graphDatas() {
 	            elem = undefined;
 
 
-			 var force = d3.layout.force()
+			var force = d3.layout.force()
 				            .charge(-700)
 				            //.alpha(1)
 				            //.gravity(function(d){console.log(d.urls.length);return 1*d.urls.length})
 				            // à mettre pour la v2
 				            //.linkDistance(600)
 				            .size([width, height])
-				            .nodes(scope.main.tags);
+                            .nodes(scope.main.tags);
 
 
 	    	var svg = d3.select(iElem[0]).append('svg')
@@ -31,7 +35,7 @@ function graphDatas() {
 				var elem = svg.selectAll('g').data(scope.main.tags);
 
 				var nodes = elem.enter().append('g')
-								.on('click', function(d){scope.clickOnTag(d)})
+								.on('click', function(d){scope.main.clickOnTag(d.tagName, d.urls)})
 								.call(force.drag)
 								.on('mouseenter', function(d){
 													d3.selectAll('g').attr('opacity', 0.5);
@@ -60,8 +64,6 @@ function graphDatas() {
             	force.start();
             }
 			update();
-
-
 		} 
 	}
 }

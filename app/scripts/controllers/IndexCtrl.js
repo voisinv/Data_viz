@@ -1,4 +1,4 @@
-function IndexCtrl (DataValues, $scope) {
+function IndexCtrl ($scope, DataValues) {
     vm = this;
     vm.tags = DataValues.getTags();
     vm.newTag = {
@@ -8,17 +8,15 @@ function IndexCtrl (DataValues, $scope) {
     vm.isTagSelected = false;
     vm.tagSelected = {};
 
-    $scope.$watch('isTagSelected', function(newValue) { console.log(newValue); });
-
     vm.addTag = function() {
         DataValues.addTag(vm.newTag);
+        vm.tags = DataValues.getTags();
     };
 
     vm.clickOnTag = function(tagName, urls) {
-        angular.element('#container-dataviz-view').toggleClass('col-sm-12').toggleClass('col-sm-9');
-        vm.isTagSelected = !vm.isTagSelected;
-        angular.element('#container-tag-list').toggleClass('col-sm-3');
+        vm.isTagSelected = true;
         vm.tagSelected = {tagName: tagName, urls: urls};
+        $scope.$digest();
     };
 }
 

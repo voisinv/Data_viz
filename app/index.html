@@ -16,10 +16,9 @@
             <div class="col-sm-12">
                 <div id="new-tags-bar" class="box-content">
                     <label>Ajouter un tag :</label>
-                    <input type="text" ng-model="main.tag.tagName" placeholder="tag"/>
-                    <input type="text" ng-model="main.tag.url" placeholder="url"/>
+                    <input type="text" ng-model="main.newTag.tagName" placeholder="tag"/>
+                    <input type="text" ng-model="main.newTag.url" placeholder="url"/>
                     <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
-                    <button class="btn btn-primary" ng-click="main.clickOnTag()">add tags</button>
                 </div>
             </div>
         </div>
@@ -27,17 +26,17 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div id="container-dataviz-view" class="col-sm-12">
+            <div id="container-dataviz-view" class="{{main.isTagSelected ? 'col-sm-9' : 'col-sm-12'}}">
                 <div id="dataviz-view" class="box-content">
-                    <label>Vue Dataviz - {{main.isTagSelected}}</label>
+                    <label>Vue Dataviz</label>
                     <div graph-datas></div>
                 </div>
             </div>
-            <div ng-show="main.isTagSelected" id="container-tag-list" class="">
+            <div ng-show="main.isTagSelected" id="container-tag-list" class="{{main.isTagSelected ? 'col-sm-3' : ''}}">
                 <div id="tags-list" class="box-content">
                     <label>Tag : {{main.tagSelected.tagName}}</label>
                     <ul>
-                        <li ng-repeat="url in main.tags.urls">
+                        <li ng-repeat="url in main.tagSelected.urls">
                             <label>{{url}}</label>
                         </li>
                     </ul>
@@ -62,7 +61,6 @@
 	<script src="app/scripts/controllers/IndexCtrl.js"></script>
 	<script src="app/scripts/services/DataValues.js"></script>
 	<script src="app/scripts/directives/GraphDatas.js"></script>
-	<script src="app/scripts/directives/TestGraph.js"></script>
 	<!-- endfileblock -->
 
 </body>

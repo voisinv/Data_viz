@@ -7,7 +7,7 @@ function graphDatas() {
 		restrict : 'A',
 		scope : true,
 		link: function(scope, iElem, iAttrs) {
-			var width = 1000,
+		    var width = 1000,
 			    height = 700,
 	            elem = undefined;
 
@@ -29,6 +29,10 @@ function graphDatas() {
 			scope.$watchCollection('$parent.main.tags', function(newVal, oldVal) {
 				if(angular.equals(newVal, oldVal)) return;
 				update(); 
+			}, true);
+			scope.$on('newUrl', function() {
+			    console.log('event newUrl');
+			    update();
 			});
 
             var update = function() {
@@ -43,11 +47,13 @@ function graphDatas() {
 								})
 								.on('mouseleave', function(d){
 													d3.selectAll('g').attr('opacity', 1);
-								})
+								});
 
 				nodes.append('circle')
 					.attr('class', 'circle')
-					.attr('r', function(d,i){return d.urls.length * 50;})
+					.attr('r', function(d,i) {
+					    return d.urls.length * 50;}
+                    );
 
 				nodes.append('text')
 					.attr('font-size', function(d){return d.urls.length*20})
@@ -55,12 +61,12 @@ function graphDatas() {
 					.attr('dx', function(d){return d.tagName.length * -6})
 					.attr('dy', '.2em')
 					.attr('class', 'text-circle')
-					.text(function(d){return d.tagName.substr(0, 1).toUpperCase() + d.tagName.substr(1);})
+					.text(function(d){return d.tagName.substr(0, 1).toUpperCase() + d.tagName.substr(1);});
 
 				force.on("tick", function() {
 					elem.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                 });
-                console.log(force)
+                console.log(force);
             	force.start();
             }
 			update();

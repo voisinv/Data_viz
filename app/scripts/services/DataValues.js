@@ -3,13 +3,13 @@ function DataValues ($rootScope) {
 
     var values = [
         {
-            tagName: 'Vélo',
+            tagName: 'vélo',
             urls: ['www.velo.fr', 'www.pedale.com']
         },{
-            tagName: 'Germany',
+            tagName: 'germany',
             urls: ['www.frankfurter-wurstchen.de']
         },{
-            tagName: 'Muse',
+            tagName: 'muse',
             urls: ['www.grouppies-bellamy.com']
         }
     ];
@@ -26,7 +26,7 @@ function DataValues ($rootScope) {
             }
             else if(!DataValues.isUrlInList(values[isTagInList].urls, tag.url)) {
                 values[isTagInList].urls.push(tag.url);
-                $rootScope.$broadcast('newUrl');
+                $rootScope.$broadcast('newUrl', { tagName: tag.tagName });
                 console.log('url added');
             }
     }

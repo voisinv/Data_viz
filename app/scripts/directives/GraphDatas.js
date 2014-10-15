@@ -30,38 +30,24 @@ function graphDatas() {
 				if(angular.equals(newVal, oldVal)) return;
 				update(); 
 			}, true);
-			scope.$on('newUrl', function() {
-			    console.log('event newUrl');
-			    update();
+			scope.$on('newUrl', function(event, arg) {
+                handleSize(d3.select('#' + arg.tagName));
 			});
 
             var update = function() {
 				var elem = svg.selectAll('g').data(scope.main.tags);
 
-				var nodes = elem.enter().append('g')
-								.on('click', function(d){scope.main.clickOnTag(d.tagName, d.urls)})
-								.call(force.drag)
-								.on('mouseenter', function(d){
-													d3.selectAll('g').attr('opacity', 0.5);
-													d3.select(this).attr('opacity', 1);
-								})
-								.on('mouseleave', function(d){
-													d3.selectAll('g').attr('opacity', 1);
-								});
+				nodes = elem.enter().append('g')
+				    .attr('id', function(d) { return d.tagName; })
+                    .on('click', function(d) {scope.main.clickOnTag(d.tagName, d.urls) })
+                    .call(force.drag)
+                    .on('mouseenter', function(d) {
+                        d3.selectAll('g').attr('opacity', 0.5);
+                        d3.select(this).attr('opacity', 1);
+                    })
+                    .on('mouseleave', function(d) { d3.selectAll('g').attr('opacity', 1); });
 
-				nodes.append('circle')
-					.attr('class', 'circle')
-					.attr('r', function(d,i) {
-					    return d.urls.length * 50;}
-                    );
-
-				nodes.append('text')
-					.attr('font-size', function(d){return d.urls.length*20})
-					.attr('fill', 'white')
-					.attr('dx', function(d){return d.tagName.length * -6})
-					.attr('dy', '.2em')
-					.attr('class', 'text-circle')
-					.text(function(d){return d.tagName.substr(0, 1).toUpperCase() + d.tagName.substr(1);});
+				handleSize(nodes, false);
 
 				force.on("tick", function() {
 					elem.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -69,6 +55,27 @@ function graphDatas() {
                 console.log(force);
             	force.start();
             }
+
+            var handleSize = function(nodes, fromEvent) {
+                nodes.append('circle')
+                    .attr('id', function(d) { return d.tagName + '-circle'; })
+                    .attr('class', 'circle')
+                    .attr('r', function(d,i) { return d.urls.length * 25; });
+
+                /*if(fromEvent) {
+                    nodes.remove('text');
+                }*/
+
+                nodes.append('text')
+                    .attr('id', function(d) { return d.tagName + '-text'; })
+                    .attr('font-size', function(d) { return (d.urls.length * 20) + 'px'; })
+                    .attr('fill', 'black ')
+                    .attr('dy', function(d) { return (d.urls.length*5); })
+                    .attr('class', 'text-circle')
+                    .attr("text-anchor", "middle")
+                    .text(function(d) { return d.tagName; }); //.substr(0, 1).toUpperCase() + d.tagName.substr(1); });
+            }
+
 			update();
 		} 
 	}

@@ -33,19 +33,24 @@ function graphDatas() {
 			scope.$on('newUrl', function(event, arg) {
                 handleSize(d3.select('#' + arg.tagName));
 			});
+			var hasBeenClicked = false;
 
             var update = function() {
 				var elem = svg.selectAll('g').data(scope.main.tags);
 
 				nodes = elem.enter().append('g')
 				    .attr('id', function(d) { return d.tagName; })
-                    .on('click', function(d) {scope.main.clickOnTag(d.tagName, d.urls) })
                     .call(force.drag)
+                    .on('click', function(d) { scope.main.clickOnTag(d.tagName, d.urls); })
                     .on('mouseenter', function(d) {
                         d3.selectAll('g').attr('opacity', 0.5);
                         d3.select(this).attr('opacity', 1);
                     })
-                    .on('mouseleave', function(d) { d3.selectAll('g').attr('opacity', 1); });
+                    .on('mouseleave', function(d) {
+                        if(!hasBeenClicked) {
+                            d3.selectAll('g').attr('opacity', 1);
+                        }
+                    });
 
 				handleSize(nodes, false);
 
@@ -58,10 +63,19 @@ function graphDatas() {
 
             var handleSize = function(nodes, fromEvent) {
                 nodes.append('circle')
+                    ///TODO : Moyen de voir celui qui est sélectionné ? (les autres restent avec faible opacité)
+                    .on('click', function(d) {
+                        /*d3.select(this)
+                            .attr('class', '.selected-tag');*/
+                        hasBeenClicked = true;
+                        d3.selectAll('g').attr('opacity', 0.5);
+                        d3.select(this.parentElement).attr('opacity', 1);
+                    })
                     .attr('id', function(d) { return d.tagName + '-circle'; })
                     .attr('class', 'circle')
                     .attr('r', function(d,i) { return d.urls.length * 25; });
 
+                ///TODO : le texte ne s'efface pas (visible avec germany)
                 /*if(fromEvent) {
                     nodes.remove('text');
                 }*/

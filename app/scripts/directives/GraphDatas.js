@@ -15,7 +15,7 @@ function graphDatas() {
 			var force = d3.layout.force()
 				            .charge(function(d, i) { return i ? 0 : -2000; })
 				            //.alpha(1)
-				            //.gravity(function(d){console.log(d.urls.length);return 1*d.urls.length})
+				            //.gravity(function(d){console.log(_.size(d.urls));return 1*_.size(d.urls)})
 				            // à mettre pour la v2
 				            //.linkDistance(600)
 				            .size([width, height])
@@ -28,17 +28,20 @@ function graphDatas() {
 
 			scope.$watchCollection('$parent.main.tags', function(newVal, oldVal) {
 				if(angular.equals(newVal, oldVal)) return;
-
+                console.log('watch')
 				draw(newVal);
 			});
 
-			scope.$on('resize', function(event, arg) {
-                 d3.select('#'+arg.name+'-circle')
-                    .attr('r', function(){return _.size(arg.urls) * 25;});
+			scope.$on('resize', function(event, list) {
+			    angular.forEach(list, function(e,i){
+                     d3.select('#'+e.name+'-circle')
+                        .attr('r', function(){return _.size(e.urls) * 25;});
 
-                 d3.select('#'+arg.name+'-text')
-                    .attr('dy', function(){return _.size(arg.urls) * 5})
-                    .attr('font-size', function() { return _.size(arg.urls) * 20 + 'px'; });
+                     d3.select('#'+e.name+'-text')
+                        .attr('dy', function(){return _.size(e.urls) * 5})
+                        .attr('font-size', function() { return _.size(e.urls) * 20 + 'px'; });
+
+			    })
 			});
 			var hasBeenClicked = false;
 
@@ -63,7 +66,7 @@ function graphDatas() {
                 nodes.append('circle')
                     .attr('id', function(d) { return d.name + '-circle'; })
                     .attr('class', 'circle')
-                    .attr('r', function(d,i) {return d.urls.length * 25; })
+                    .attr('r', function(d,i) {return _.size(d.urls) * 25; })
                     ///TODO : Moyen de voir celui qui est sélectionné ? (les autres restent avec faible opacité)
                     .on('click', function(d) {
                         hasBeenClicked = true;
@@ -78,7 +81,7 @@ function graphDatas() {
 
                 nodes.append('text')
                     .attr('id', function(d) { return d.name + '-text'; })
-                    .attr('font-size', function(d) { return (d.urls.length * 20) + 'px'; })
+                    .attr('font-size', function(d) { return (_.size(d.urls) * 20) + 'px'; })
                     .attr('fill', 'black ')
                     .attr('dy', function(d) { return ( _.size(d.urls) *5); })
                     .attr('class', 'text-circle')

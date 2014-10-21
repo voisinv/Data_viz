@@ -15,27 +15,24 @@ function collection () {
     var tags = {};
 
     tags.get = function() {
-        return list;
-    }
-
-    tags.exist = function(name) {
-        // return undefined if not found
-        return _.findWhere(list, {name:name})
+        return list
     }
 
     tags.add = function(tag) {
-        list.push({name:tag.name, urls:[tag.url]});
-    }
-
-    tags.url = function(tag) {
-        var o = _.findWhere(list, {name:tag.name}) || {};
-        if(!_.contains(o.urls, tag.url)) o.urls.push(tag.url);
+        // récupère objet complet {name:'', urls:[]};
+        var o = _.findWhere(list, {name:tag.name}) || null;
+        // Si o != null
+        if( o ) {
+            // ON vérifie que l'url n'éxiste pas déja dans la liste, si non on ajoute
+            if(!_.contains(o.urls, tag.url)) o.urls.push(tag.url);
+        } else {
+            // crée objet
+            list.push({name:tag.name, urls:[tag.url]});
+        }
     }
 
     return tags;
 }
-
-
 
 angular
     .module('services')

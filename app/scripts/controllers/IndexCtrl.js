@@ -22,6 +22,9 @@ function ctrl($scope, collection, $rootScope) {
         $scope.$digest();
     }
 }
-angular.module('controllers')
-	.controller('IndexCtrl', ctrl)
+
+angular
+    .module('controllers')
+	.controller('IndexCtrl', ctrl);
+
 //TODO $parser for the input

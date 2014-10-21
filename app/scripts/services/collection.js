@@ -1,4 +1,3 @@
-
 function collection () {
     var list = [
             {
@@ -15,7 +14,7 @@ function collection () {
     var tags = {};
 
     tags.get = function() {
-        return list
+        return list;
     }
 
     tags.add = function(tag) {
@@ -37,4 +36,4 @@ function collection () {
 angular
     .module('services')
     //.factory('DataValues', DataValues)
-    .factory('collection', collection)
+    .factory('collection', collection);

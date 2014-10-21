@@ -16,8 +16,8 @@
             <div class="col-sm-12">
                 <div id="new-tags-bar" class="box-content">
                     <label>Ajouter un tag :</label>
-                    <input type="text" ng-model="main.newTag.tagName" placeholder="tag"/>
-                    <input type="text" ng-model="main.newTag.url" placeholder="url"/>
+                    <input type="text" ng-model="main.tag.name" placeholder="tag"/>
+                    <input type="text" ng-model="main.tag.url" placeholder="url"/>
                     <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
                 </div>
             </div>
@@ -53,6 +53,7 @@
 	<script src="../bower_components/d3/d3.js"></script>
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="../bower_components/angular-route/angular-route.js"></script>
+	<script src="../bower_components/underscore/underscore.js"></script>
 	<!-- endbower -->
 
 

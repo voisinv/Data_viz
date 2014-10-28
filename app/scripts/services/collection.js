@@ -10,24 +10,24 @@ function collection () {
                 name: 'muse',
                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a']
             },{
-                             name: 'véloa',
-                             urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a']
-                         },{
-                             name: 'germanya',
-                             urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a']
-                         },{
-                             name: 'musea',
-                             urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a',]
-                         },{
-                                          name: 'vélob',
-                                          urls: ['www.grouppies-bellamy.com','a','a','a','a','a']
-                                      },{
-                                          name: 'b',
-                                          urls: ['www.grouppies-bellamy.com','a','a','a','a']
-                                      },{
-                                          name: 'museb',
-                                          urls: ['www.grouppies-bellamy.com','a','a','a']
-                                      }
+                name: 'véloa',
+                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a']
+            },{
+                name: 'germanya',
+                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a']
+            },{
+                name: 'musea',
+                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a',]
+            },{
+                 name: 'vélob',
+                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a']
+            },{
+                 name: 'b',
+                 urls: ['www.grouppies-bellamy.com','a','a','a','a']
+            },{
+                 name: 'museb',
+                 urls: ['www.grouppies-bellamy.com','a','a','a']
+            }
         ];
     var tags = {};
 

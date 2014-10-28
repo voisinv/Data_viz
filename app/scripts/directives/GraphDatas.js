@@ -1,93 +1,111 @@
-function graphDatas() {
+function graphDatas(collection, $rootScope) {
+
 	return {
 		restrict : 'A',
 		scope : true,
 		link: function(scope, iElem, iAttrs) {
 		    var width = 1000,
 			    height = 700,
-	            elem = undefined;
+	            elem = undefined,
+	            nodes;
 
+			scope.$watchCollection('$parent.main.tags', function(newVal, oldVal) {
+				if(angular.equals(newVal, oldVal)) return;
+				draw();
+			});
 
-			var force = d3.layout.force()
-				            .charge(function(d, i) { return i ? 0 : -2000; })
-				            //.alpha(1)
-				            //.gravity(function(d){console.log(_.size(d.urls));return 1*_.size(d.urls)})
-				            // à mettre pour la v2
-				            //.linkDistance(600)
-				            .size([width, height])
-                            .nodes(scope.main.tags);
-
+			scope.$on('resize', function(event, list) {
+			   nodes  = _.findWhere(nodes, {name:list.name})
+			});
 
 	    	var svg = d3.select(iElem[0]).append('svg')
 	    			.attr("width", width)
 	        		.attr("height", height);
 
-			scope.$watchCollection('$parent.main.tags', function(newVal, oldVal) {
-				if(angular.equals(newVal, oldVal)) return;
-				draw(newVal);
-			});
+            function draw(){
+                nodes = collection.get().map(function(d, i) { return {radius: _.size(d.urls) * 8, name: d.name}; }),
+                        color = d3.scale.category10();
 
-			scope.$on('resize', function(event, list) {
-			    angular.forEach(list, function(e,i){
-                    d3.select('#'+e.name+'-circle')
-                        .attr('r', function(){return _.size(e.urls) * 25;});
+                var force = d3.layout.force()
+                    .gravity(0.3)
+                    .charge(function(d, i) { return -30 * d.radius; })
+                    .nodes(nodes)
+                    .size([width, height]);
 
-                    d3.select('#'+e.name+'-text')
-                        .attr('dy', function(){return _.size(e.urls) * 5})
-                        .attr('font-size', function() { return _.size(e.urls) * 20 + 'px'; });
-			    });
-			});
-			var hasBeenClicked = false;
+                var root = nodes[0];
+                root.radius = 0;
+                root.fixed = true;
 
-            var draw = function() {
-				var elem = svg.selectAll('g').data(scope.main.tags);
+                force.start();
 
-                // draw g
-				nodes = elem.enter().append('g')
-				    .attr('id', function(d) { return d.name; })
+                svg.selectAll("circle")
+                    .data(nodes.slice(1))
+                    .enter()
+                    .append("circle")
+                    .attr("r", function(d) { return d.radius - 2; })
+                    //.attr('class', 'hoverCircle')
                     .call(force.drag)
-                    .on('click', function(d) { scope.main.clickOnTag(d.name, d.urls); })
-                    .on('mouseenter', function(d) {
-                        d3.selectAll('g').attr('opacity', 0.5);
-                        d3.select(this).attr('opacity', 1);
-                    })
-                    .on('mouseleave', function(d) {
-                        if(!hasBeenClicked) {
-                            d3.selectAll('g').attr('opacity', 1);
-                        }
-                    });
-
-                nodes.append('circle')
-                    .attr('id', function(d) { return d.name + '-circle'; })
                     .attr('class', 'circle')
-                    .attr('r', function(d,i) {return _.size(d.urls) * 25; })
-                    .on('click', function(d) {
-                        hasBeenClicked = true;
-                        d3.selectAll('g').attr('opacity', 0.5);
-                        d3.select(this.parentElement).attr('opacity', 1);
-                    });
+                    .on('mouseover', function(d) {
+                        d3.selectAll("circle").attr('opacity', 0.3);
+                        d3.select(this).attr('opacity', 1);
+                        $rootScope.$broadcast('hoverTag', { name: d.name });
+                    })
+                    /*.on('mouseleave', function(d) {
+                        d3.selectAll("circle").attr('opacity', 1);
+                    })*/
+                    .style("fill", function(d, i) { return color(i % _.size(collection.get())); });
 
-                nodes.append('text')
-                    .attr('id', function(d) { return d.name + '-text'; })
-                    .attr('font-size', function(d) { return (_.size(d.urls) * 20) + 'px'; })
-                    .attr('fill', 'black ')
-                    .attr('dy', function(d) { return ( _.size(d.urls) *5); })
-                    .attr('class', 'text-circle')
-                    .attr("text-anchor", "middle")
-                    .text(function(d) { return d.name; });
+                force.on("tick", tick(event));
+            }
+            function tick (e){
 
-                force.on("tick", function() {
-                    elem.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-                });
+                var q = d3.geom.quadtree(nodes),
+                    i = 0,
+                    n = nodes.length;
+                while (++i < n) {
+                  q.visit(collide(nodes[i]));
+                }
+                return function(){
 
-            	force.start();
-            };
+                    svg.selectAll("circle")
+                        .attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; })
+                }
 
-			draw();
 
-			///TODO : visualisation claire - analyse force ?
-		} 
+            }
+
+            draw();
+		}
 	};
+
+	function collide(node) {
+      var r = node.radius + 30,
+          nx1 = node.x - r,
+          nx2 = node.x + r,
+          ny1 = node.y - r,
+          ny2 = node.y + r;
+      return function(quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== node)) {
+          var x = node.x - quad.point.x,
+              y = node.y - quad.point.y,
+              l = Math.sqrt(x * x + y * y),
+              r = node.radius + quad.point.radius;
+          if (l < r) {
+            l = (l - r) / l * .5;
+            node.x -= x *= l;
+            node.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
+        }
+        return x1 > nx2
+            || x2 < nx1
+            || y1 > ny2
+            || y2 < ny1;
+      };
+    };
 }
 
 angular

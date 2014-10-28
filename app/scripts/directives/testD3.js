@@ -6,7 +6,7 @@ function testD3($rootScope, collection) {
             var w = 1280,
                 h = 800;
 
-            var nodes = collection.get().map(function(d, i) { return {radius: _.size(d.urls) * 10, name: d.name}; }),
+            var nodes = collection.get().map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
                 color = d3.scale.category10();
 
             var force = d3.layout.force()
@@ -34,11 +34,11 @@ function testD3($rootScope, collection) {
                 .on('mouseover', function(d) {
                     d3.selectAll("circle").attr('opacity', 0.3);
                     d3.select(this).attr('opacity', 1);
-                    $rootScope.$broadcast('hoverTag', { name: d.name });
+                    $rootScope.$broadcast('hoverTag', { id: d.id });
                 })
-                /*.on('mouseleave', function(d) {
+                .on('mouseleave', function(d) {
                     d3.selectAll("circle").attr('opacity', 1);
-                })*/
+                })
                 .style("fill", function(d, i) { return color(i % _.size(collection.get())); });
 
             force.on("tick", function(e) {

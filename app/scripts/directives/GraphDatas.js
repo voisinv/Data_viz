@@ -15,7 +15,7 @@ function graphDatas(collection, $rootScope) {
 			});
 
 			scope.$on('resize', function(event, list) {
-			   nodes  = _.findWhere(nodes, {name:list.name})
+			   nodes  = _.findWhere(nodes, {id:list.id})
 			});
 
 	    	var svg = d3.select(iElem[0]).append('svg')
@@ -23,7 +23,7 @@ function graphDatas(collection, $rootScope) {
 	        		.attr("height", height);
 
             function draw(){
-                nodes = collection.get().map(function(d, i) { return {radius: _.size(d.urls) * 8, name: d.name}; }),
+                nodes = collection.get().map(function(d, i) { return {radius: _.size(d.urls) * 8, id: d.id}; }),
                         color = d3.scale.category10();
 
                 var force = d3.layout.force()
@@ -49,7 +49,7 @@ function graphDatas(collection, $rootScope) {
                     .on('mouseover', function(d) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
-                        $rootScope.$broadcast('hoverTag', { name: d.name });
+                        $rootScope.$broadcast('hoverTag', { id: d.id });
                     })
                     /*.on('mouseleave', function(d) {
                         d3.selectAll("circle").attr('opacity', 1);
@@ -77,35 +77,35 @@ function graphDatas(collection, $rootScope) {
             }
 
             draw();
+
+            function collide(node) {
+                  var r = node.radius + 30,
+                      nx1 = node.x - r,
+                      nx2 = node.x + r,
+                      ny1 = node.y - r,
+                      ny2 = node.y + r;
+                  return function(quad, x1, y1, x2, y2) {
+                    if (quad.point && (quad.point !== node)) {
+                      var x = node.x - quad.point.x,
+                          y = node.y - quad.point.y,
+                          l = Math.sqrt(x * x + y * y),
+                          r = node.radius + quad.point.radius;
+                      if (l < r) {
+                        l = (l - r) / l * .5;
+                        node.x -= x *= l;
+                        node.y -= y *= l;
+                        quad.point.x += x;
+                        quad.point.y += y;
+                      }
+                    }
+                    return x1 > nx2
+                        || x2 < nx1
+                        || y1 > ny2
+                        || y2 < ny1;
+                  };
+                };
 		}
 	};
-
-	function collide(node) {
-      var r = node.radius + 30,
-          nx1 = node.x - r,
-          nx2 = node.x + r,
-          ny1 = node.y - r,
-          ny2 = node.y + r;
-      return function(quad, x1, y1, x2, y2) {
-        if (quad.point && (quad.point !== node)) {
-          var x = node.x - quad.point.x,
-              y = node.y - quad.point.y,
-              l = Math.sqrt(x * x + y * y),
-              r = node.radius + quad.point.radius;
-          if (l < r) {
-            l = (l - r) / l * .5;
-            node.x -= x *= l;
-            node.y -= y *= l;
-            quad.point.x += x;
-            quad.point.y += y;
-          }
-        }
-        return x1 > nx2
-            || x2 < nx1
-            || y1 > ny2
-            || y2 < ny1;
-      };
-    };
 }
 
 angular

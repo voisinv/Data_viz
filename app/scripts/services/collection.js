@@ -1,31 +1,31 @@
 function collection () {
     var list = [
             {
-                name: 'vélo',
+                id: 'vélo',
                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a','a','a']
             },{
-                name: 'germany',
+                id: 'germany',
                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a','a']
             },{
-                name: 'muse',
+                id: 'muse',
                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a']
             },{
-                name: 'véloa',
+                id: 'véloa',
                  urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a']
             },{
-                name: 'germanya',
+                id: 'germanya',
                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a']
             },{
-                name: 'musea',
+                id: 'musea',
                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a',]
             },{
-                 name: 'vélob',
+                 id: 'vélob',
                  urls: ['www.grouppies-bellamy.com','a','a','a','a','a']
             },{
-                 name: 'b',
+                 id: 'b',
                  urls: ['www.grouppies-bellamy.com','a','a','a','a']
             },{
-                 name: 'museb',
+                 id: 'museb',
                  urls: ['www.grouppies-bellamy.com','a','a','a']
             }
         ];
@@ -36,15 +36,15 @@ function collection () {
     }
 
     tags.add = function(tag) {
-        // récupère objet complet {name:'', urls:[]};
-        var o = _.findWhere(list, {name:tag.name}) || null;
+        // récupère objet complet {id:'', urls:[]};
+        var o = _.findWhere(list, {id:tag.id}) || null;
         // Si o != null
         if( o ) {
             // ON vérifie que l'url n'éxiste pas déja dans la liste, si non on ajoute
             if(!_.contains(o.urls, tag.url)) o.urls.push(tag.url);
         } else {
             // crée objet
-            list.push({name:tag.name, urls:[tag.url]});
+            list.push({id:tag.id, urls:[tag.url]});
         }
     }
 

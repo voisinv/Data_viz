@@ -4,8 +4,8 @@ function ctrl($rootScope) {
     vm.nameTagHovered = '';
 
     $rootScope.$on('hoverTag', function(e, arg) {
-        console.log(arg.name);
-        vm.nameTagHovered = arg.name;
+        console.log(arg.id);
+        vm.nameTagHovered = arg.id;
     });
 }
 

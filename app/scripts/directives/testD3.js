@@ -1,12 +1,12 @@
-function testD3($rootScope, collection) {
+function testD3($rootScope, $timeout) {
 	return {
 		restrict : 'A',
 		scope : true,
-		link: function(scope, iElem, iAttrs) {
+		link: function(scope, elem, attrs) {
             var w = 1280,
                 h = 800;
 
-            var nodes = collection.get().map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
+            var nodes = scope.test.tags.map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
                 color = d3.scale.category10();
 
             var force = d3.layout.force()
@@ -29,33 +29,29 @@ function testD3($rootScope, collection) {
                 .data(nodes.slice(1))
               .enter().append("circle")
                 .attr("r", function(d) { return d.radius - 2; })
-                //.attr('class', 'hoverCircle')
+                .attr("id", function(d) { return 'circle-' + d.id; })
                 .call(force.drag)
                 .on('mouseover', function(d) {
                     d3.selectAll("circle").attr('opacity', 0.3);
                     d3.select(this).attr('opacity', 1);
                     $rootScope.$broadcast('hoverTag', { id: d.id });
                 })
-                .on('mouseleave', function(d) {
-                    d3.selectAll("circle").attr('opacity', 1);
-                })
-                .style("fill", function(d, i) { return color(i % _.size(collection.get())); });
+                .on('mouseleave', function(d) { d3.selectAll("circle").attr('opacity', 1); })
+                .style("fill", function(d, i) { return color(i % _.size(scope.test.tags)); });
 
             force.on("tick", function(e) {
-              var q = d3.geom.quadtree(nodes),
-                  i = 0,
-                  n = nodes.length;
+                var q = d3.geom.quadtree(nodes),
+                    i = 0,
+                    n = nodes.length;
 
-              while (++i < n) {
-                q.visit(collide(nodes[i]));
-              }
+                while (++i < n) {
+                    q.visit(collide(nodes[i]));
+                }
 
-              svg.selectAll("circle")
-                  .attr("cx", function(d) { return d.x; })
-                  .attr("cy", function(d) { return d.y; });
+                svg.selectAll("circle")
+                    .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
             });
-
-
 
             function collide(node) {
               var r = node.radius + 16,
@@ -84,7 +80,6 @@ function testD3($rootScope, collection) {
               };
             }
 		}
-
 	};
 }
 

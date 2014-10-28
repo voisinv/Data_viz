@@ -1,10 +1,21 @@
 <div ng-controller="TestCtrl as test">
     <div id="body">
         <div id="footer">
-            Test - Collision Detection
-            <div class="hint">move the mouse to repel nodes</div>
-            <div>{{test.nameTagHovered}}</div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="new-tags-bar" class="box-content">
+                            <label>Ajouter un tag :</label>
+                            <input type="text" placeholder="tag" ng-model="test.tag.id" ng-change="test.erreurSaisieTag = false"/>
+                            <input type="text" placeholder="url" ng-model="test.tag.url" ng-change="test.erreurSaisieTag = false"/>
+                            <button class="btn btn-primary" ng-click="test.addTag()">add tags</button>
+                            <label ng-show="test.erreurSaisieTag" class="red">Erreur de saisie</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div test-d3></div>
+
+        <div test-d3 data="test.tags"></div>
     </div>
 </div>

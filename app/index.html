@@ -9,59 +9,30 @@
     <link href="app/style/main.css" rel="stylesheet" />
     <!-- endfileblock -->
 </head>
-<body ng-controller="IndexCtrl as main">
+<body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="new-tags-bar" class="box-content">
-                    <label>Ajouter un tag :</label>
-                    <input type="text" ng-model="main.tag.name" placeholder="tag"/>
-                    <input type="text" ng-model="main.tag.url" placeholder="url"/>
-                    <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
-                </div>
-            </div>
-        </div>
+    <div>
+        <a class="btn btn-primary" ui-sref="main">Main</a>
+        <a class="btn btn-primary" ui-sref="test">Test</a>
+	    <div ui-view></div>
     </div>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div id="container-dataviz-view" class="{{main.isTagSelected ? 'col-sm-9' : 'col-sm-12'}}">
-                <div id="dataviz-view" class="box-content">
-                    <label>Vue Dataviz</label>
-                    <div graph-datas></div>
-                </div>
-            </div>
-            <div ng-show="main.isTagSelected" id="container-tag-list" class="{{main.isTagSelected ? 'col-sm-3' : ''}}">
-                <div id="tags-list" class="box-content">
-                    <label>Tag : {{main.tagSelected.tagName}}</label>
-                    <ul>
-                        <li ng-repeat="url in main.tagSelected.urls">
-                            <label>{{url}}</label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-	<!--div ng-view></div-->
 
 	<!-- bower:js -->
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/angular/angular.js"></script>
 	<script src="../bower_components/d3/d3.js"></script>
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-	<script src="../bower_components/angular-route/angular-route.js"></script>
 	<script src="../bower_components/underscore/underscore.js"></script>
+	<script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<!-- endbower -->
-
 
 	<!-- fileblock:js app -->
 	<script src="app/scripts/app.js"></script>
-	<script src="app/scripts/controllers/IndexCtrl.js"></script>
 	<script src="app/scripts/directives/GraphDatas.js"></script>
 	<script src="app/scripts/services/collection.js"></script>
+	<script src="app/scripts/directives/testD3.js"></script>
+	<script src="app/scripts/controllers/MainCtrl.js"></script>
+	<script src="app/scripts/controllers/TestCtrl.js"></script>
 	<!-- endfileblock -->
 
 </body>

@@ -1,1 +1,35 @@
-<p>Main</p>
+<div ng-controller="MainCtrl as main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="new-tags-bar" class="box-content">
+                    <label>Ajouter un tag :</label>
+                    <input type="text" ng-model="main.tag.name" placeholder="tag"/>
+                    <input type="text" ng-model="main.tag.url" placeholder="url"/>
+                    <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="container-dataviz-view" class="{{main.isTagSelected ? 'col-sm-9' : 'col-sm-12'}}">
+                <div id="dataviz-view" class="box-content">
+                    <label>Vue Dataviz</label>
+                    <div graph-datas></div>
+                </div>
+            </div>
+            <div ng-show="main.isTagSelected" id="container-tag-list" class="{{main.isTagSelected ? 'col-sm-3' : ''}}">
+                <div id="tags-list" class="box-content">
+                    <label>Tag : {{main.tagSelected.tagName}}</label>
+                    <ul>
+                        <li ng-repeat="url in main.tagSelected.urls">
+                            <label>{{url}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

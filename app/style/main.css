@@ -39,14 +39,8 @@ body {
     box-shadow: 2px 2px 5px #aaa;
 }
 
-.circle {
-    fill : #1abc9c;
-    stroke: #16a085;
-    stroke-width: 5px;
-}
+.hoverCircle {
 
-.circle:hover{
-    cursor : pointer;
 }
 
 .text-circle {

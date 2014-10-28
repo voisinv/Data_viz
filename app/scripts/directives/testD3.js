@@ -9,6 +9,16 @@ function testD3($rootScope, $timeout) {
             var nodes = scope.test.tags.map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
                 color = d3.scale.category10();
 
+            /*scope.$watchCollection('$parent.test.tags', function(newVal, oldVal) {
+                if(angular.equals(newVal, oldVal)) return;
+                draw();
+            });*/
+
+            scope.$on('urlAdded', function(event, tagId) {
+               _.findWhere(nodes, {id: tagId}).radius -= 10;
+               resize(tagId);
+            });
+
             var force = d3.layout.force()
                 .gravity(0.3)
                 .charge(function(d, i) { return -30 * d.radius; })
@@ -28,7 +38,7 @@ function testD3($rootScope, $timeout) {
             svg.selectAll("circle")
                 .data(nodes.slice(1))
               .enter().append("circle")
-                .attr("r", function(d) { return d.radius - 2; })
+                .attr("r", function(d) { return d.radius; })
                 .attr("id", function(d) { return 'circle-' + d.id; })
                 .call(force.drag)
                 .on('mouseover', function(d) {
@@ -78,6 +88,12 @@ function testD3($rootScope, $timeout) {
                     || y1 > ny2
                     || y2 < ny1;
               };
+            }
+
+            function resize(tagId) {
+                var node = d3.select('#circle-' + tagId)
+                             .attr('r', function(d) { return d.radius; })
+                             .call(force.drag);
             }
 		}
 	};

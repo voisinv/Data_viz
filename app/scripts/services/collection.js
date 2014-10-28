@@ -1,4 +1,4 @@
-function collection () {
+function collection ($rootScope) {
     var list = [
             {
                 id: 'vélo',
@@ -39,8 +39,10 @@ function collection () {
         var o = _.findWhere(list, {id:tag.id}) || null;
         if(o) {
             // On vérifie que le tag existe bien et que l'url n'existe pas déjà dans la liste de ce tag
-            if(!_.contains(o.urls, tag.url))
+            if(!_.contains(o.urls, tag.url)) {
                 o.urls.push(tag.url);
+                $rootScope.$broadcast('urlAdded', tag.id);
+            }
         }
         else {
             // le tag n'existe pas, on l'ajoute à la liste

@@ -15,7 +15,7 @@ function testD3($rootScope, $timeout) {
             });*/
 
             scope.$on('urlAdded', function(event, tagId) {
-               _.findWhere(nodes, {id: tagId}).radius -= 10;
+               _.findWhere(nodes, {id: tagId}).radius += 10;
                resize(tagId);
             });
 
@@ -38,13 +38,13 @@ function testD3($rootScope, $timeout) {
             svg.selectAll("circle")
                 .data(nodes.slice(1))
               .enter().append("circle")
-                .attr("r", function(d) { return d.radius; })
+                .attr("r", function(d) { return d.radius-1; })
                 .attr("id", function(d) { return 'circle-' + d.id; })
                 .call(force.drag)
                 .on('mouseover', function(d) {
                     d3.selectAll("circle").attr('opacity', 0.3);
                     d3.select(this).attr('opacity', 1);
-                    $rootScope.$broadcast('hoverTag', { id: d.id });
+                    $rootScope.$broadcast('hoverTag', d.id);
                 })
                 .on('mouseleave', function(d) { d3.selectAll("circle").attr('opacity', 1); })
                 .style("fill", function(d, i) { return color(i % _.size(scope.test.tags)); });
@@ -92,8 +92,8 @@ function testD3($rootScope, $timeout) {
 
             function resize(tagId) {
                 var node = d3.select('#circle-' + tagId)
-                             .attr('r', function(d) { return d.radius; })
-                             .call(force.drag);
+                             .attr('r', function(d) { return d.radius-1; });
+                             force.start();
             }
 		}
 	};

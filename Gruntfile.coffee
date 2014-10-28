@@ -30,7 +30,7 @@ module.exports = (grunt) ->
           'Gruntfile.coffee'
           'bower.json'
           'app/index.html'
-          'app/partials/*.*'
+          'app/views/*.html'
           'app/scripts/{,*/}*.js'
           'app/style/{,*/}*.css'
           ]

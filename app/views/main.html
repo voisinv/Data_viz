@@ -6,8 +6,8 @@
                     <div class="col-sm-12">
                         <div class="box-content">
                             <label>Ajouter un tag :</label>
-                            <input type="text" placeholder="tag" ng-model="main.tag.id" ng-change="main.erreurSaisieTag = false"/>
                             <input type="text" placeholder="url" ng-model="main.tag.url" ng-change="main.erreurSaisieTag = false"/>
+                            <input type="text" placeholder="tag" ng-model="main.tag.id" ng-change="main.erreurSaisieTag = false"/>
                             <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
                             <label ng-show="main.erreurSaisieTag" class="red">Erreur de saisie</label>
                         </div>

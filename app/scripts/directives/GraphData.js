@@ -1,4 +1,4 @@
-function testD3($rootScope, $timeout) {
+function graphData($rootScope, $timeout) {
 	return {
 		restrict : 'A',
 		scope : true,
@@ -7,7 +7,7 @@ function testD3($rootScope, $timeout) {
                 h = 800,
                 nodes = null;
 
-            var nodes = scope.test.tags.map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
+            var nodes = scope.main.tags.map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
                 color = d3.scale.category10();
 
             scope.$on('newTag', function(event) {
@@ -49,7 +49,7 @@ function testD3($rootScope, $timeout) {
                     $rootScope.$broadcast('hoverTag', d.id);
                 })
                 .on('mouseleave', function(d) { d3.selectAll("circle").attr('opacity', 1); })
-                .style("fill", function(d, i) { return color(i % _.size(scope.test.tags)); });
+                .style("fill", function(d, i) { return color(i % _.size(scope.main.tags)); });
 
             force.on("tick", function(e) {
                 var q = d3.geom.quadtree(nodes),
@@ -103,4 +103,4 @@ function testD3($rootScope, $timeout) {
 
 angular
     .module('directives')
-    .directive('testD3', testD3);
+    .directive('graphData', graphData);

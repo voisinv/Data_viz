@@ -8,15 +8,11 @@ angular
     .module('app', ['ui.router', 'services', 'directives', 'controllers'])
 	.config(function($stateProvider, $urlRouterProvider) {
 
-	    //$urlRouterProvider.otherwise("/");
+	    $urlRouterProvider.otherwise("/main");
 
         $stateProvider
             .state('main', {
                 url: "/main",
                 templateUrl: "../views/main.html"
-            })
-            .state('test', {
-                url: "/test",
-                templateUrl: "../views/test.html"
             });
 	});

@@ -1,30 +1,25 @@
-function ctrl($scope, collection, $rootScope) {
+function ctrl($scope, $rootScope, collection) {
     var vm = this;
 
+    vm.idTagHovered = 'tag hovered';
+    vm.tag = { id: '', url: '' };
+    vm.erreurSaisieTag = false;
     vm.tags = collection.get();
 
-    vm.tag = {
-        name : '',
-        url : ''
-    };
+    $scope.$on('hoverTag', function(event, tagId) {
+        vm.idTagHovered = tagId;
+        $scope.$apply();
+    });
 
-    vm.tagSelected = false;
-    vm.tagSelected = {};
 
     vm.addTag = function() {
-        collection.add(vm.tag);
-        $rootScope.$broadcast('resize', collection.get());
-    }
-
-    vm.clickOnTag = function(name, urls) {
-        vm.isTagSelected = true;
-        vm.tagSelected = {name:name, urls:urls};
-        $scope.$digest();
+        if(vm.tag.id !== '' && vm.tag.url !== '')
+            collection.addTag(vm.tag);
+        else
+            vm.erreurSaisieTag = true;
     }
 }
 
 angular
     .module('controllers')
 	.controller('MainCtrl', ctrl);
-
-//TODO $parser for the input

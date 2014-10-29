@@ -7,7 +7,6 @@ function ctrl($scope, $rootScope, collection) {
     vm.tags = collection.get();
 
     $scope.$on('hoverTag', function(event, tagId) {
-        console.log(tagId);
         vm.idTagHovered = tagId;
         $scope.$apply();
     });

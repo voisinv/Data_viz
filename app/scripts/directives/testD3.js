@@ -4,19 +4,21 @@ function testD3($rootScope, $timeout) {
 		scope : true,
 		link: function(scope, elem, attrs) {
             var w = 1280,
-                h = 800;
+                h = 800,
+                nodes = null;
 
             var nodes = scope.test.tags.map(function(d, i) { return {radius: _.size(d.urls) * 10, id: d.id}; }),
                 color = d3.scale.category10();
 
-            /*scope.$watchCollection('$parent.test.tags', function(newVal, oldVal) {
-                if(angular.equals(newVal, oldVal)) return;
+            scope.$on('newTag', function(event) {
                 draw();
-            });*/
+            });
 
-            scope.$on('urlAdded', function(event, tagId) {
-               _.findWhere(nodes, {id: tagId}).radius += 10;
-               resize(tagId);
+            scope.$on('newUrl', function(event, tagId) {
+                if(nodes) {
+                    _.findWhere(nodes, {id: tagId}).radius += 10;
+                    resize(tagId);
+                }
             });
 
             var force = d3.layout.force()

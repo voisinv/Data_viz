@@ -41,7 +41,7 @@ function collection ($rootScope) {
             // On vérifie que le tag existe bien et que l'url n'existe pas déjà dans la liste de ce tag
             if(!_.contains(o.urls, tag.url)) {
                 o.urls.push(tag.url);
-                $rootScope.$broadcast('urlAdded', tag.id);
+                $rootScope.$broadcast('newUrl', tag.id);
             }
         }
         else {
@@ -50,6 +50,7 @@ function collection ($rootScope) {
                 id: tag.id,
                 urls:[tag.url]
             });
+            $rootScope.$broadcast('newTag');
         }
     };
 

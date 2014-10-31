@@ -14,13 +14,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
-                        <h1>{{main.idTagHovered}}</h1>
+                    <div class="col-sm-10">
+                        <div id="div-graph" graph-data></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <h1>{{main.tagHovered.id}}</h1>
+                        <label>Urls : </label>
+                        <ul ng-repeat="url in main.tagHovered.urls">
+                            <li>{{url}}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div graph-data></div>
     </div>
 </div>

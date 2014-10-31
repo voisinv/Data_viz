@@ -1,13 +1,13 @@
 function ctrl($scope, $rootScope, collection) {
     var vm = this;
 
-    vm.idTagHovered = 'tag hovered';
+    vm.tagHovered = {};
     vm.tag = { id: '', url: '' };
     vm.erreurSaisieTag = false;
     vm.tags = collection.get();
 
-    $scope.$on('hoverTag', function(event, tagId) {
-        vm.idTagHovered = tagId;
+    $scope.$on('hoverTag', function(event, tag) {
+        vm.tagHovered = tag;
         $scope.$apply();
     });
 

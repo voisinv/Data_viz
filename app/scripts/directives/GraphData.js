@@ -7,9 +7,9 @@ function graphData($rootScope, $timeout) {
                 h = 800,
                 nodes = null,
                 force = null,
-                color = d3.scale.category10();;
+                color = d3.scale.category10();
 
-            var svg = d3.select("#body").append("svg")
+            var svg = d3.select("#div-graph").append("svg")
                 .attr("width", w)
                 .attr("height", h);
 
@@ -44,7 +44,7 @@ function graphData($rootScope, $timeout) {
                 force.start();
 
                 svg.selectAll("circle")
-                    .data(nodes.slice(1))
+                    .data(nodes)
                     .enter().append("circle")
                     .attr("r", function (d) {
                         return d.radius - 1;
@@ -53,10 +53,10 @@ function graphData($rootScope, $timeout) {
                         return 'circle-' + d.id;
                     })
                     .call(force.drag)
-                    .on('mouseover', function (d) {
+                    .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
-                        $rootScope.$broadcast('hoverTag', d.id);
+                        $rootScope.$broadcast('hoverTag', scope.main.tags[i]);
                     })
                     .on('mouseleave', function () {
                         d3.selectAll("circle").attr('opacity', 1);

@@ -1,34 +1,46 @@
 function collection ($rootScope) {
     var list = [
-            {
-                id: 'vélo',
-                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a','a','a']
-            },{
-                id: 'germany',
-                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a','a']
-            },{
-                id: 'muse',
-                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a','a']
-            },{
-                id: 'véloa',
-                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a','a']
-            },{
-                id: 'germanya',
-                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a','a']
-            },{
-                id: 'musea',
-                urls: ['www.grouppies-bellamy.com','a','a','a','a','a','a',]
-            },{
-                 id: 'vélob',
-                 urls: ['www.grouppies-bellamy.com','a','a','a','a','a']
-            },{
-                 id: 'b',
-                 urls: ['www.grouppies-bellamy.com','a','a','a','a']
-            },{
-                 id: 'museb',
-                 urls: ['www.grouppies-bellamy.com','a','a','a']
-            }
-        ];
+        {
+            id: '',
+            urls: []
+        },{
+            id: '12',
+            urls: ['1','a','b','c','d','e','f','g','h','i','j','k']
+        },{
+            id: '11',
+            urls: ['1','a','b','c','d','e','f','g','h','i','j']
+        },{
+            id: '10',
+            urls: ['1','a','b','c','d','e','f','g','h','i']
+        },{
+            id: '9',
+            urls: ['1','a','b','c','d','e','f','g','h']
+        },{
+            id: '8',
+            urls: ['1','a','b','c','d','e','f','g']
+        },{
+            id: '7',
+            urls: ['1','a','b','c','d','e','f']
+        },{
+            id: '6',
+            urls: ['1','a','b','c','d','e']
+        },{
+            id: '5',
+            urls: ['1','a','b','c','d']
+        },{
+            id: '4',
+            urls: ['1','a','b','c']
+        },{
+            id: '3',
+            urls: ['1','a','b']
+        },{
+            id: '2',
+            urls: ['1','a']
+        },{
+            id: '1',
+            urls: ['1']
+        }
+    ];
     var tags = {};
 
     tags.get = function() {

@@ -17,10 +17,13 @@ body {
 /* ----------- ----- ----------- *\
                class
 \* ----------- ----- ----------- */
+.circle {
+    border: 5px solid red;
+
+}
 
 .box-content {
     background-color: white;
-
     margin: 10px 10px;
     padding: 5px;
 
@@ -31,3 +34,4 @@ body {
 .red {
     color: red;
 }
+

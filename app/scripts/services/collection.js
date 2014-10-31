@@ -49,7 +49,7 @@ function collection ($rootScope) {
 
     tags.addTag = function(tag) {
         var o = _.findWhere(list, {id:tag.id}) || null;
-        if(o) {
+        if( o ) {
             // On vérifie que le tag existe bien et que l'url n'existe pas déjà dans la liste de ce tag
             if(!_.contains(o.urls, tag.url)) {
                 o.urls.push(tag.url);

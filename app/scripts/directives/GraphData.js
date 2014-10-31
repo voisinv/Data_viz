@@ -45,7 +45,8 @@ function graphData($rootScope, $timeout) {
 
                 svg.selectAll("circle")
                     .data(nodes)
-                    .enter().append("circle")
+                    .enter()
+                    .append("circle")
                     .attr("r", function (d) {
                         return d.radius - 1;
                     })
@@ -62,7 +63,7 @@ function graphData($rootScope, $timeout) {
                         d3.selectAll("circle").attr('opacity', 1);
                     })
                     .style("fill", function (d, i) {
-                        return color(i % _.size(scope.main.tags));
+                        return '#3498db'
                     });
 
                 force.on("tick", function () {

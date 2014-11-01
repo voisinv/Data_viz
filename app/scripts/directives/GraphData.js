@@ -1,8 +1,11 @@
 function graphData($rootScope, $timeout) {
     return {
         restrict : 'A',
-        scope : true,
-        link: function(scope) {
+
+        controller:'MainCtrl',
+        link: function(scope, element, attrs, ctrl) {
+            var main = scope.main;
+
             var w = 1280,
                 h = 800,
                 nodes = null,
@@ -18,6 +21,7 @@ function graphData($rootScope, $timeout) {
             });
 
             scope.$on('newUrl', function(event, tagId) {
+                console.log('resize')
                 if(nodes) {
                     _.findWhere(nodes, {id: tagId}).radius += 10;
                     resize(tagId);
@@ -25,7 +29,7 @@ function graphData($rootScope, $timeout) {
             });
 
             function draw() {
-                nodes = scope.main.tags.map(function (d) {
+                nodes = main.tags.map(function (d) {
                         return {radius: _.size(d.urls) * 10, id: d.id};
                     });
 
@@ -41,7 +45,7 @@ function graphData($rootScope, $timeout) {
                 root.radius = 0;
                 root.fixed = true;
 
-                force.start();
+
 
                 svg.selectAll("circle")
                     .data(nodes)
@@ -57,7 +61,7 @@ function graphData($rootScope, $timeout) {
                     .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
-                        $rootScope.$broadcast('hoverTag', scope.main.tags[i]);
+                        main.hoverTag(main.tags[i])
                     })
                     .on('mouseleave', function () {
                         d3.selectAll("circle").attr('opacity', 1);
@@ -110,6 +114,7 @@ function graphData($rootScope, $timeout) {
                             || y2 < ny1;
                     };
                 }
+                force.start();
             }
 
             function resize(tagId) {
@@ -118,7 +123,7 @@ function graphData($rootScope, $timeout) {
                         return d.radius - 1;
                     });
                 force.start();
-                draw();
+                //draw();
             }
 
             draw();

@@ -6,10 +6,10 @@ function ctrl($scope, $rootScope, collection) {
     vm.erreurSaisieTag = false;
     vm.tags = collection.get();
 
-    $scope.$on('hoverTag', function(event, tag) {
-        vm.tagHovered = tag;
-        $scope.$apply();
-    });
+    this.hoverTag = function(tag) {
+            vm.tagHovered = tag;
+            $scope.$apply();
+        };
 
 
     vm.addTag = function() {

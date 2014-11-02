@@ -45,8 +45,6 @@ function graphData($rootScope, $timeout) {
                 root.radius = 0;
                 root.fixed = true;
 
-
-
                 svg.selectAll("circle")
                     .data(nodes)
                     .enter()

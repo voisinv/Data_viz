@@ -35,3 +35,11 @@ body {
     color: red;
 }
 
+.tag-area {
+    padding: 9px;
+    font-size: 18px;
+    margin: 8px;
+    border-radius: 5px;
+    background-color: #2ecc71;
+    color: #ecf0f1;
+}

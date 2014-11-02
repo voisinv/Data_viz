@@ -1,4 +1,4 @@
-function ctrl($scope, $rootScope, collection) {
+function ctrl($scope, $rootScope, collection, $modal) {
     var vm = this;
 
     vm.tagHovered = {};
@@ -18,8 +18,21 @@ function ctrl($scope, $rootScope, collection) {
         else
             vm.erreurSaisieTag = true;
     }
+    vm.open = function(){
+        $modal.open({
+             templateUrl: '../../modal.html',
+             size: 'lg'
+        })
+    }
 }
+
 
 angular
     .module('controllers')
-	.controller('MainCtrl', ctrl);
+	.controller('MainCtrl', ctrl)
+	.controller('modalCtrl', function($scope, collection){
+        this.collections = collection.get();
+        this.url = function(index) {
+            console.log(index)
+        }
+	});

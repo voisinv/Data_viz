@@ -4,40 +4,40 @@ function collection ($rootScope) {
             id: '',
             urls: []
         },{
-            id: '12',
+            id: 'Federer',
             urls: ['1','a','b','c','d','e','f','g','h','i','j','k']
         },{
-            id: '11',
+            id: 'Nadal',
             urls: ['1','a','b','c','d','e','f','g','h','i','j']
         },{
-            id: '10',
+            id: 'Djokovic',
             urls: ['1','a','b','c','d','e','f','g','h','i']
         },{
-            id: '9',
+            id: 'Murray',
             urls: ['1','a','b','c','d','e','f','g','h']
         },{
-            id: '8',
+            id: 'Tsonga',
             urls: ['1','a','b','c','d','e','f','g']
         },{
-            id: '7',
+            id: 'Gasquet',
             urls: ['1','a','b','c','d','e','f']
         },{
-            id: '6',
+            id: 'Del Potro',
             urls: ['1','a','b','c','d','e']
         },{
-            id: '5',
+            id: 'Raonic',
             urls: ['1','a','b','c','d']
         },{
-            id: '4',
+            id: 'Ferrer',
             urls: ['1','a','b','c']
         },{
-            id: '3',
+            id: 'Simon',
             urls: ['1','a','b']
         },{
-            id: '2',
+            id: 'Pouille',
             urls: ['1','a']
         },{
-            id: '1',
+            id: 'Benneteau',
             urls: ['1']
         }
     ];

@@ -5,7 +5,7 @@ angular.module('directives', []);
 angular.module('services', []);
 
 angular
-    .module('app', ['ui.router', 'services', 'directives', 'controllers'])
+    .module('app', [ 'ui.bootstrap', 'ui.router', 'services', 'directives', 'controllers'])
 	.config(function($stateProvider, $urlRouterProvider) {
 
 	    $urlRouterProvider.otherwise("/main");

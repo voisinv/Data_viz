@@ -1,3 +1,8 @@
+/**
+ Directive première génération
+ permettant les points d'un seul et même tag
+ de façon séparé
+**/
 function graphData($rootScope, $timeout) {
     return {
         restrict : 'A',
@@ -30,7 +35,7 @@ function graphData($rootScope, $timeout) {
 
             function draw() {
                 nodes = main.tags.map(function (d) {
-                        return {radius: _.size(d.urls) * 10, id: d.id};
+                        return {radius: _.size(d.urls) * 5, id: d.id};
                     });
 
                 force = d3.layout.force()

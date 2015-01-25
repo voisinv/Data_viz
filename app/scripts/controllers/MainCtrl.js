@@ -24,15 +24,18 @@ function ctrl($scope, $rootScope, collection, $modal) {
              size: 'lg'
         })
     }
+};
+
+function ModalCtrl($scope, collection) {
+    var relations = [];
+    this.collections = collection.get();
+    this.url = function(index) {
+        relations.push(index);
+    }
 }
 
 
 angular
     .module('controllers')
 	.controller('MainCtrl', ctrl)
-	.controller('modalCtrl', function($scope, collection){
-        this.collections = collection.get();
-        this.url = function(index) {
-            console.log(index)
-        }
-	});
+	.controller('modalCtrl', ModalCtrl);

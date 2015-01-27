@@ -85,6 +85,38 @@ function DataFctr ($rootScope) {
         links : links
     };
 
+    datas.add = function (name, idGroup, urls, id) {
+        if ( !verify(name) ) return ;
+
+        var id = getNewId;
+
+        datas.nodes.push({
+            name: name,
+            group : 2,
+            urls : ['a', 'b', 'c'],
+            id : getNewId
+        });
+
+        urls.forEach(function(e) {
+            links.push({
+                source: getNewId,
+                target: e.id,
+                value: 10
+            })
+        });
+
+        return true;
+
+    }
+
+    var verify = function(o) {
+        return !_.isUndefined(o) && !_.isNull(o) && o.length != 0;
+    }
+
+    var getNewId = function() {
+        return datas.nodes.length
+    }
+
     return datas;
 }
 

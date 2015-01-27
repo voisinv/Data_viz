@@ -1,5 +1,5 @@
 
-<div ng-controller="modalCtrl as ctrl">
+<div>
     <div class="modal-header">
         <h3 class="modal-title">Ajouter un tag</h3>
     </div>
@@ -22,11 +22,11 @@
         </div>
         </form>
         <div class="row">
-            <span class="tag-area pull-left" ng-repeat="o in ctrl.datas | filter : ctrl.filter" ng-click="">{{o.name}}</span>
+            <span class="tag-area pull-left" ng-repeat="o in ctrl.datas | filter : ctrl.filter" ng-click="o.selected = !o.selected" ng-class="{nodeSelected:o.selected}">{{o.name}}</span>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary">Annuler</button>
-        <button class="btn btn-success">Valider</button>
+        <button class="btn btn-primary" ng-click="cancel()">Annuler</button>
+        <button class="btn btn-success" ng-click="ctrl.add(ctrl.name)">Valider</button>
     </div>
 </div>

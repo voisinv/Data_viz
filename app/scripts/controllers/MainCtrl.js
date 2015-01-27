@@ -22,29 +22,49 @@ function ctrl($scope, $rootScope, collection, $modal, DataFctr) {
 
     vm.datas = DataFctr;
     vm.open = function(){
-        $modal.open({
+        $modal
+        .open({
              templateUrl: '../../modal.html',
+             controller: 'ModalCtrl as ctrl',
              size: 'lg',
-             resolve : {
-                datas : vm.datas
-             }
+             resolve : { }
         })
-    };
+        .result
+        .then(
+            function(result) {
+                console.log("here is the result ", result);
+            }
+        );
+    }
+
+
 };
 
-function ModalCtrl($scope, DataFctr) {
-console.log('data for my modal', DataFctr)
-    var relations = [];
-    this.datas = DataFctr.nodes;
-    this.url = function(index) {
-        relations.push(index);
+function ModalCtrl($scope, $modalInstance, DataFctr) {
+    // On récupère la liste et on ajoute une propriété pour la sélection des "liés à"
+    this.datas = _.each( DataFctr.nodes, function ( e ){ e.selected = false ; });
+
+    this.add = function(name) {
+        var result =
+        DataFctr.add(
+            name,
+            0,
+           this.datas.filter(function(e){return e.selected}),
+           null
+        );
+        $modalInstance.close(result);
     }
-}
+
+    this.cancel = function() {
+        $modalInstance.dismiss() ;
+    }
+
+};
 
 
 angular
     .module('controllers')
 	.controller('MainCtrl', ctrl)
-	.controller('modalCtrl', ModalCtrl);
+	.controller('ModalCtrl', ModalCtrl);
 
 

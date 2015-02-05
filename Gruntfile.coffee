@@ -55,16 +55,10 @@ module.exports = (grunt) ->
           join: false
           bare:true
         files:[
-          './app/scripts/app.js':'./dev/scripts/app.coffee'
-          './app/scripts/controllers/*.js':'./dev/scripts/controllers/*.coffee'
+          './app/scripts/services/datas.js':'./dev/scripts/services/datas.coffee'
           ]
-      glob_to_multiple:
-        expand: true,
-        flatten: true,
-        cwd: ['./dev/scripts/', './dev/scripts/controllers/']
-        src: '*.coffee',
-        dest: ['./app/scripts/', '.app/scripts/controllers']
-        ext: '.js'
+
+
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'

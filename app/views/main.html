@@ -5,15 +5,16 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="box-content">
-                            <label>Ajouter un tag :</label>
-                            <input type="text" placeholder="url" ng-model="main.tag.url" ng-change="main.erreurSaisieTag = false"/>
-                            <input type="text" placeholder="tag" ng-model="main.tag.id" ng-change="main.erreurSaisieTag = false"/>
-                            <button class="btn btn-primary" ng-click="main.addTag()">add tags</button>
+                            <label>Ajouter un article :</label>
+                            <input type="text" placeholder="url" ng-model="main.article.url" ng-change="main.erreurSaisieTag = false"/>
+                            <input type="text" placeholder="titre" ng-model="main.article.title" ng-change="main.erreurSaisieTag = false"/>
+                            <input type="text" placeholder="tags" ng-model="main.article.tags" ng-change="main.erreurSaisieTag = false"/>
+                            <button class="btn btn-primary" ng-click="main.addArticle()">Ajouter</button>
                             <label ng-show="main.erreurSaisieTag" class="red">Erreur de saisie</label>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!--div class="row">
                     <div class="col-sm-10">
                         <div id="div-graph" graph-data></div>
                     </div>
@@ -23,6 +24,14 @@
                         <ul ng-repeat="url in main.tagHovered.urls">
                             <li>{{url}}</li>
                         </ul>
+                    </div>
+                </div-->
+                <div class="row">
+                    <div ng-repeat="article in main.articles">
+                        Titre : {{article.title}} / tags :
+                        <span ng-repeat="tag in article.tags">
+                            {{tag + '  '}}
+                        </span>
                     </div>
                 </div>
             </div>

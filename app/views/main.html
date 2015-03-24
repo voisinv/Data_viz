@@ -28,23 +28,38 @@
                 </div-->
                 <div class="row">
                     <div class="col-sm-6">
-                        <button class="btn btn-primary" ng-click="main.switchModeByArticles()">switch</button>
-                        <div ng-show="main.modeByArticles" ng-repeat="article in main.tagsByArticles">
-                            Id : {{article.id}} / Titre : {{article.title}} / tags :
-                            <span ng-repeat="tag in article.tags">
-                                {{tag + '  '}}
-                            </span>
-                        </div>
-                        <div ng-hide="main.modeByArticles" ng-repeat="tag in main.articlesByTags">
-                            Tag : {{tag.value}} / articleId :
-                            <span ng-repeat="articleId in tag.articleIds">
-                                {{articleId + '  '}}
-                            </span>
+                        <div class="box-content">
+                            <button class="btn btn-primary" ng-click="main.switchModeByArticles()">switch</button>
+                            <div ng-show="main.modeByArticles">
+                                <h2>Liste d'articles</h2>
+                                <div ng-repeat="article in main.tagsByArticles">
+                                    {{article.title}}
+                                    <ul>
+                                        <li ng-repeat="tag in article.tags">
+                                            {{tag}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div ng-hide="main.modeByArticles">
+                                <h2>Liste de tags</h2>
+                                <div ng-repeat="tag in main.articlesByTags">
+                                    {{tag.value}}
+                                    <ul>
+                                        <li ng-repeat="articleId in tag.articleIds">
+                                            {{main.getArticleTitle(articleId)}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div ng-repeat="link in main.links">
-                            Link : {{link.source + ' -> ' + link.target + ' = ' + link.value}}
+                        <div class="box-content">
+                            <h2>Liste de liens entre tags</h2>
+                            <div ng-repeat="link in main.links">
+                                {{link.source + ' -> ' + link.target + ' = poids de ' + link.value}}
+                            </div>
                         </div>
                     </div>
                 </div>

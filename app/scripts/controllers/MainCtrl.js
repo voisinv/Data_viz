@@ -31,6 +31,10 @@ function ctrl($scope, articlesSrv, linksSrv) {
     vm.switchModeByArticles = function() {
         vm.modeByArticles = !vm.modeByArticles;
     };
+    vm.getArticleTitle = function(articleId) {
+        var article = articlesSrv.getArticleById(articleId);
+        return article.title;
+    };
     vm.test = function() {
         console.log('test');
     };

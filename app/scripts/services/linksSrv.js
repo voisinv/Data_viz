@@ -3,28 +3,28 @@ function linksSrv() {
         links: [
             {
                 id: 1,
-                source: '1',
-                target: '2',
+                source: 'tag1',
+                target: 'tag2',
                 value: 3
             },{
                 id: 2,
-                source: '1',
-                target: '3',
+                source: 'tag1',
+                target: 'tag3',
                 value: 2
             },{
                 id: 3,
-                source: '1',
-                target: '4',
+                source: 'tag1',
+                target: 'tag4',
                 value: 2
             },{
                 id: 4,
-                source: '2',
-                target: '3',
+                source: 'tag2',
+                target: 'tag3',
                 value: 2
             },{
                 id: 5,
-                source: '2',
-                target: '4',
+                source: 'tag2',
+                target: 'tag4',
                 value: 2
             }
         ]

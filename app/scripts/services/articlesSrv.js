@@ -1,4 +1,4 @@
-function articlesSrv () {
+function articlesSrv ($filter, linksSrv) {
     var articlesSrv = {
         articles: [
             {
@@ -6,41 +6,40 @@ function articlesSrv () {
                 title: 'title0',
                 url: 'title0.fr',
                 tags: ['1', '2', '3']
-            },
-            {
+            },{
                 id: 1,
                 title: 'title1',
                 url: 'title1.fr',
-                tags: ['1', '4', '5']
-            },
-            {
+                tags: ['1', '4']
+            },{
                 id: 2,
                 title: 'title2',
                 url: 'title2.fr',
-                tags: ['6']
-            },
-            {
+                tags: ['3']
+            },{
                 id: 3,
                 title: 'title3',
                 url: 'title3.fr',
-                tags: ['3', '2', '1', '7']
-            },
-            {
+                tags: ['1', '2', '3']
+            },{
                 id: 4,
                 title: 'title4',
                 url: 'title4.fr',
-                tags: ['8', '4']
-            },
-            {
+                tags: ['2', '4']
+            },{
                 id: 5,
                 title: 'title5',
                 url: 'title5.fr',
-                tags: ['1', '2', '3', '4', '5', '6', '7', '8']
+                tags: ['1', '2', '4']
             }
-        ]
+        ],
+        tags: []
     };
 
+    // Articles methods
     articlesSrv.getArticles = function() {
+        //promise - success : maj id articles + maj tags
+        updateTags();
         return articlesSrv.articles;
     };
     articlesSrv.getArticle = function(articleId) {
@@ -59,12 +58,17 @@ function articlesSrv () {
         if(existingTag) {
             return -1;
         }
-        articlesSrv.articles.push({
-            id: 0,
+        var newArticle = {
+            id: articlesSrv.articles.length,
             title: article.title,
             url: article.url,
-            tags: article.tags
-        });
+            tags: $filter('orderBy')(article.tags)
+        };
+        //promise - success : maj id nouvel article
+        articlesSrv.articles.push(newArticle);
+        updateTags();
+
+        linksSrv.addLinksBetweenTags(newArticle);
         return article;
     };
     articlesSrv.deleteArticle = function(articleId) {
@@ -76,43 +80,48 @@ function articlesSrv () {
         });
         return -1;
     };
-    articlesSrv.getTagLinksTab = function() {
-        return {
-            tags: [
-                {
-                    value: '1',
-                    articleIds: [0, 1, 3, 5]
-                },
-                {
-                    value: '2',
-                    articleIds: [0, 3, 5]
-                },
-                {
-                    value: '3',
-                    articleIds: [0, 3, 5]
-                },
-                {
-                    value: '4',
-                    articleIds: [1, 4, 5]
-                },
-                {
-                    value: '5',
-                    articleIds: [1, 5]
-                },
-                {
-                    value: '6',
-                    articleIds: [2, 5]
-                },
-                {
-                    value: '7',
-                    articleIds: [3, 5]
-                },
-                {
-                    value: '8',
-                    articleIds: [4, 5]
+
+    // Tags methods
+    articlesSrv.getTags = function() {
+        var tags = [];
+        articlesSrv.articles.forEach(function(articleTag) {
+            articleTag.tags.forEach(function(tag) {
+                if(!_.contains(tags, tag)) {
+                    tags.push(tag);
                 }
-            ]
+            });
+        });
+        return tags;
+    };
+    articlesSrv.getArticlesIdByTag = function(tag) {
+        var articlesByTag = {
+            value: tag,
+            articleIds: []
         };
+        articlesSrv.articles.forEach(function(article) {
+            if(_.contains(article.tags, tag)) {
+                articlesByTag.articleIds.push(article.id);
+            }
+        });
+        return articlesByTag;
+    };
+    articlesSrv.getArticlesByTags = function() {
+        return articlesSrv.tags;
+    };
+    var updateTags = function() {
+        articlesSrv.tags = [];
+        var tags = articlesSrv.getTags();
+        tags.forEach(function(element) {
+            articlesSrv.tags.push(articlesSrv.getArticlesIdByTag(element));
+        });
+        //articlesSrv.tags = $filter('orderBy')(articlesSrv.tags, 'value');
+    };
+
+    //Links methods
+    articlesSrv.getLinksBetweenTags = function() {
+        articlesSrv.tags.forEach(function(element) {
+
+        });
     };
 
     return articlesSrv;

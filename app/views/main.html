@@ -27,11 +27,25 @@
                     </div>
                 </div-->
                 <div class="row">
-                    <div ng-repeat="article in main.articles">
-                        Titre : {{article.title}} / tags :
-                        <span ng-repeat="tag in article.tags">
-                            {{tag + '  '}}
-                        </span>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary" ng-click="main.switchModeByArticles()">switch</button>
+                        <div ng-show="main.modeByArticles" ng-repeat="article in main.tagsByArticles">
+                            Id : {{article.id}} / Titre : {{article.title}} / tags :
+                            <span ng-repeat="tag in article.tags">
+                                {{tag + '  '}}
+                            </span>
+                        </div>
+                        <div ng-hide="main.modeByArticles" ng-repeat="tag in main.articlesByTags">
+                            Tag : {{tag.value}} / tags :
+                            <span ng-repeat="articleId in tag.articleIds">
+                                {{articleId + '  '}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div ng-repeat="link in main.links">
+                            Link : {{link.source + ' -> ' + link.target + ' = ' + link.value}}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -26,11 +26,6 @@ function linksSrv() {
                 source: '2',
                 target: '4',
                 value: 2
-            },{
-                id: 6,
-                source: '3',
-                target: '4',
-                value: 0
             }
         ]
     };
@@ -56,7 +51,7 @@ function linksSrv() {
         var linksList = [], id = 1, tags = article.tags;
         for(var i=0; i<tags.length-1; i++) {
             for(var j=1; j<tags.length-i; j++) {
-                linksList.push({id: id, source: tags[i], target: tags[i+j], value: 0});
+                linksList.push({id: id, source: tags[i], target: tags[i+j], value: 1});
                 id++;
             }
         }

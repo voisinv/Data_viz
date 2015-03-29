@@ -33,7 +33,8 @@ function ctrl($scope, $rootScope, collection, $modal, DataFctr) {
         .then(
             function(result) {
                 vm.tags = DataFctr.nodes;
-
+                console.log('result',  vm.datas)
+                //vm.datas.nodes.push(result)
                 $rootScope.$broadcast('newUrl', result)
             }
         );

@@ -1,5 +1,5 @@
 var DataFctr;
-
+//IMPORTANT :
 DataFctr = function($rootScope) {
   var datas, getNewId, links, list, verify;
   list = [
@@ -8,24 +8,25 @@ DataFctr = function($rootScope) {
       urls: [],
       group: 0,
       id: 0,
-      radius: 20
+      radius: 0,
+      fixed: true
     }, {
       name: 'Pere',
       urls: ['a', 'b', 'c', 'd'],
       group: 1,
-      id: '1',
+      id: 1,
       radius: 20
     }, {
       name: 'Mere',
       urls: ['1', 'a', 'b', 'c', 'd', 'e'],
       group: 2,
-      id: '2',
+      id:2,
       radius: 20
     }, {
       name: 'Fils',
       urls: ['1', 'a', 'b', 'c', 'd'],
       group: 3,
-      id: '3',
+      id: 3,
       radius: 20
     }, {
       name: 'Cousin',
@@ -78,7 +79,11 @@ DataFctr = function($rootScope) {
       group: 2,
       urls: ['a', 'b', 'c'],
       id: newNodeId,
-      radius: 20
+      radius: 20,
+      px: 0,
+      py:0,
+      x:0,
+      y:0
     }
     datas.nodes.push(newNode);
 
@@ -88,8 +93,8 @@ DataFctr = function($rootScope) {
         target: e.id,
         value: 10
       });
-
     });
+    return newNode;
   };
   verify = function(o) {
     return !_.isUndefined(o) && !_.isNull(o) && o.length !== 0;

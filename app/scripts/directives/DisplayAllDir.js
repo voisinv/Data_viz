@@ -38,9 +38,7 @@ function displayAll ($rootScope, DataFctr) {
 
             var w = 1280,
                 h = 800,
-                nodes = null,
-                links,
-                force = null,
+
                 color = d3.scale.category10();
 
             var svg = d3.select("#div-graph").append("svg")
@@ -49,59 +47,50 @@ function displayAll ($rootScope, DataFctr) {
 
             scope.$on('newUrl', function (event, nEle) {
                 //nEle.node.radius = 20;
-                //scope.datas.nodes.push(nEle.node)
-                draw();
-                console.log(scope.datas)
-                //force.start()
+                //main.datas.nodes.push(nEle.node)
+                //draw();
+                console.log(main.datas);
+                update();
             });
 
-            var DataFctr = main.tags;
+            main.datas = main.datas;
 
-            scope.datas = {}
 
-            scope.datas.nodes = main.datas.nodes.map(function (d) {
-                return {radius: _.size(d.urls) * 5};
-            });
+            /*.charge(120)
+             .linkDistance(120)
+             .size([w, h])
+             .gravity(0.3)
+             .charge(function (d) {
+             return -20 * d.radius;
+             })
+             .size([w, h]);*/
 
-            scope.datas = main.datas;
-            var root = scope.datas.nodes[0];
+            var force = force = d3.layout.force();
+            force    .nodes(main.datas.nodes)
+                .links(main.datas.links)
 
-            root.radius = 0;
-            root.fixed = true;
-            force = d3.layout.force()
-                //.charge(120)
-                .linkDistance(120)
-                .size([w, h])
-                .nodes(scope.datas.nodes)
-                .links(scope.datas.links)
-                .gravity(0.3)
-                .charge(function (d) {
-                    return -20 * d.radius;
-                })
-                .size([w, h]);
-            //function draw(){
-            function draw(){
-                console.log(scope.datas)
-
-                link = svg.selectAll(".link")
-                    .data(scope.datas.links)
-                    .enter().append("line")
+            console.log(main.datas)
+            function update() {
+                var link = svg.selectAll(".link")
+                    .data(main.datas.links)
+                link.enter().append("line")
                     .attr("class", "link")
                     .style("stroke-width", function (d) {
                         return Math.sqrt(d.value);
                     });
+                link.exit().remove();
+                var node = svg.selectAll("circle")
+                    .data(main.datas.nodes);
 
-                node = svg.selectAll("circle")
-                    .data(scope.datas.nodes)
-                    .enter()
+                node.enter()
                     .append("circle")
+                    .attr('class', 'circle')
                     .attr("r", function (d) {
                         return d.radius - 1;
                     })
                     .attr("id", function (d) {
                         return 'circle-' + d.id;
                     })
-                    .call(force.drag)
                     .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
@@ -112,7 +101,10 @@ function displayAll ($rootScope, DataFctr) {
                     })
                     .style("fill", function (d, i) {
                         return '#3498db'
-                    });
+                    })
+                    .call(force.drag);
+                node.exit().remove();
+
                 force.on("tick", function () {
                     link.attr("x1", function (d) {
                         return d.source.x;
@@ -133,11 +125,27 @@ function displayAll ($rootScope, DataFctr) {
                         .attr("cy", function (d) {
                             return d.y;
                         });
-                });
-                force.start();
-            }
-            draw();
 
+                });
+                force.charge(120)
+                    .linkDistance(120)
+                    .size([w, h])
+                    .gravity(0.03)
+                    .charge(function (d) {
+                        return -20 * d.radius;
+                    })
+                    .size([w, h])
+                    /*
+                    .gravity(.01)
+                    .charge(-80000)
+                    .friction(0)
+                    .linkDistance(function (d) {
+                        return d.value * 10
+                    })
+                    .size([w, h])*/
+                    .start()
+            }
+            update();
         }
     };
 }
@@ -146,22 +154,3 @@ function displayAll ($rootScope, DataFctr) {
 angular
     .module('directives')
     .directive('displayAllPoints', displayAll);
-
-/*
- force.on("tick", function () {
- var q = d3.geom.quadtree(nodes),
- i = 0,
- n = nodes.length;
-
- while (++i < n) {
- q.visit(collide(nodes[i]));
- }
-
- svg.selectAll("circle")
- .attr("cx", function (d) {
- return d.x;
- })
- .attr("cy", function (d) {
- return d.y;
- });
- });*/

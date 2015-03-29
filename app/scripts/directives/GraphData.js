@@ -22,6 +22,7 @@ function graphData($rootScope, $timeout) {
                 .attr("height", h);
 
             scope.$on('newTag', function() {
+                console.log('new tag')
                 draw();
             });
 

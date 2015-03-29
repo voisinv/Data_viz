@@ -32,7 +32,9 @@ function ctrl($scope, $rootScope, collection, $modal, DataFctr) {
         .result
         .then(
             function(result) {
-                console.log("here is the result ", result);
+                vm.tags = DataFctr.nodes;
+
+                $rootScope.$broadcast('newUrl', result)
             }
         );
     }

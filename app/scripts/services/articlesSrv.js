@@ -3,34 +3,34 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         articles: [
             {
                 id: 0,
-                title: 'title0',
-                url: 'title0.fr',
-                tags: ['1', '2', '3']
+                title: 'article0',
+                url: 'article0.fr',
+                tags: ['tag1', 'tag2', 'tag3']
             },{
                 id: 1,
-                title: 'title1',
-                url: 'title1.fr',
-                tags: ['1', '4']
+                title: 'article1',
+                url: 'article1.fr',
+                tags: ['tag1', 'tag4']
             },{
                 id: 2,
-                title: 'title2',
-                url: 'title2.fr',
-                tags: ['3']
+                title: 'article2',
+                url: 'article2.fr',
+                tags: ['tag3']
             },{
                 id: 3,
-                title: 'title3',
-                url: 'title3.fr',
-                tags: ['1', '2', '3']
+                title: 'article3',
+                url: 'article3.fr',
+                tags: ['tag1', 'tag2', 'tag3']
             },{
                 id: 4,
-                title: 'title4',
-                url: 'title4.fr',
-                tags: ['2', '4']
+                title: 'article4',
+                url: 'article4.fr',
+                tags: ['tag2', 'tag4']
             },{
                 id: 5,
-                title: 'title5',
-                url: 'title5.fr',
-                tags: ['1', '2', '4']
+                title: 'article5',
+                url: 'article5.fr',
+                tags: ['tag1', 'tag2', 'tag4']
             }
         ],
         tags: [] // {articleIds, value}
@@ -46,6 +46,15 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         return _.findWhere(articlesSrv.articles, {id: articleId});
     };
     articlesSrv.addArticle = function(article) {
+        var existingTag = false;
+        articlesSrv.articles.forEach(function(element){
+            if(element.title === article.title || element.url === article.url) {
+                existingTag = true;
+            }
+        });
+        if(existingTag) {
+            return -1;
+        }
         var newArticle = {
             id: articlesSrv.articles.length,
             title: article.title,

@@ -1,16 +1,8 @@
-/**
- Directive première génération
- permettant les points d'un seul et même tag
- de façon séparé
-**/
-function graphData($rootScope, $timeout) {
+function graphData($rootScope, articlesSrv) {
     return {
         restrict : 'A',
-
-        controller:'MainCtrl',
-        link: function(scope, element, attrs, ctrl) {
-            var main = scope.main;
-
+        scope : true,
+        link: function(scope) {
             var w = 1280,
                 h = 800,
                 nodes = null,
@@ -25,18 +17,17 @@ function graphData($rootScope, $timeout) {
                 draw();
             });
 
-            scope.$on('newUrl', function(event, tagId) {
-                console.log('resize')
+            scope.$on('resizeTag', function(event, tagValue) {
                 if(nodes) {
-                    _.findWhere(nodes, {id: tagId}).radius += 10;
-                    resize(tagId);
+                    _.findWhere(nodes, {value: tagValue}).radius += 10;
+                    resize(tagValue);
                 }
             });
 
             function draw() {
-                nodes = main.tags.map(function (d) {
-                        return {radius: _.size(d.urls) * 5, id: d.id};
-                    });
+                nodes = articlesSrv.getTags().map(function (d) {
+                    return {radius: _.size(d.articleIds) * 10, value: d.value};
+                });
 
                 force = d3.layout.force()
                     .gravity(0.3)
@@ -46,31 +37,28 @@ function graphData($rootScope, $timeout) {
                     .nodes(nodes)
                     .size([w, h]);
 
-                var root = nodes[0];
-                root.radius = 0;
-                root.fixed = true;
+                force.start();
 
                 svg.selectAll("circle")
                     .data(nodes)
-                    .enter()
-                    .append("circle")
+                    .enter().append("circle")
                     .attr("r", function (d) {
                         return d.radius - 1;
                     })
                     .attr("id", function (d) {
-                        return 'circle-' + d.id;
+                        return 'circle-' + d.value;
                     })
                     .call(force.drag)
                     .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
-                        main.hoverTag(main.tags[i])
+                        $rootScope.$broadcast('hoverTag', d.value);
                     })
                     .on('mouseleave', function () {
                         d3.selectAll("circle").attr('opacity', 1);
                     })
                     .style("fill", function (d, i) {
-                        return '#3498db'
+                        return color(i % _.size(scope.main.tags));
                     });
 
                 force.on("tick", function () {
@@ -117,7 +105,6 @@ function graphData($rootScope, $timeout) {
                             || y2 < ny1;
                     };
                 }
-                force.start();
             }
 
             function resize(tagId) {
@@ -126,7 +113,6 @@ function graphData($rootScope, $timeout) {
                         return d.radius - 1;
                     });
                 force.start();
-                //draw();
             }
 
             draw();

@@ -47,7 +47,7 @@ function collection ($rootScope) {
         return list;
     };
 
-    tags.addTag = function(tag) {
+    tags.addLink = function(tag) {
         var o = _.findWhere(list, {id:tag.id}) || null;
         if( o ) {
             // On vérifie que le tag existe bien et que l'url n'existe pas déjà dans la liste de ce tag

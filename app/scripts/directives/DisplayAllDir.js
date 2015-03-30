@@ -27,7 +27,6 @@ function displayAll ($rootScope, DataFctr) {
         };
     }
 
-
     return {
         restrict : 'A',
 
@@ -46,11 +45,8 @@ function displayAll ($rootScope, DataFctr) {
                 .attr("height", h);
 
             scope.$on('newUrl', function (event, nEle) {
-                //nEle.node.radius = 20;
-                //main.datas.nodes.push(nEle.node)
-                //draw();
-                console.log(main.datas);
                 update();
+                keepNodesOnTop();
             });
 
             main.datas = main.datas;
@@ -66,10 +62,10 @@ function displayAll ($rootScope, DataFctr) {
              .size([w, h]);*/
 
             var force = force = d3.layout.force();
-            force    .nodes(main.datas.nodes)
+            force.nodes(main.datas.nodes)
                 .links(main.datas.links)
 
-            console.log(main.datas)
+
             function update() {
                 var link = svg.selectAll(".link")
                     .data(main.datas.links)
@@ -78,7 +74,12 @@ function displayAll ($rootScope, DataFctr) {
                     .style("stroke-width", function (d) {
                         return Math.sqrt(d.value);
                     });
-                link.exit().remove();
+
+                link.transition().duration(3000)
+                    .style("stroke-width", function (d) {
+                        return Math.sqrt(d.value);
+                    })
+                //link.exit().remove();
                 var node = svg.selectAll("circle")
                     .data(main.datas.nodes);
 
@@ -103,6 +104,11 @@ function displayAll ($rootScope, DataFctr) {
                         return '#3498db'
                     })
                     .call(force.drag);
+                node.transition().duration(1000)
+                    .attr('r', function(d) {
+                        return d.radius + 1
+                    });
+
                 node.exit().remove();
 
                 force.on("tick", function () {
@@ -128,11 +134,11 @@ function displayAll ($rootScope, DataFctr) {
 
                 });
                 force.charge(120)
-                    .linkDistance(120)
+                    .linkDistance(10)
                     .size([w, h])
-                    .gravity(0.03)
+                    .gravity(0.3)
                     .charge(function (d) {
-                        return -20 * d.radius;
+                        return -500 * d.radius;
                     })
                     .size([w, h])
                     /*
@@ -147,7 +153,14 @@ function displayAll ($rootScope, DataFctr) {
             }
             update();
         }
+
     };
+    function keepNodesOnTop() {
+        $(".circle").each(function( index ) {
+            var gnode = this.parentNode;
+            gnode.parentNode.appendChild(gnode);
+        });
+    }
 }
 
 

@@ -14,6 +14,8 @@ function ctrl($scope, $rootScope, collection, $modal, DataFctr) {
 
 
     vm.addTag = function() {
+        DataFctr.test();
+        return
         if(vm.tag.id !== '' && vm.tag.url !== '')
             collection.addTag(vm.tag);
         else
@@ -43,14 +45,14 @@ function ctrl($scope, $rootScope, collection, $modal, DataFctr) {
 
 };
 
-function ModalCtrl($scope, $modalInstance, DataFctr) {
+function ModalCtrl($scope, $modalInstance, DataFctr, Tags) {
     // On récupère la liste et on ajoute une propriété pour la sélection des "liés à"
     this.datas = _.each( DataFctr.nodes, function ( e ){ e.selected = false ; });
 
-    this.add = function(name) {
+    this.add = function(nameurl) {
         var result =
         DataFctr.add(
-            name,
+            nameurl,
             0,
            this.datas.filter(function(e){return e.selected}),
            null
@@ -61,7 +63,17 @@ function ModalCtrl($scope, $modalInstance, DataFctr) {
     this.cancel = function() {
         $modalInstance.dismiss() ;
     }
-
+    this.addTag = function() {
+        o =
+        {
+            selected: true,
+            id: this.datas.length,
+            name: this.tagname,
+            urls : [this.nameurl],
+            radius: 5
+        }
+        this.datas.push(o)
+    }
 };
 
 

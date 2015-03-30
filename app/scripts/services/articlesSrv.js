@@ -1,4 +1,4 @@
-function articlesSrv ($filter, linksSrv) {
+function articlesSrv ($filter, linksSrv, $rootScope) {
     var articlesSrv = {
         articles: [
             {
@@ -33,7 +33,7 @@ function articlesSrv ($filter, linksSrv) {
                 tags: ['1', '2', '4']
             }
         ],
-        tags: []
+        tags: [] // {articleIds, value}
     };
 
     // Articles methods
@@ -42,34 +42,41 @@ function articlesSrv ($filter, linksSrv) {
         updateTags();
         return articlesSrv.articles;
     };
-    articlesSrv.getArticle = function(articleId) {
-        articlesSrv.articles.forEach(function(element){
-            if(element.id === articleId) return element;
-        });
-        return -1;
+    articlesSrv.getArticleById = function(articleId) {
+        return _.findWhere(articlesSrv.articles, {id: articleId});
     };
     articlesSrv.addArticle = function(article) {
-        var existingTag = false;
-        articlesSrv.articles.forEach(function(element){
-            if(element.title === article.title || element.url === article.url) {
-                existingTag = true;
-            }
-        });
-        if(existingTag) {
-            return -1;
-        }
         var newArticle = {
             id: articlesSrv.articles.length,
             title: article.title,
             url: article.url,
             tags: $filter('orderBy')(article.tags)
         };
+        var eventName = '', tagValues = [];
+        newArticle.tags.forEach(function(tagValue) {
+            if(articlesSrv.isExistingTag(tagValue)) {
+                eventName = 'resizeTag';
+                tagValues.push(tagValue);
+            } else {
+                eventName = 'newTag';
+            }
+        });
+
         //promise - success : maj id nouvel article
         articlesSrv.articles.push(newArticle);
+
+        //Gestion tags
         updateTags();
+        if(eventName === 'newTag') {
+            $rootScope.$broadcast(eventName);
+        } else {
+            tagValues.forEach(function (tagValue) {
+                $rootScope.$broadcast(eventName, tagValue);
+            });
+        }
 
         linksSrv.addLinksBetweenTags(newArticle);
-        return article;
+        return newArticle;
     };
     articlesSrv.deleteArticle = function(articleId) {
         articlesSrv.articles.forEach(function(element, index){
@@ -80,8 +87,23 @@ function articlesSrv ($filter, linksSrv) {
         });
         return -1;
     };
+    articlesSrv.isExistingArticle = function(article) {
+        var existingArticle = false;
+        articlesSrv.articles.forEach(function(element){
+            if(element.title === article.title) {
+                existingArticle = 'title';
+            }
+            if(element.url === article.url) {
+                existingArticle = 'url';
+            }
+        });
+        return existingArticle;
+    };
 
     // Tags methods
+    articlesSrv.getTagByValue = function(value) {
+        return _.findWhere(articlesSrv.tags, {value: value});
+    };
     articlesSrv.getTags = function() {
         var tags = [];
         articlesSrv.articles.forEach(function(articleTag) {
@@ -108,13 +130,21 @@ function articlesSrv ($filter, linksSrv) {
     articlesSrv.getArticlesByTags = function() {
         return articlesSrv.tags;
     };
+    articlesSrv.isExistingTag = function(tagValue) {
+        var existingTag = false;
+        articlesSrv.tags.forEach(function(element){
+            if(element.value === tagValue) {
+                existingTag = true;
+            }
+        });
+        return existingTag;
+    };
     var updateTags = function() {
         articlesSrv.tags = [];
         var tags = articlesSrv.getTags();
         tags.forEach(function(element) {
             articlesSrv.tags.push(articlesSrv.getArticlesIdByTag(element));
         });
-        //articlesSrv.tags = $filter('orderBy')(articlesSrv.tags, 'value');
     };
 
     //Links methods

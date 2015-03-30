@@ -1,4 +1,4 @@
-function graphData($rootScope, $timeout) {
+function graphData($rootScope, articlesSrv) {
     return {
         restrict : 'A',
         scope : true,
@@ -17,17 +17,17 @@ function graphData($rootScope, $timeout) {
                 draw();
             });
 
-            scope.$on('newUrl', function(event, tagId) {
+            scope.$on('resizeTag', function(event, tagValue) {
                 if(nodes) {
-                    _.findWhere(nodes, {id: tagId}).radius += 10;
-                    resize(tagId);
+                    _.findWhere(nodes, {value: tagValue}).radius += 10;
+                    resize(tagValue);
                 }
             });
 
             function draw() {
-                nodes = scope.main.tags.map(function (d) {
-                        return {radius: _.size(d.urls) * 10, id: d.id};
-                    });
+                nodes = articlesSrv.getArticlesByTags().map(function (d) {
+                    return {radius: _.size(d.articleIds) * 10, value: d.value};
+                });
 
                 force = d3.layout.force()
                     .gravity(0.3)
@@ -36,10 +36,6 @@ function graphData($rootScope, $timeout) {
                     })
                     .nodes(nodes)
                     .size([w, h]);
-
-                var root = nodes[0];
-                root.radius = 0;
-                root.fixed = true;
 
                 force.start();
 
@@ -50,19 +46,19 @@ function graphData($rootScope, $timeout) {
                         return d.radius - 1;
                     })
                     .attr("id", function (d) {
-                        return 'circle-' + d.id;
+                        return 'circle-' + d.value;
                     })
                     .call(force.drag)
                     .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
-                        $rootScope.$broadcast('hoverTag', scope.main.tags[i]);
+                        $rootScope.$broadcast('hoverTag', d.value);
                     })
                     .on('mouseleave', function () {
                         d3.selectAll("circle").attr('opacity', 1);
                     })
                     .style("fill", function (d, i) {
-                        return color(i % _.size(scope.main.tags));
+                        return color(i % _.size(scope.main.articlesByTags));
                     });
 
                 force.on("tick", function () {
@@ -117,7 +113,6 @@ function graphData($rootScope, $timeout) {
                         return d.radius - 1;
                     });
                 force.start();
-                draw();
             }
 
             draw();

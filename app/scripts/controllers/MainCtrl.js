@@ -7,8 +7,8 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
     vm.modeByArticles = true;
     vm.viewState = false;
 
-    vm.tagsByArticles = articlesSrv.getArticles(); // {id, tags, title, url}
-    vm.articlesByTags = articlesSrv.getArticlesByTags(); // {articleIds, value}
+    vm.articles = articlesSrv.getArticles(); // article = {id, tags, title, url}
+    vm.tags = articlesSrv.getTags(); // tag = {articleIds, value}
     vm.links = linksSrv.getLinks();
 
     $scope.$on('hoverTag', function(event, tagValue) {
@@ -33,7 +33,7 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
                 vm.article.tags = deleteDoubleTags(vm.article.tags);
 
                 articlesSrv.addArticle(vm.article);
-                vm.articlesByTags = articlesSrv.getArticlesByTags();
+                vm.tags = articlesSrv.getTags();
 
                 vm.article = { title: '', url: '', tags: ''};
             }

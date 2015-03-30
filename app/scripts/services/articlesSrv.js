@@ -33,13 +33,29 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
                 tags: ['tag1', 'tag2', 'tag4']
             }
         ],
-        tags: [] // {articleIds, value}
+        tags: [
+            {
+                value: 'tag1',
+                articleIds: [0, 1, 3, 5]
+            },
+            {
+                value: 'tag2',
+                articleIds: [0, 3, 4, 5]
+            },
+            {
+                value: 'tag3',
+                articleIds: [0, 2, 3]
+            },
+            {
+                value: 'tag4',
+                articleIds: [1, 4, 5]
+            }
+        ]
     };
 
     // Articles methods
     articlesSrv.getArticles = function() {
-        //promise - success : maj id articles + maj tags
-        updateTags();
+        //promise - success : maj id articles
         return articlesSrv.articles;
     };
     articlesSrv.getArticleById = function(articleId) {
@@ -75,7 +91,7 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         articlesSrv.articles.push(newArticle);
 
         //Gestion tags
-        updateTags();
+        updateTags(newArticle); // need success promise (pr l'id de l'article)
         if(eventName === 'newTag') {
             $rootScope.$broadcast(eventName);
         } else {
@@ -114,30 +130,19 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         return _.findWhere(articlesSrv.tags, {value: value});
     };
     articlesSrv.getTags = function() {
-        var tags = [];
-        articlesSrv.articles.forEach(function(articleTag) {
-            articleTag.tags.forEach(function(tag) {
-                if(!_.contains(tags, tag)) {
-                    tags.push(tag);
-                }
-            });
-        });
-        return tags;
+        return articlesSrv.tags;
     };
-    articlesSrv.getArticlesIdByTag = function(tag) {
-        var articlesByTag = {
-            value: tag,
+    articlesSrv.getArticlesIdByTag = function(tagValue) {
+        var tag = {
+            value: tagValue,
             articleIds: []
         };
         articlesSrv.articles.forEach(function(article) {
             if(_.contains(article.tags, tag)) {
-                articlesByTag.articleIds.push(article.id);
+                tag.articleIds.push(article.id);
             }
         });
-        return articlesByTag;
-    };
-    articlesSrv.getArticlesByTags = function() {
-        return articlesSrv.tags;
+        return tag;
     };
     articlesSrv.isExistingTag = function(tagValue) {
         var existingTag = false;
@@ -148,18 +153,14 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         });
         return existingTag;
     };
-    var updateTags = function() {
-        articlesSrv.tags = [];
-        var tags = articlesSrv.getTags();
-        tags.forEach(function(element) {
-            articlesSrv.tags.push(articlesSrv.getArticlesIdByTag(element));
-        });
-    };
-
-    //Links methods
-    articlesSrv.getLinksBetweenTags = function() {
-        articlesSrv.tags.forEach(function(element) {
-
+    var updateTags = function(newArticle) {
+        newArticle.tags.forEach(function(tag) {
+            var o = _.find(articlesSrv.tags, {value: tag});
+            if(o !== undefined) {
+                o.articleIds.push(newArticle.id);
+            } else {
+                articlesSrv.tags.push({value: tag, articleIds: [newArticle.id]});
+            }
         });
     };
 

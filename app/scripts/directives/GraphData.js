@@ -25,7 +25,7 @@ function graphData($rootScope, articlesSrv) {
             });
 
             function draw() {
-                nodes = articlesSrv.getArticlesByTags().map(function (d) {
+                nodes = articlesSrv.getTags().map(function (d) {
                     return {radius: _.size(d.articleIds) * 10, value: d.value};
                 });
 
@@ -58,7 +58,7 @@ function graphData($rootScope, articlesSrv) {
                         d3.selectAll("circle").attr('opacity', 1);
                     })
                     .style("fill", function (d, i) {
-                        return color(i % _.size(scope.main.articlesByTags));
+                        return color(i % _.size(scope.main.tags));
                     });
 
                 force.on("tick", function () {

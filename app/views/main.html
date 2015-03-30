@@ -33,7 +33,7 @@
                             <button class="btn btn-primary" ng-click="main.switchModeByArticles()">switch</button>
                             <div ng-show="main.modeByArticles">
                                 <h2>Liste d'articles</h2>
-                                <div ng-repeat="article in main.tagsByArticles">
+                                <div ng-repeat="article in main.articles">
                                     {{article.title}}
                                     <ul>
                                         <li ng-repeat="tag in article.tags">
@@ -44,7 +44,7 @@
                             </div>
                             <div ng-hide="main.modeByArticles">
                                 <h2>Liste de tags</h2>
-                                <div ng-repeat="tag in main.articlesByTags">
+                                <div ng-repeat="tag in main.tags">
                                     {{tag.value}}
                                     <ul>
                                         <li ng-repeat="articleId in tag.articleIds">

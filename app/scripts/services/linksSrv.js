@@ -3,28 +3,28 @@ function linksSrv() {
         links: [
             {
                 id: 1,
-                source: 'tag1',
-                target: 'tag2',
+                source: 1,
+                target: 2,
                 value: 3
             },{
                 id: 2,
-                source: 'tag1',
-                target: 'tag3',
+                source: 1,
+                target: 3,
                 value: 2
             },{
                 id: 3,
-                source: 'tag1',
-                target: 'tag4',
+                source: 1,
+                target: 4,
                 value: 2
             },{
                 id: 4,
-                source: 'tag2',
-                target: 'tag3',
+                source: 2,
+                target: 3,
                 value: 2
             },{
                 id: 5,
-                source: 'tag2',
-                target: 'tag4',
+                source: 2,
+                target: 4,
                 value: 2
             }
         ]
@@ -35,11 +35,14 @@ function linksSrv() {
     };
     linksSrv.addLinksBetweenTags = function(article) {
         if(article.tags.length > 1) {
-            var linksList = getLinksListOfArticleTags(article);
+            var linksList = getLinksListOfArticle(article);
             linksList.forEach(function(link, index) {
-                var o = _.findWhere(linksSrv.links, {source: link.source, target: link.target});
+                var toFind = {
+                    source: {value: link.source},
+                    target: {value: link.target}
+                };
+                var o = _.findWhere(linksSrv.links, toFind);
                 if(!o) {
-                    // awesome underscore.js !!!!!
                     linksSrv.links.push(link);
                 } else {
                     o.value++;
@@ -47,7 +50,7 @@ function linksSrv() {
             });
         }
     };
-    var getLinksListOfArticleTags = function(article) {
+    var getLinksListOfArticle = function(article) {
         var linksList = [], id = 1, tags = article.tags;
         for(var i=0; i<tags.length-1; i++) {
             for(var j=1; j<tags.length-i; j++) {

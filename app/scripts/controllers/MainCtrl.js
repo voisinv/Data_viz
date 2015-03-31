@@ -5,7 +5,7 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
     vm.article = { title: '', url: '', tags: ''};
     vm.erreurSaisie = false;
     vm.modeByArticles = true;
-    vm.viewState = false;
+    vm.viewState = true;
 
     vm.articles = articlesSrv.getArticles(); // article = {id, tags, title, url}
     vm.tags = articlesSrv.getTags(); // tag = {articleIds, value}
@@ -15,6 +15,9 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
         vm.tagHovered = articlesSrv.getTagByValue(tagValue);
         $scope.$apply();
     });
+    vm.hoverTag =function(tag) {
+        //console.log(tag);
+    };
 
     vm.getArticleById = function(articleId) {
         return articlesSrv.getArticleById(articleId);

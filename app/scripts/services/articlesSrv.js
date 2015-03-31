@@ -35,20 +35,33 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         ],
         tags: [
             {
+                id: 0,
+                value: '',
+                articleIds: [],
+                radius: 1
+            },{
+                id: 1,
                 value: 'tag1',
-                articleIds: [0, 1, 3, 5]
+                articleIds: [0, 1, 3, 5],
+                radius: 20
             },
             {
+                id: 2,
                 value: 'tag2',
-                articleIds: [0, 3, 4, 5]
+                articleIds: [0, 3, 4, 5],
+                radius: 20
             },
             {
+                id: 3,
                 value: 'tag3',
-                articleIds: [0, 2, 3]
+                articleIds: [0, 2, 3],
+                radius: 15
             },
             {
+                id: 4,
                 value: 'tag4',
-                articleIds: [1, 4, 5]
+                articleIds: [1, 4, 5],
+                radius: 15
             }
         ]
     };
@@ -62,46 +75,32 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         return _.findWhere(articlesSrv.articles, {id: articleId});
     };
     articlesSrv.addArticle = function(article) {
-        var existingTag = false;
-        articlesSrv.articles.forEach(function(element){
-            if(element.title === article.title || element.url === article.url) {
-                existingTag = true;
-            }
-        });
-        if(existingTag) {
-            return -1;
-        }
         var newArticle = {
             id: articlesSrv.articles.length,
             title: article.title,
             url: article.url,
             tags: $filter('orderBy')(article.tags)
         };
-        var eventName = '', tagValues = [];
-        newArticle.tags.forEach(function(tagValue) {
-            if(articlesSrv.isExistingTag(tagValue)) {
-                eventName = 'resizeTag';
-                tagValues.push(tagValue);
-            } else {
-                eventName = 'newTag';
-            }
-        });
 
         //promise - success : maj id nouvel article
         articlesSrv.articles.push(newArticle);
 
         //Gestion tags
         updateTags(newArticle); // need success promise (pr l'id de l'article)
-        if(eventName === 'newTag') {
-            $rootScope.$broadcast(eventName);
-        } else {
-            tagValues.forEach(function (tagValue) {
-                $rootScope.$broadcast(eventName, tagValue);
-            });
-        }
 
         linksSrv.addLinksBetweenTags(newArticle);
         return newArticle;
+    };
+    var updateTags = function(newArticle) {
+        newArticle.tags.forEach(function(tag) {
+            var o = _.find(articlesSrv.tags, {value: tag});
+            if(o !== undefined) {
+                o.articleIds.push(newArticle.id);
+                o.radius += 5;
+            } else {
+                articlesSrv.tags.push({id: articlesSrv.tags.length,value: tag, articleIds: [newArticle.id], radius: 5});
+            }
+        });
     };
     articlesSrv.deleteArticle = function(articleId) {
         articlesSrv.articles.forEach(function(element, index){
@@ -152,16 +151,6 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
             }
         });
         return existingTag;
-    };
-    var updateTags = function(newArticle) {
-        newArticle.tags.forEach(function(tag) {
-            var o = _.find(articlesSrv.tags, {value: tag});
-            if(o !== undefined) {
-                o.articleIds.push(newArticle.id);
-            } else {
-                articlesSrv.tags.push({value: tag, articleIds: [newArticle.id]});
-            }
-        });
     };
 
     return articlesSrv;

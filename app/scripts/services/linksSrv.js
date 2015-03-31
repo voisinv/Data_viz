@@ -48,13 +48,15 @@ function linksSrv() {
                     o.value++;
                 }
             });
+
+            $rootScope.$broadcast('newUrl');
         }
     };
     var getLinksListOfArticle = function(article) {
         var linksList = [], id = 1, tags = article.tags;
         for(var i=0; i<tags.length-1; i++) {
             for(var j=1; j<tags.length-i; j++) {
-                linksList.push({id: id, source: tags[i], target: tags[i+j], value: 1});
+                linksList.push({id: id, source: {value: tags[i]}, target: {value: tags[i+j]}, value: 1});
                 id++;
             }
         }

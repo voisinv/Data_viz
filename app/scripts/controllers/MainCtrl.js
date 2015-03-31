@@ -37,6 +37,7 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
 
                 articlesSrv.addArticle(vm.article);
                 vm.tags = articlesSrv.getTags();
+                vm.links = linksSrv.getLinks();
 
                 vm.article = { title: '', url: '', tags: ''};
             }

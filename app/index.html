@@ -3,6 +3,7 @@
 	<title>Dataviz</title>
 	<!-- bower:css -->
 	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="../bower_components/angular-material/angular-material.css" />
 	<!-- endbower -->
 
     <!-- fileblock:css style -->
@@ -11,6 +12,9 @@
 </head>
 <body>
 
+    <md-toolbar layout="row">
+        <h1 class="md-toolbar-tools" layout-align-gt-sm="left">Datapizz</h1>
+    </md-toolbar>
     <div>
 	    <div ui-view></div>
     </div>
@@ -23,6 +27,9 @@
 	<script src="../bower_components/underscore/underscore.js"></script>
 	<script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="../bower_components/angular-animate/angular-animate.js"></script>
+	<script src="../bower_components/angular-aria/angular-aria.js"></script>
+	<script src="../bower_components/angular-material/angular-material.js"></script>
 	<!-- endbower -->
 
 	<!-- fileblock:js app -->

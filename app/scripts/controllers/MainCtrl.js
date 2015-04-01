@@ -1,6 +1,6 @@
 function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
     var vm = this;
-
+    vm.tab = angular.copy(['Apple', 'Banana', 'Orange']);
     vm.tagHovered = {};
     vm.article = { title: '', url: '', tags: ''};
     vm.erreurSaisie = false;
@@ -73,6 +73,8 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
         }
         return tagsTab;
     };
+
+
 }
 
 angular

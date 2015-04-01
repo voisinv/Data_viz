@@ -1,73 +1,108 @@
 <div ng-controller="MainCtrl as main">
+
+    <md-content class="md-padding" layout="row" layout-align="center center" ng-if="main.viewState">
+        <p class="md-blody-1" flex="15"> Ajouter un article </p>
+        <form name="tagForm" flex="85">
+            <div class="" layout layout-margin layout-align="center center">
+
+                <md-input-container flex>
+                    <label >Url</label>
+                    <input type="text" ng-model='main.article.url' required  ng-change="main.erreurSaisie = false"/>
+                </md-input-container>
+                <md-input-container flex>
+                    <label >Titre</label>
+                    <input type="text" ng-model='main.article.title' required ng-change="main.erreurSaisie = false"/>
+                </md-input-container>
+                <md-input-container flex>
+                    <label >Tags</label>
+                    <input type="text" ng-model='main.article.tags'/>
+                </md-input-container>
+                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
+
+            </div>
+        </form>
+    </md-content>
+    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.changeViewState()" ng-if="main.viewState" aria-label="">
+        <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+    </md-button>
     <div id="body">
         <div id="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="box-content">
-                            <label>Ajouter un article :</label>
-                            <input type="text" placeholder="url" ng-model="main.article.url" ng-change="main.erreurSaisie = false"/>
-                            <input type="text" placeholder="titre" ng-model="main.article.title" ng-change="main.erreurSaisie = false"/>
-                            <input type="text" placeholder="tags" ng-model="main.article.tags" ng-change="main.erreurSaisie = false"/>
-                            <button class="btn btn-primary" ng-click="main.addArticle()">Ajouter</button>
-                            <button class="btn btn-primary" ng-click="main.changeViewState()">Changer de vue</button>
-                            <label ng-show="main.erreurSaisie" class="red">{{main.msgErreur}}</label>
-                        </div>
-                    </div>
-                </div>
-                <div ng-if="main.viewState" class="row">
+            <div class="">
+                <div class="row" ng-if="main.viewState">
                     <div class="col-sm-10">
                         <div id="graph" display-all-points></div>
                     </div>
-                    <!-- vincent div class="col-sm-2">
-                        <h1>{{main.tagHovered.name}}</h1>
-                        <label>Urls : </label>
-                        <ul ng-repeat="url in main.tagHovered.urls">
-                            <li>{{url}}</li>
-                        </ul>
-                    </div-->
-                    <!-- matt div class="col-sm-2">
-                        <h1>{{main.tagHovered.value}}</h1>
-                        <label>Articles : </label>
-                        <ul ng-repeat="article in main.tagHovered.articleIds">
-                            <li>{{main.getArticleById(article).title}}</li>
-                        </ul>
-                    </div-->
+
                 </div>
-                <div ng-if="!main.viewState" class="row">
-                    <div class="col-sm-6">
-                        <div class="box-content">
-                            <button class="btn btn-primary" ng-click="main.switchModeByArticles()">switch</button>
-                            <div ng-show="main.modeByArticles">
-                                <h2>Liste d'articles</h2>
-                                <div ng-repeat="article in main.articles">
-                                    {{article.title}}
-                                    <ul>
-                                        <li ng-repeat="tag in article.tags">
-                                            {{tag}}
-                                        </li>
-                                    </ul>
+                <div ng-if="!main.viewState" layout="row" layout-margin>
+
+                    <div flex>
+                    <md-toolbar class="md-theme-light" >
+                        <h2 class="md-toolbar-tools">
+                            <p flex>Liste d'articles</p>
+                            <md-switch flex="30" class="md-warn" ng-disabled="false" aria-label="Disabled active switch right" ng-model="main.modeByArticles">
+                                Par article
+                            </md-switch>
+                        </h2>
+                    </md-toolbar>
+                        <md-content flex>
+                            <md-list>
+                                <div ng-if="main.modeByArticles">
+                                    <h2></h2>
+                                    <md-item ng-repeat="article in main.articles">
+                                        <md-item-content>
+                                            <h1 class="md-tile-left">
+                                                <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+                                            </h1>
+                                            <div class="md-tile-content">
+                                                <h3>{{article.title}}</h3>
+                                                <p ng-repeat="tag in article.tags">{{tag}}</p>
+                                            </div>
+                                        </md-item-content>
+                                        <md-divider ng-if="!$last"></md-divider>
+                                    </md-item>
                                 </div>
-                            </div>
-                            <div ng-hide="main.modeByArticles">
-                                <h2>Liste de tags</h2>
-                                <div ng-repeat="tag in main.tags">
-                                    {{tag.value}}
-                                    <ul>
-                                        <li ng-repeat="articleId in tag.articleIds">
-                                            {{main.getArticleTitle(articleId)}}
-                                        </li>
-                                    </ul>
+                                <div ng-if="!main.modeByArticles">
+                                    <md-item ng-repeat="tag in main.tags">
+                                        <md-item-content>
+                                            <h1 class="md-tile-left">
+                                                <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+                                            </h1>
+                                            <div class="md-tile-content">
+                                                <h3>{{tag.value}}</h3>
+                                                <p ng-repeat="articleId in tag.articleIds">{{main.getArticleTitle(articleId)}}</p>
+                                            </div>
+                                        </md-item-content>
+                                        <md-divider ng-if="!$last"></md-divider>
+                                    </md-item>
                                 </div>
-                            </div>
-                        </div>
+                            </md-list>
+                        </md-content>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="box-content">
-                            <h2>Liste de liens entre tags</h2>
-                            <div ng-repeat="link in main.links">
-                                {{link.source.value + ' -> ' + link.target.value + ' = poids de ' + link.value}}
-                            </div>
+                    <div flex>
+                        <md-toolbar class="md-theme-light" >
+                            <h2 class="md-toolbar-tools">
+                                Liste des liens entre les tags
+                            </h2>
+                        </md-toolbar>
+                        <md-content >
+                            <md-list >
+                                <md-item ng-repeat="link in main.links">
+                                    <md-item-content>
+                                        <h1 class="md-tile-left">
+                                            <md-icon md-svg-icon="../img/action/ic_stars_24px.svg"></md-icon>
+                                        </h1>
+
+                                        <div class="md-tile-content">
+                                            {{link.source.value + ' -> ' + link.target.value + ' = poids de ' + link.value}}
+                                        </div>
+                                    </md-item-content>
+                                    <md-divider ng-if="!$last"></md-divider>
+                                </md-item>
+                            </md-list>
+
+                            </md-content>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,6 @@
 
 body {
     background-color: #FBF8EF;
-    padding: 5px;
     font-size: 20px;
 }
 
@@ -54,3 +53,8 @@ body {
 .nodeSelected {
     background-color : blue;
 }
+.face {
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    width: 48px;
+    margin: 16px; }

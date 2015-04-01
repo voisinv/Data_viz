@@ -1,5 +1,5 @@
 
-function displayAll ($rootScope, DataFctr) {
+function displayAll (articlesSrv, linksSrv) {
     function collide(node) {
         var r = node.radius + 16,
             nx1 = node.x - r,
@@ -61,25 +61,24 @@ function displayAll ($rootScope, DataFctr) {
              })
              .size([w, h]);*/
 
-            var force = force = d3.layout.force();
+            var force = d3.layout.force();
             force.nodes(main.tags)
                 .links(main.links);
-
 
             function update() {
                 var link = svg.selectAll(".link")
                     .data(main.links);
                 link.enter().append("line")
                     .attr("class", "link")
-                    .style("stroke-width", function (d) {
+                    /*.style("stroke-width", function (d) {
                         return Math.sqrt(d.value);
-                    });
+                    })*/;
 
                 link.transition().duration(3000)
                     .style("stroke-width", function (d) {
-                        return Math.sqrt(d.value);
+                        return Math.sqrt(d.value +5);
                     });
-                //link.exit().remove();
+                link.exit().remove();
                 var node = svg.selectAll("circle")
                     .data(main.tags);
 
@@ -87,7 +86,6 @@ function displayAll ($rootScope, DataFctr) {
                     .append("circle")
                     .attr('class', 'circle')
                     .attr("r", function (d) {
-                        //return d.radius- 1;
                         return d.radius - 1;
                     })
                     .attr("id", function (d) {
@@ -105,9 +103,10 @@ function displayAll ($rootScope, DataFctr) {
                         return '#3498db'
                     })
                     .call(force.drag);
+
                 node.transition().duration(1000)
                     .attr('r', function(d) {
-                        return d.radius + 1
+                        return d.radius;
                     });
 
                 node.exit().remove();

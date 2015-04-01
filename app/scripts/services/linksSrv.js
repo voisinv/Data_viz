@@ -1,4 +1,4 @@
-function linksSrv() {
+function linksSrv($rootScope) {
     var linksSrv = {
         links: [
             {
@@ -38,8 +38,8 @@ function linksSrv() {
             var linksList = getLinksListOfArticle(article);
             linksList.forEach(function(link, index) {
                 var toFind = {
-                    source: {value: link.source},
-                    target: {value: link.target}
+                    source: {value: link.source.value},
+                    target: {value: link.target.value}
                 };
                 var o = _.findWhere(linksSrv.links, toFind);
                 if(!o) {
@@ -54,7 +54,7 @@ function linksSrv() {
         var linksList = [], id = 1, tags = article.tags;
         for(var i=0; i<tags.length-1; i++) {
             for(var j=1; j<tags.length-i; j++) {
-                linksList.push({id: id, source: tags[i], target: tags[i+j], value: 1});
+                linksList.push({id: id, source: {value: tags[i]}, target: {value: tags[i+j]}, value: 1});
                 id++;
             }
         }

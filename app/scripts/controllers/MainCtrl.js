@@ -12,13 +12,10 @@ function MainCtrl($scope, $rootScope, articlesSrv, linksSrv) {
     vm.tags = articlesSrv.getTags(); // tag = {articleIds, value}
     vm.links = linksSrv.getLinks();
 
-    $scope.$on('hoverTag', function(event, tagValue) {
-        vm.tagHovered = articlesSrv.getTagByValue(tagValue);
-        $scope.$apply();
-    });
-
     vm.hoverTag = function(tag) {
         vm.value = tag.value;
+        console.log(vm.value);
+        $scope.$apply();
     };
 
     vm.getArticleById = function(articleId) {

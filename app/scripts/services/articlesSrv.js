@@ -1,4 +1,4 @@
-function articlesSrv ($filter, linksSrv, $rootScope) {
+function articlesSrv ($filter, linksSrv) {
     var articlesSrv = {
         articles: [
             {
@@ -91,7 +91,7 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         //Gestion tags
         updateTags(newArticle); // need success promise (pr l'id de l'article)
 
-        linksSrv.addLinksBetweenTags(newArticle);
+        linksSrv.addLinksBetweenTags(newArticle, articlesSrv.tags);
         return newArticle;
     };
     var updateTags = function(newArticle) {

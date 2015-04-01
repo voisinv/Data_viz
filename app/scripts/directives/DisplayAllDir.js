@@ -67,20 +67,20 @@ function displayAll (articlesSrv, linksSrv) {
 
             function update() {
                 var link = svg.selectAll(".link")
-                    .data(main.links);
+                    .data(linksSrv.getLinks());
                 link.enter().append("line")
                     .attr("class", "link")
-                    /*.style("stroke-width", function (d) {
-                        return Math.sqrt(d.value);
-                    })*/;
+                    .style("stroke-width", function (d) {
+                        return d.value;
+                    });
 
                 link.transition().duration(3000)
                     .style("stroke-width", function (d) {
-                        return Math.sqrt(d.value +5);
+                        return d.value;
                     });
                 link.exit().remove();
                 var node = svg.selectAll("circle")
-                    .data(main.tags);
+                    .data(articlesSrv.getTags());
 
                 node.enter()
                     .append("circle")

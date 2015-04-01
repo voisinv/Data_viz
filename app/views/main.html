@@ -19,20 +19,13 @@
                     <div class="col-sm-10">
                         <div id="graph" display-all-points></div>
                     </div>
-                    <!-- vincent div class="col-sm-2">
-                        <h1>{{main.tagHovered.name}}</h1>
-                        <label>Urls : </label>
-                        <ul ng-repeat="url in main.tagHovered.urls">
-                            <li>{{url}}</li>
-                        </ul>
-                    </div-->
-                    <!-- matt div class="col-sm-2">
-                        <h1>{{main.tagHovered.value}}</h1>
+                    <div class="col-sm-2">
+                        <h1>{{ main.value }}</h1>
                         <label>Articles : </label>
-                        <ul ng-repeat="article in main.tagHovered.articleIds">
-                            <li>{{main.getArticleById(article).title}}</li>
+                        <ul ng-repeat="articleId in main.tagHovered.articleIds">
+                            <li>{{main.getArticleById(articleId).title}}</li>
                         </ul>
-                    </div-->
+                    </div>
                 </div>
                 <div ng-if="!main.viewState" class="row">
                     <div class="col-sm-6">

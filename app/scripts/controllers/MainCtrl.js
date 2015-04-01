@@ -1,7 +1,8 @@
-function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
+function MainCtrl($scope, $rootScope, articlesSrv, linksSrv) {
     var vm = this;
 
     vm.tagHovered = {};
+    vm.value = '';
     vm.article = { title: '', url: '', tags: ''};
     vm.erreurSaisie = false;
     vm.modeByArticles = true;
@@ -15,8 +16,9 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
         vm.tagHovered = articlesSrv.getTagByValue(tagValue);
         $scope.$apply();
     });
-    vm.hoverTag =function(tag) {
-        //console.log(tag);
+
+    vm.hoverTag = function(tag) {
+        vm.value = tag.value;
     };
 
     vm.getArticleById = function(articleId) {
@@ -77,4 +79,4 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
 
 angular
     .module('controllers')
-	.controller('MainCtrl', ctrl);
+	.controller('MainCtrl', MainCtrl);

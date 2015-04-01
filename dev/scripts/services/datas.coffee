@@ -116,9 +116,10 @@ DataFctr = ($rootScope) ->
 
     urls.forEach (e) ->
       links.push
-        source: getNewId
+        source: getNewId()
         target: e.id
         value: 10
+      return
 
     true
 

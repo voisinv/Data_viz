@@ -18,7 +18,8 @@ body {
                class
 \* ----------- ----- ----------- */
 .circle {
-    border: 5px solid red;
+    stroke: #fff;
+    stroke-width: 1.5px;
 
 }
 

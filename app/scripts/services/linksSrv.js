@@ -1,4 +1,4 @@
-function linksSrv() {
+function linksSrv($rootScope) {
     var linksSrv = {
         links: [
             {
@@ -38,8 +38,8 @@ function linksSrv() {
             var linksList = getLinksListOfArticle(article);
             linksList.forEach(function(link, index) {
                 var toFind = {
-                    source: {value: link.source},
-                    target: {value: link.target}
+                    source: {value: link.source.value},
+                    target: {value: link.target.value}
                 };
                 var o = _.findWhere(linksSrv.links, toFind);
                 if(!o) {
@@ -48,8 +48,6 @@ function linksSrv() {
                     o.value++;
                 }
             });
-
-            $rootScope.$broadcast('newUrl');
         }
     };
     var getLinksListOfArticle = function(article) {

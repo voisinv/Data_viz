@@ -1,5 +1,5 @@
 
-function displayAll ($rootScope) {
+function displayAll (articlesSrv, linksSrv) {
     function collide(node) {
         var r = node.radius + 16,
             nx1 = node.x - r,
@@ -61,7 +61,7 @@ function displayAll ($rootScope) {
              })
              .size([w, h]);*/
 
-            var force = force = d3.layout.force();
+            var force = d3.layout.force();
             force.nodes(main.tags)
                 .links(main.links);
 
@@ -70,17 +70,15 @@ function displayAll ($rootScope) {
                     .data(main.links);
                 link.enter().append("line")
                     .attr("class", "link")
-                    .style("stroke-width", function (d) {
-                        //return Math.sqrt(d.value);
-                        return d.value;
-                    });
+                    /*.style("stroke-width", function (d) {
+                        return Math.sqrt(d.value);
+                    })*/;
 
                 link.transition().duration(3000)
                     .style("stroke-width", function (d) {
-                        //return Math.sqrt(d.value);
-                        return d.value;
+                        return Math.sqrt(d.value +5);
                     });
-                //link.exit().remove();
+                link.exit().remove();
                 var node = svg.selectAll("circle")
                     .data(main.tags);
 

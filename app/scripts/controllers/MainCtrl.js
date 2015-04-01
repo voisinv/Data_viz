@@ -39,6 +39,8 @@ function ctrl($scope, $rootScope, articlesSrv, linksSrv) {
                 vm.tags = articlesSrv.getTags();
                 vm.links = linksSrv.getLinks();
 
+                $rootScope.$broadcast('newUrl');
+
                 vm.article = { title: '', url: '', tags: ''};
             }
         } else {

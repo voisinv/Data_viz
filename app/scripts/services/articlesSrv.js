@@ -91,8 +91,6 @@ function articlesSrv ($filter, linksSrv, $rootScope) {
         //Gestion tags
         updateTags(newArticle); // need success promise (pr l'id de l'article)
 
-        $rootScope.$broadcast('newUrl');
-
         linksSrv.addLinksBetweenTags(newArticle);
         return newArticle;
     };

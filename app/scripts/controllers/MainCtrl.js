@@ -2,7 +2,6 @@ function MainCtrl($scope, $rootScope, articlesSrv, linksSrv) {
     var vm = this;
     vm.tab = angular.copy(['Apple', 'Banana', 'Orange']);
     vm.tagHovered = {};
-    vm.value = '';
     vm.article = { title: '', url: '', tags: ''};
     vm.erreurSaisie = false;
     vm.modeByArticles = true;
@@ -13,8 +12,7 @@ function MainCtrl($scope, $rootScope, articlesSrv, linksSrv) {
     vm.links = linksSrv.getLinks();
 
     vm.hoverTag = function(tag) {
-        vm.value = tag.value;
-        console.log(vm.value);
+        vm.tagHovered = tag;
         $scope.$apply();
     };
 

@@ -35,9 +35,8 @@ function displayAll (articlesSrv, linksSrv) {
             var main = scope.main;
             var node = link = [];
 
-            var w = 1280,
-                h = 800,
-
+            var w = $(window).width()*0.8,
+                h = $(window).height()*0.7,
                 color = d3.scale.category10();
 
             var svg = d3.select("#graph").append("svg")

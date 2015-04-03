@@ -14,14 +14,24 @@ angular
             .state('main', {
                 url: "/main",
                 templateUrl: "../views/main.html"
-            });
+            })
+            .state('details', {
+                url: '/details',
+                templateUrl: '../views/details.html'
+            })
+        ;
 	})
     .controller('AppCtrl', function() {
         var self = this;
         self.toggleSidenav = function(menuId) {
             $mdSidenav(menuId).toggle();
+
         };
     })
-.config( function( $mdIconProvider ){
-        $mdIconProvider.iconSet("avatar", './img/avatar-icons.svg', 128);
-    })
+    .config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+            .primaryPalette('blue')
+            .backgroundPalette('grey')
+            .warnPalette('red')
+            .accentPalette('pink');
+    });

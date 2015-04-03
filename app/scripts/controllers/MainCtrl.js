@@ -1,16 +1,18 @@
-function MainCtrl($scope, $rootScope, articlesSrv, linksSrv) {
+function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
     var vm = this;
-    vm.tab = angular.copy(['Apple', 'Banana', 'Orange']);
-    vm.tagHovered = {};
-    vm.value = '';
-    vm.article = { title: '', url: '', tags: ''};
-    vm.erreurSaisie = false;
-    vm.modeByArticles = true;
-    vm.viewState = true;
-
-    vm.articles = articlesSrv.getArticles(); // article = {id, tags, title, url}
-    vm.tags = articlesSrv.getTags(); // tag = {articleIds, value}
-    vm.links = linksSrv.getLinks();
+    _.extend(vm,
+        {
+            tagHovered: {},
+            value: '',
+            article: { title: '', url: '', tags: ''},
+            erreurSaisie: true,
+            modeByarticles: true,
+            viewState: true,
+            articles: articlesSrv.getArticles(),
+            tags: articlesSrv.getTags(),
+            links: linksSrv.getLinks()
+        }
+    )
 
     $scope.$on('hoverTag', function(event, tagValue) {
         vm.tagHovered = articlesSrv.getTagByValue(tagValue);
@@ -61,7 +63,7 @@ function MainCtrl($scope, $rootScope, articlesSrv, linksSrv) {
         console.log('test');
     };
     vm.changeViewState = function() {
-        vm.viewState = !vm.viewState;
+        $state.go('details')
     };
 
     var deleteDoubleTags = function(tagsTab) {

@@ -1,6 +1,6 @@
 <div ng-controller="MainCtrl as main">
 
-    <md-content class="md-padding" layout="row" layout-align="center center" ng-if="main.viewState">
+    <md-content class="md-padding" layout="row" layout-align="center center">
         <p class="md-blody-1" flex="15"> Ajouter un article </p>
         <form name="tagForm" flex="85">
             <div class="" layout layout-margin layout-align="center center">
@@ -9,31 +9,32 @@
                     <label >Url</label>
                     <input type="text" ng-model='main.article.url' required  ng-change="main.erreurSaisie = false"/>
                 </md-input-container>
+
                 <md-input-container flex>
                     <label >Titre</label>
                     <input type="text" ng-model='main.article.title' required ng-change="main.erreurSaisie = false"/>
                 </md-input-container>
+
                 <md-input-container flex>
                     <label >Tags</label>
                     <input type="text" ng-model='main.article.tags'/>
                 </md-input-container>
-                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
-                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
+
+                <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
+                <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
 
             </div>
         </form>
     </md-content>
-    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.changeViewState()" ng-if="main.viewState" aria-label="">
-        <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
-    </md-button>
+
     <div id="body">
         <div id="footer">
             <div class="">
                 <div layout="row" layout-wrap ng-if="main.viewState">
-                    <div flex="83">
+                    <div flex="80">
                         <div id="graph" display-all-points></div>
                     </div>
-                    <div flex="17">
+                    <div flex="19">
                         {{main.tagHovered.value}}
                         <ul>
                             <li ng-repeat="articleId in main.tagHovered.articleIds">
@@ -113,4 +114,8 @@
             </div>
         </div>
     </div>
+
+    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.changeViewState()" ng-if="main.viewState" aria-label="">
+        <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+    </md-button>
 </div>

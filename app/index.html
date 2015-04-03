@@ -12,8 +12,10 @@
 </head>
 <body>
 
-    <md-toolbar class=" md-primary" layout="row">
-        <h1 class="md-toolbar-tools" layout-align-gt-sm="left">Datapizz</h1>
+
+    <md-toolbar layout="row">
+        <h1 class="md-toolbar-tools" layout-align-gt-sm="left" flex>Datapizz</h1>
+
     </md-toolbar>
     <div>
 	    <div ui-view></div>
@@ -30,6 +32,7 @@
 	<script src="../bower_components/angular-animate/angular-animate.js"></script>
 	<script src="../bower_components/angular-aria/angular-aria.js"></script>
 	<script src="../bower_components/angular-material/angular-material.js"></script>
+	<script src="../bower_components/lodash/lodash.js"></script>
 	<!-- endbower -->
 
 	<!-- fileblock:js app -->
@@ -38,10 +41,9 @@
 	<script src="app/scripts/directives/DisplayAllDir.js"></script>
 	<script src="app/scripts/services/articlesSrv.js"></script>
 	<script src="app/scripts/services/linksSrv.js"></script>
-	<script src="app/scripts/lodash.min.js"></script>
+
+
 	<script src="app/scripts/controllers/DetailsCtrl.js"></script>
 	<!-- endfileblock -->
-
-    <script src="app/scripts/lodash.min.js"></script>
 </body>
 </html>

@@ -14,13 +14,10 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
         }
     )
 
-    $scope.$on('hoverTag', function(event, tagValue) {
-        vm.tagHovered = articlesSrv.getTagByValue(tagValue);
-        $scope.$apply();
-    });
 
     vm.hoverTag = function(tag) {
-        vm.value = tag.value;
+        vm.tagHovered = tag;
+        $scope.$apply();
     };
 
     vm.getArticleById = function(articleId) {

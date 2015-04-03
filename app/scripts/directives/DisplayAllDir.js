@@ -1,5 +1,5 @@
 
-function displayAll (articlesSrv, linksSrv) {
+function displayAll ($window, articlesSrv, linksSrv) {
     function collide(node) {
         var r = node.radius + 16,
             nx1 = node.x - r,
@@ -35,9 +35,8 @@ function displayAll (articlesSrv, linksSrv) {
             var main = scope.main;
             var node = link = [];
 
-            var w = 1280,
-                h = 800,
-
+            var w = $window.innerWidth*0.8,
+                h = $window.innerHeight*0.7,
                 color = d3.scale.category10();
 
             var svg = d3.select("#graph").append("svg")
@@ -82,7 +81,8 @@ function displayAll (articlesSrv, linksSrv) {
                 var node = svg.selectAll("circle")
                     .data(articlesSrv.getTags());
 
-                node.enter()
+                var mouseover = false;
+                var circle = node.enter()
                     .append("circle")
                     .attr('class', 'circle')
                     .attr("r", function (d) {
@@ -91,16 +91,17 @@ function displayAll (articlesSrv, linksSrv) {
                     .attr("id", function (d) {
                         return 'circle-' + d.value;
                     })
+                    .style("fill", function (d, i) {
+                        return '#3498db'
+                    })
                     .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
-                        main.hoverTag(d)
+                        mouseover = true;
+                        main.hoverTag(d);
                     })
                     .on('mouseleave', function () {
                         d3.selectAll("circle").attr('opacity', 1);
-                    })
-                    .style("fill", function (d, i) {
-                        return '#3498db'
                     })
                     .call(force.drag);
 
@@ -114,7 +115,7 @@ function displayAll (articlesSrv, linksSrv) {
                 force.on("tick", function () {
                     link.attr("x1", function (d) {
                         return d.source.x;
-                    })
+                        })
                         .attr("y1", function (d) {
                             return d.source.y;
                         })
@@ -127,11 +128,10 @@ function displayAll (articlesSrv, linksSrv) {
 
                     node.attr("cx", function (d) {
                         return d.x;
-                    })
+                        })
                         .attr("cy", function (d) {
                             return d.y;
                         });
-
                 });
                 force.charge(120)
                     .linkDistance(10)

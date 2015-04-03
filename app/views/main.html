@@ -1,8 +1,10 @@
 <div ng-controller="MainCtrl as main" layout="column" >
 
-    <div class="form-add-tag" flex="25"  layout="row" layout-align="center center" ng-if="main.viewState">
-        <h5 class="md-title">Ajouter un article</h5>
-        <ng-form name="tagForm" flex="85">
+
+    <md-content class="md-padding form-add-tag" class="form-add-tag" layout="row" layout-align="center center">
+        <p class="md-blody-1" flex="15"> Ajouter un article </p>
+        <form name="tagForm" flex="85" class="">
+
             <div class="" layout layout-margin layout-align="center center">
 
                 <md-input-container flex>
@@ -12,6 +14,7 @@
                         <div ng-message="minlength">Un nom est requis</div>
                     </div>
                 </md-input-container>
+
                 <md-input-container flex>
                     <label >Titre</label>
                     <input type="text" name="tTitle" ng-model='main.article.title' required/>
@@ -19,25 +22,31 @@
                         <div ng-message="minlength">Un titre est requis</div>
                     </div>
                 </md-input-container>
+
                 <md-input-container flex>
                     <label >Tags</label>
                     <input type="text" ng-model='main.article.tags'/>
                 </md-input-container>
+
+
                 <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
-                <md-button flex class="md-raised md-accent" ng-click="main.changeViewState()">Changer de vue</md-button>
+                <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
 
             </div>
-        </ng-form>
-    </div>
+        </form>
+    </md-content>
 
-    <md-divider></md-divider>
-    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.changeViewState()" ng-if="main.viewState" aria-label="">
-        <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
-    </md-button>
-    <div class="row">
-        <div class="col-sm-10">
-            <div id="graph" display-all-points></div>
+    <div id="body">
+        <div layout="row" layout-wrap ng-if="main.viewState">
+            <div flex="80">
+                <div id="graph" display-all-points></div>
+            </div>
+
         </div>
 
     </div>
+
+    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.changeViewState()" ng-if="main.viewState" aria-label="">
+        <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+    </md-button>
 </div>

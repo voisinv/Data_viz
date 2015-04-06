@@ -78,10 +78,36 @@ function displayAll ($window, articlesSrv, linksSrv) {
                         return d.value;
                     });
                 link.exit().remove();
-                var node = svg.selectAll("circle")
-                    .data(articlesSrv.getTags());
+
 
                 var mouseover = false;
+
+                var node = svg.selectAll(".node")
+                    .data(articlesSrv.getTags());
+
+                node.enter()
+                    .append('g')
+                    .attr('class', 'node')
+                    .call(force.drag);
+
+                node.append('circle')
+                    .attr("r", function (d) {
+                        return d.radius - 1;
+                    })
+                    .attr("id", function (d) {
+                        return 'circle-' + d.value;
+                    })
+                    .style("fill", function (d, i) {
+                        return '#3498db'
+                    })
+
+                node.append("text")
+                    .attr("dx", 0)//function(d) {return d.radius+5})
+                    .attr("dy", ".35em")
+                    .text(function(d) { return d.value })
+                    //.style("stroke", "gray");
+
+                /*
                 var circle = node.enter()
                     .append("circle")
                     .attr('class', 'circle')
@@ -94,7 +120,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
                     .style("fill", function (d, i) {
                         return '#3498db'
                     })
-                    .on('mouseover', function (d, i) {
+                   .on('mouseover', function (d, i) {
                         d3.selectAll("circle").attr('opacity', 0.3);
                         d3.select(this).attr('opacity', 1);
                         mouseover = true;
@@ -103,14 +129,17 @@ function displayAll ($window, articlesSrv, linksSrv) {
                     .on('mouseleave', function () {
                         d3.selectAll("circle").attr('opacity', 1);
                     })
-                    .call(force.drag);
 
+                    .call(force.drag);
+                 */
                 node.transition().duration(1000)
                     .attr('r', function(d) {
+                        console.log('radius', d)
+                        //d.x += 10;
                         return d.radius;
                     });
 
-                node.exit().remove();
+                //node.exit().remove();
 
                 force.on("tick", function () {
                     link.attr("x1", function (d) {
@@ -126,10 +155,18 @@ function displayAll ($window, articlesSrv, linksSrv) {
                             return d.target.y;
                         });
 
-                    node.attr("cx", function (d) {
-                        return d.x;
+                    d3.selectAll("circle")
+                        .attr("cx", function (d) {
+                            return d.x;
                         })
                         .attr("cy", function (d) {
+                            return d.y;
+                        });
+                    d3.selectAll("text")
+                        .attr("x", function (d) {
+                            return d.x + d.radius + 5;
+                        })
+                        .attr("y", function (d) {
                             return d.y;
                         });
                 });
@@ -150,9 +187,17 @@ function displayAll ($window, articlesSrv, linksSrv) {
                     })
                     .size([w, h])*/
                     .start()
+
+
             }
             update();
+
+            //---Insert-------
+
+//Toggle stores whether the highlighting is on
+
         }
+
 
     };
     function keepNodesOnTop() {
@@ -161,6 +206,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
             gnode.parentNode.appendChild(gnode);
         });
     }
+
 }
 
 

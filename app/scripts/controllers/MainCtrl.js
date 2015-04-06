@@ -10,7 +10,11 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
             viewState: true,
             articles: articlesSrv.getArticles(),
             tags: articlesSrv.getTags(),
-            links: linksSrv.getLinks()
+            displayname: true,
+            links: linksSrv.getLinks(),
+            linkdistance: 10,
+            gravity: 3,
+            charge: 500
         }
     )
 
@@ -57,10 +61,15 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
         return article.title;
     };
     vm.test = function() {
-        console.log('test');
+
+        $rootScope.$broadcast('displayText', {toDisplay: vm.displayname = !vm.displayname});
     };
     vm.changeViewState = function() {
         $state.go('details')
+    };
+
+    vm.update = function(){
+            $rootScope.$broadcast('newUrl');
     };
 
     var deleteDoubleTags = function(tagsTab) {

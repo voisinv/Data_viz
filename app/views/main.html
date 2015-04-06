@@ -1,39 +1,71 @@
 <div ng-controller="MainCtrl as main" layout="column" >
 
 
-    <md-content class="md-padding form-add-tag" class="form-add-tag" layout="row" layout-align="center center">
-        <p class="md-blody-1" flex="15"> Ajouter un article </p>
-        <form name="tagForm" flex="85" class="">
+    <md-content class="md-padding form-add-tag" class="form-add-tag" layout="column">
+        <div layout="row" layout-align="center center">
+            <p class="md-blody-1" flex="15"> Ajouter un article </p>
+            <form name="tagForm" flex="85" class="">
 
-            <div class="" layout layout-margin layout-align="center center">
+                <div class="" layout layout-margin layout-align="center center">
 
-                <md-input-container flex>
-                    <label >Url</label>
-                    <input type="text" name="tName" ng-model='main.article.url' required/>
-                    <div ng-messages="tagForm.tName.$error" ng-show="userForm.tName.$dirty">
-                        <div ng-message="minlength">Un nom est requis</div>
-                    </div>
-                </md-input-container>
+                    <md-input-container flex>
+                        <label >Url</label>
+                        <input type="text" name="tName" ng-model='main.article.url' required/>
+                        <div ng-messages="tagForm.tName.$error" ng-show="userForm.tName.$dirty">
+                            <div ng-message="minlength">Un nom est requis</div>
+                        </div>
+                    </md-input-container>
 
-                <md-input-container flex>
-                    <label >Titre</label>
-                    <input type="text" name="tTitle" ng-model='main.article.title' required/>
-                    <div ng-messages="tagForm.tTitle.$error" ng-show="userForm.tTitle.$dirty">
-                        <div ng-message="minlength">Un titre est requis</div>
-                    </div>
-                </md-input-container>
+                    <md-input-container flex>
+                        <label >Titre</label>
+                        <input type="text" name="tTitle" ng-model='main.article.title' required/>
+                        <div ng-messages="tagForm.tTitle.$error" ng-show="userForm.tTitle.$dirty">
+                            <div ng-message="minlength">Un titre est requis</div>
+                        </div>
+                    </md-input-container>
 
-                <md-input-container flex>
-                    <label >Tags</label>
-                    <input type="text" ng-model='main.article.tags'/>
-                </md-input-container>
+                    <md-input-container flex>
+                        <label >Tags</label>
+                        <input type="text" ng-model='main.article.tags'/>
+                    </md-input-container>
 
 
-                <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
-                <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
+                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
 
+                </div>
+            </form>
+        </div>
+        <div layout="row" flex="100">
+            <div flex="33" layout-padding layout="row">
+                <div flex="25" layout layout-align="center center">
+                    <span>linkDistance</span>
+                </div>
+                <md-slider layout-padding flex min="0" max="255" ng-model="main.linkdistance" aria-label="red" class>
+                </md-slider>
+                {{main.linkdistance}}
             </div>
-        </form>
+            <div flex="33" layout-padding layout="row">
+                <div flex="25" layout layout-align="center center">
+                    <span>Gravity</span>
+                </div>
+                <md-slider layout-padding flex min="0" max="10" ng-model="main.gravity" aria-label="red" class>
+                </md-slider>
+                {{main.gravity}}
+            </div>
+            <div flex="33" layout-padding layout="row">
+                <div flex="25" layout layout-align="center center">
+                    <span>Charge</span>
+                </div>
+                <md-slider layout-padding flex min="0" max="1000" ng-model="main.charge" aria-label="blue" class>
+                </md-slider>
+                {{main.charge}}
+            </div>
+
+
+        </div>
+
+        <md-button flex class="md-raised md-warn" ng-click="main.update()">Update</md-button>
     </md-content>
 
     <div id="body">
@@ -41,12 +73,11 @@
             <div flex="80">
                 <div id="graph" display-all-points></div>
             </div>
-
         </div>
 
     </div>
 
-    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.changeViewState()" ng-if="main.viewState" aria-label="">
+    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.test()" ng-if="main.viewState" aria-label="">
         <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
     </md-button>
 </div>

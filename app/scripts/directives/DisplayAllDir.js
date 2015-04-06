@@ -45,25 +45,19 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
             scope.$on('newUrl', function (event, nEle) {
                 update();
-                keepNodesOnTop();
+                //keepNodesOnTop();
             });
 
-            //main.datas = main.datas;
-
-
-            /*.charge(120)
-             .linkDistance(120)
-             .size([w, h])
-             .gravity(0.3)
-             .charge(function (d) {
-             return -20 * d.radius;
-             })
-             .size([w, h]);*/
+            scope.$on('displayText', function(e, o) {
+                node.selectAll('.text').attr('visibility', function() {
+                    return o.toDisplay ?  'display' : 'hidden'
+                });
+            })
 
             var force = d3.layout.force();
             force.nodes(main.tags)
                 .links(main.links);
-
+            var node;
             function update() {
                 var link = svg.selectAll(".link")
                     .data(linksSrv.getLinks());
@@ -82,7 +76,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
                 var mouseover = false;
 
-                var node = svg.selectAll(".node")
+                node = svg.selectAll(".node")
                     .data(articlesSrv.getTags());
 
                 node.enter()
@@ -92,7 +86,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
                 node.append('circle')
                     .attr("r", function (d) {
-                        return d.radius - 1;
+                        return (d.radius - 1) * 0.4;
                     })
                     .attr("id", function (d) {
                         return 'circle-' + d.value;
@@ -102,6 +96,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
                     })
 
                 node.append("text")
+                    .attr('class', 'text')
                     .attr("dx", 0)//function(d) {return d.radius+5})
                     .attr("dy", ".35em")
                     .text(function(d) { return d.value })
@@ -134,9 +129,8 @@ function displayAll ($window, articlesSrv, linksSrv) {
                  */
                 node.transition().duration(1000)
                     .attr('r', function(d) {
-                        console.log('radius', d)
-                        //d.x += 10;
-                        return d.radius;
+                        console.log((d.radius - 1) * 0.4)
+                        return (d.radius - 1) *  0.4;
                     });
 
                 //node.exit().remove();
@@ -171,13 +165,12 @@ function displayAll ($window, articlesSrv, linksSrv) {
                         });
                 });
                 force.charge(120)
-                    .linkDistance(10)
+                    .linkDistance(main.linkdistance)
                     .size([w, h])
-                    .gravity(0.3)
+                    .gravity(main.gravity * 0.1)
                     .charge(function (d) {
-                        return -500 * d.radius;
+                        return -1 * main.charge * d.radius;
                     })
-                    .size([w, h])
                     /*
                     .gravity(.01)
                     .charge(-80000)

@@ -47,6 +47,16 @@ function displayAll ($window, articlesSrv, linksSrv) {
                 update();
                 //keepNodesOnTop();
             });
+            var force = d3.layout.force();
+            scope.$on('dbconnection', function() {
+                force.nodes(main.tags)
+                    .links(main.links);
+                update();
+            });
+            scope.$on('stopForce', function() {
+                console.log('stopForce')
+                force = null;
+            })
 
             scope.$on('displayText', function(e, o) {
                 node.selectAll('.text').attr('visibility', function() {
@@ -54,11 +64,11 @@ function displayAll ($window, articlesSrv, linksSrv) {
                 });
             })
 
-            var force = d3.layout.force();
-            force.nodes(main.tags)
-                .links(main.links);
+
             var node;
             function update() {
+
+
                 var link = svg.selectAll(".link")
                     .data(linksSrv.getLinks());
                 link.enter().append("line")
@@ -183,7 +193,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
 
             }
-            update();
+            //update();
 
             //---Insert-------
 

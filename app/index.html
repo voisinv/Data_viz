@@ -14,7 +14,7 @@
 
 
     <md-toolbar layout="row">
-        <h1 class="md-toolbar-tools" layout-align-gt-sm="left" flex>Datapizz</h1>
+        <h1 class="md-toolbar-tools" layout-align-gt-sm="left" flex ng-click="index.change()">Datapizz</h1>
 		<md-checkbox ng-model="index.debug" aria-label="Checkbox 2" ng-true-value="true" ng-false-value="false" class="md-warn">
 			Debug mode
 		</md-checkbox>
@@ -35,6 +35,8 @@
 	<script src="../bower_components/angular-aria/angular-aria.js"></script>
 	<script src="../bower_components/angular-material/angular-material.js"></script>
 	<script src="../bower_components/lodash/lodash.js"></script>
+	<script src="../bower_components/firebase/firebase.js"></script>
+	<script src="../bower_components/angularfire/dist/angularfire.js"></script>
 	<!-- endbower -->
 
 	<!-- fileblock:js app -->
@@ -43,9 +45,8 @@
 	<script src="app/scripts/directives/DisplayAllDir.js"></script>
 	<script src="app/scripts/services/articlesSrv.js"></script>
 	<script src="app/scripts/services/linksSrv.js"></script>
-
-
 	<script src="app/scripts/controllers/DetailsCtrl.js"></script>
+	<script src="app/scripts/services/dbconnection.js"></script>
 	<!-- endfileblock -->
 </body>
 </html>

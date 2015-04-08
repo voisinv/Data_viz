@@ -32,6 +32,9 @@
 
                     <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
                     <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.connect(); $event.preventDefault()">connect</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.save(); $event.preventDefault()">Save</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.restore(); $event.preventDefault()">Restore</md-button>
 
                 </div>
             </form>

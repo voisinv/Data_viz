@@ -1,4 +1,4 @@
-function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
+function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnection) {
     var vm = this;
     _.extend(vm,
         {
@@ -83,6 +83,25 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
         }
         return tagsTab;
     };
+
+    vm.connect = function() {
+        dbconnection.connect().then(function() {
+            vm.articles= articlesSrv.getArticles();
+            vm.tags= articlesSrv.getTags();
+            vm.links= linksSrv.getLinks();
+            console.log(vm)
+            $rootScope.$broadcast('dbconnection');
+        });
+    }
+    vm.save = function() {
+        $rootScope.$broadcast('stopForce')
+        dbconnection.save(vm.articles, vm.tags, vm.links).then(
+            function(){console.log('success')}
+        )
+    }
+    vm.restore = function() {
+        dbconnection.restore();
+    }
 
 
 }

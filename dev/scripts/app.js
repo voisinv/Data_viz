@@ -6,9 +6,9 @@ angular.module('services', []);
 
 angular
     .module('app', ['ngMaterial','ngAria', 'ui.bootstrap', 'ui.router', 'services', 'directives', 'controllers'])
-	.config(function($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider) {
 
-	    $urlRouterProvider.otherwise("/main");
+        $urlRouterProvider.otherwise("/main");
 
         $stateProvider
             .state('main', {
@@ -20,7 +20,7 @@ angular
                 templateUrl: '../views/details.html'
             })
         ;
-	})
+    })
     .controller('AppCtrl', function() {
         var self = this;
         self.toggleSidenav = function(menuId) {

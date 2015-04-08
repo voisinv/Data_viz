@@ -61,15 +61,16 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
         return article.title;
     };
     vm.test = function() {
-
-        $rootScope.$broadcast('displayText', {toDisplay: vm.displayname = !vm.displayname});
+        alert('ok')
+        vm.displayname = !vm.displayname;
+        $rootScope.$broadcast('displayText', {toDisplay: vm.displayname});
     };
     vm.changeViewState = function() {
         $state.go('details')
     };
 
     vm.update = function(){
-            $rootScope.$broadcast('newUrl');
+        $rootScope.$broadcast('newUrl');
     };
 
     var deleteDoubleTags = function(tagsTab) {
@@ -89,4 +90,4 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
 
 angular
     .module('controllers')
-	.controller('MainCtrl', MainCtrl);
+    .controller('MainCtrl', MainCtrl);

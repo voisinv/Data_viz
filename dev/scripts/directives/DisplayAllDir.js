@@ -100,32 +100,32 @@ function displayAll ($window, articlesSrv, linksSrv) {
                     .attr("dx", 0)//function(d) {return d.radius+5})
                     .attr("dy", ".35em")
                     .text(function(d) { return d.value })
-                    //.style("stroke", "gray");
+                //.style("stroke", "gray");
 
                 /*
-                var circle = node.enter()
-                    .append("circle")
-                    .attr('class', 'circle')
-                    .attr("r", function (d) {
-                        return d.radius - 1;
-                    })
-                    .attr("id", function (d) {
-                        return 'circle-' + d.value;
-                    })
-                    .style("fill", function (d, i) {
-                        return '#3498db'
-                    })
-                   .on('mouseover', function (d, i) {
-                        d3.selectAll("circle").attr('opacity', 0.3);
-                        d3.select(this).attr('opacity', 1);
-                        mouseover = true;
-                        main.hoverTag(d);
-                    })
-                    .on('mouseleave', function () {
-                        d3.selectAll("circle").attr('opacity', 1);
-                    })
+                 var circle = node.enter()
+                 .append("circle")
+                 .attr('class', 'circle')
+                 .attr("r", function (d) {
+                 return d.radius - 1;
+                 })
+                 .attr("id", function (d) {
+                 return 'circle-' + d.value;
+                 })
+                 .style("fill", function (d, i) {
+                 return '#3498db'
+                 })
+                 .on('mouseover', function (d, i) {
+                 d3.selectAll("circle").attr('opacity', 0.3);
+                 d3.select(this).attr('opacity', 1);
+                 mouseover = true;
+                 main.hoverTag(d);
+                 })
+                 .on('mouseleave', function () {
+                 d3.selectAll("circle").attr('opacity', 1);
+                 })
 
-                    .call(force.drag);
+                 .call(force.drag);
                  */
                 node.transition().duration(1000)
                     .attr('r', function(d) {
@@ -138,7 +138,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
                 force.on("tick", function () {
                     link.attr("x1", function (d) {
                         return d.source.x;
-                        })
+                    })
                         .attr("y1", function (d) {
                             return d.source.y;
                         })
@@ -172,13 +172,13 @@ function displayAll ($window, articlesSrv, linksSrv) {
                         return -1 * main.charge * d.radius;
                     })
                     /*
-                    .gravity(.01)
-                    .charge(-80000)
-                    .friction(0)
-                    .linkDistance(function (d) {
-                        return d.value * 10
-                    })
-                    .size([w, h])*/
+                     .gravity(.01)
+                     .charge(-80000)
+                     .friction(0)
+                     .linkDistance(function (d) {
+                     return d.value * 10
+                     })
+                     .size([w, h])*/
                     .start()
 
 

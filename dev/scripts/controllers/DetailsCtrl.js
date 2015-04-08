@@ -12,4 +12,4 @@ var DetailsCtrl = function(articlesSrv, linksSrv) {
     console.log('loaded', self.links)
 }
 angular.module('controllers')
-.controller('DetailsCtrl', DetailsCtrl);
+    .controller('DetailsCtrl', DetailsCtrl);

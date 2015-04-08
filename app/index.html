@@ -10,12 +10,14 @@
     <link href="app/style/main.css" rel="stylesheet" />
     <!-- endfileblock -->
 </head>
-<body>
+<body ng-controller="IndexCtrl as index">
 
 
     <md-toolbar layout="row">
         <h1 class="md-toolbar-tools" layout-align-gt-sm="left" flex>Datapizz</h1>
-
+		<md-checkbox ng-model="index.debug" aria-label="Checkbox 2" ng-true-value="true" ng-false-value="false" class="md-warn">
+			Debug mode
+		</md-checkbox>
     </md-toolbar>
     <div>
 	    <div ui-view></div>

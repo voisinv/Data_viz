@@ -21,12 +21,16 @@ angular
             })
         ;
 	})
-    .controller('AppCtrl', function() {
+    .controller('IndexCtrl', function() {
         var self = this;
         self.toggleSidenav = function(menuId) {
             $mdSidenav(menuId).toggle();
 
         };
+        self.debug = false;
+        self.change = function() {
+            self.debug=!self.debug;
+        }
     })
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('default')

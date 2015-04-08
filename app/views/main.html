@@ -36,7 +36,7 @@
                 </div>
             </form>
         </div>
-        <div layout="row" flex="100">
+        <div layout="row" flex="100" ng-show="index.debug">
             <div flex="33" layout-padding layout="row">
                 <div flex="25" layout layout-align="center center">
                     <span>linkDistance</span>
@@ -65,7 +65,7 @@
 
         </div>
 
-        <md-button flex class="md-raised md-warn" ng-click="main.update()">Update</md-button>
+        <md-button ng-show="index.debug" flex class="md-raised md-warn" ng-click="main.update()">Update</md-button>
     </md-content>
 
     <div id="body">

@@ -1,51 +1,59 @@
 <div ng-controller="MainCtrl as main" layout="column" >
 
-
     <md-content class="md-padding form-add-tag" class="form-add-tag" layout="column">
         <div layout="row" layout-align="center center">
             <p class="md-blody-1" flex="15"> Ajouter un article </p>
-            <form name="tagForm" flex="85" class="">
+            <form name="main.tagForm" flex="85" class="">
 
                 <div class="" layout layout-margin layout-align="center center">
 
                     <md-input-container flex>
                         <label >Url</label>
-                        <input type="text" name="tName" ng-model='main.article.url' required/>
-                        <div ng-messages="tagForm.tName.$error" ng-show="userForm.tName.$dirty">
-                            <div ng-message="minlength">Un nom est requis</div>
-                        </div>
+                        <input type="text" class="" name="tName" ng-model='main.article.url' required placeholder="Avion.fr"/>
                     </md-input-container>
 
                     <md-input-container flex>
                         <label >Titre</label>
-                        <input type="text" name="tTitle" ng-model='main.article.title' required/>
-                        <div ng-messages="tagForm.tTitle.$error" ng-show="userForm.tTitle.$dirty">
-                            <div ng-message="minlength">Un titre est requis</div>
-                        </div>
+                        <input type="text" name="tTitle" ng-model='main.article.title' required placeholder="Avion"/>
                     </md-input-container>
 
-                    <md-input-container flex>
+                    <md-input-container flex="20">
                         <label >Tags</label>
-                        <input type="text" ng-model='main.article.tags'/>
+                        <input type="text" ng-model='main.article.tags' required placeholder="Roue Moteur Joistick"/>
                     </md-input-container>
 
 
-                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
-                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
+                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()" ng-disabled="main.tags.length == 0">
+                        Ajouter
+                    </md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.connect(); $event.preventDefault()" ng-disabled="main.request.connected">
+                        connect
+                        <md-tooltip>
+                            Se connecter à la base Datapizzz
+                        </md-tooltip>
+                    </md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.save(); $event.preventDefault()" ng-disabled="main.tags.length == 0">Save</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.restore(); $event.preventDefault()">Restore</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState(); $event.preventDefault()">
+                        Détails
+                        <md-tooltip>
+                            Voir plus d'informations
+                        </md-tooltip>
+                    </md-button>
 
                 </div>
             </form>
         </div>
-        <div layout="row" flex="100" ng-show="index.debug">
-            <div flex="33" layout-padding layout="row">
+        <div layout="row" layout-align="center center" flex="100" ng-show="index.debug">
+            <div flex="30" layout="row">
                 <div flex="25" layout layout-align="center center">
                     <span>linkDistance</span>
                 </div>
-                <md-slider layout-padding flex min="0" max="255" ng-model="main.linkdistance" aria-label="red" class>
+                <md-slider flex min="0" max="255" ng-model="main.linkdistance" aria-label="red" class>
                 </md-slider>
                 {{main.linkdistance}}
             </div>
-            <div flex="33" layout-padding layout="row">
+            <div flex="30" layout="row">
                 <div flex="25" layout layout-align="center center">
                     <span>Gravity</span>
                 </div>
@@ -53,7 +61,7 @@
                 </md-slider>
                 {{main.gravity}}
             </div>
-            <div flex="33" layout-padding layout="row">
+            <div flex="30" layout-padding layout="row">
                 <div flex="25" layout layout-align="center center">
                     <span>Charge</span>
                 </div>
@@ -61,23 +69,27 @@
                 </md-slider>
                 {{main.charge}}
             </div>
+            <md-button ng-show="index.debug" flex="10" class="md-raised md-warn" ng-click="main.update()">Update</md-button>
 
 
         </div>
 
-        <md-button ng-show="index.debug" flex class="md-raised md-warn" ng-click="main.update()">Update</md-button>
     </md-content>
 
     <div id="body">
-        <div layout="row" layout-wrap ng-if="main.viewState">
-            <div flex="80">
+        <div layout="row" layout-sm="column" layout-align="space-around" ng-if="main.request.load">
+            <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div layout="row" layout-wrap>
+            <div flex="80" ng-if="main.viewState">
                 <div id="graph" display-all-points></div>
             </div>
+
         </div>
 
     </div>
 
-    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.test()" ng-if="main.viewState" aria-label="">
+    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.test()" ng-disabled="main.tags.length == 0" ng-if="main.viewState" aria-label="">
         <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
     </md-button>
 </div>

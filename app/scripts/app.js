@@ -5,7 +5,7 @@ angular.module('directives', []);
 angular.module('services', []);
 
 angular
-    .module('app', ['ngMaterial','ngAria', 'ui.bootstrap', 'ui.router', 'services', 'directives', 'controllers'])
+    .module('app', ['firebase', 'ngMaterial','ngAria', 'ui.bootstrap', 'ui.router', 'services', 'directives', 'controllers'])
 	.config(function($stateProvider, $urlRouterProvider) {
 
 	    $urlRouterProvider.otherwise("/main");
@@ -21,7 +21,7 @@ angular
             })
         ;
 	})
-    .controller('IndexCtrl', function() {
+    .controller('IndexCtrl', function($rootScope, articlesSrv) {
         var self = this;
         self.toggleSidenav = function(menuId) {
             $mdSidenav(menuId).toggle();
@@ -29,7 +29,7 @@ angular
         };
         self.debug = false;
         self.change = function() {
-            self.debug=!self.debug;
+            //self.debug=!self.debug;
         }
     })
     .config(function($mdThemingProvider) {

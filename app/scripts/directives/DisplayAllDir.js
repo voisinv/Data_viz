@@ -47,6 +47,16 @@ function displayAll ($window, articlesSrv, linksSrv) {
                 update();
                 //keepNodesOnTop();
             });
+            var force = d3.layout.force();
+            scope.$on('dbconnection', function() {
+                force.nodes(main.tags)
+                    .links(main.links);
+                update();
+            });
+            scope.$on('stopForce', function() {
+                console.log('stopForce')
+                //force.stop();
+            })
 
             scope.$on('displayText', function(e, o) {
                 node.selectAll('.text').attr('visibility', function() {
@@ -54,9 +64,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
                 });
             })
 
-            var force = d3.layout.force();
-            force.nodes(main.tags)
-                .links(main.links);
+
             var node;
             function update() {
                 var link = svg.selectAll(".link")
@@ -129,7 +137,6 @@ function displayAll ($window, articlesSrv, linksSrv) {
                  */
                 node.transition().duration(1000)
                     .attr('r', function(d) {
-                        console.log((d.radius - 1) * 0.4)
                         return (d.radius - 1) *  0.4;
                     });
 
@@ -158,7 +165,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
                         });
                     d3.selectAll("text")
                         .attr("x", function (d) {
-                            return d.x + d.radius + 5;
+                            return d.x + d.radius / 2;
                         })
                         .attr("y", function (d) {
                             return d.y;
@@ -183,7 +190,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
 
             }
-            update();
+            //update();
 
             //---Insert-------
 

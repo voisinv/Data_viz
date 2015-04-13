@@ -1,4 +1,4 @@
-function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
+function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnection, $timeout) {
     var vm = this;
     _.extend(vm,
         {
@@ -14,7 +14,11 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
             links: linksSrv.getLinks(),
             linkdistance: 10,
             gravity: 3,
-            charge: 500
+            charge: 500,
+            request : {
+                load : false,
+                connected: false
+            }
         }
     )
 
@@ -37,13 +41,12 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
                 vm.erreurSaisie = true;
                 vm.msgErreur = 'Url d\'article déjà existante';
             } else {
-                vm.article.tags = vm.article.tags.split(' ');
+                vm.article.tags = _.uniq(_.words(vm.article.tags,  /[^, ]+/g));
                 vm.article.tags = deleteDoubleTags(vm.article.tags);
 
                 articlesSrv.addArticle(vm.article);
                 vm.tags = articlesSrv.getTags();
                 vm.links = linksSrv.getLinks();
-
                 $rootScope.$broadcast('newUrl');
 
                 vm.article = { title: '', url: '', tags: ''};
@@ -83,6 +86,29 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv) {
         }
         return tagsTab;
     };
+
+    vm.connect = function() {
+        vm.request.load = true;
+
+        dbconnection.connect().then(function() {
+            vm.articles= articlesSrv.getArticles();
+            vm.tags= articlesSrv.getTags();
+            vm.links= linksSrv.getLinks();
+            $rootScope.$broadcast('dbconnection');
+            vm.request.connected = true;
+            vm.request.load = false;
+        });
+    }
+    vm.save = function() {
+        $rootScope.$broadcast('stopForce')
+        dbconnection.save(vm.articles, vm.tags, vm.links).then(
+            function(){console.log('success')}
+        )
+    }
+    vm.restore = function() {
+
+        dbconnection.restore();
+    }
 
 
 }

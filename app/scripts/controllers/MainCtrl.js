@@ -14,7 +14,11 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
             links: linksSrv.getLinks(),
             linkdistance: 10,
             gravity: 3,
-            charge: 500
+            charge: 500,
+            request : {
+                load : false,
+                connected: false
+            }
         }
     )
 
@@ -43,7 +47,6 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
                 articlesSrv.addArticle(vm.article);
                 vm.tags = articlesSrv.getTags();
                 vm.links = linksSrv.getLinks();
-                console.log('links', vm.links)
                 $rootScope.$broadcast('newUrl');
 
                 vm.article = { title: '', url: '', tags: ''};
@@ -85,11 +88,15 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
     };
 
     vm.connect = function() {
+        vm.request.load = true;
+
         dbconnection.connect().then(function() {
             vm.articles= articlesSrv.getArticles();
             vm.tags= articlesSrv.getTags();
             vm.links= linksSrv.getLinks();
             $rootScope.$broadcast('dbconnection');
+            vm.request.connected = true;
+            vm.request.load = false;
         });
     }
     vm.save = function() {

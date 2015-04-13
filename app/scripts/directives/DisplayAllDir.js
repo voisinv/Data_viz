@@ -165,7 +165,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
                         });
                     d3.selectAll("text")
                         .attr("x", function (d) {
-                            return d.x + d.radius + 5;
+                            return d.x + d.radius / 2;
                         })
                         .attr("y", function (d) {
                             return d.y;

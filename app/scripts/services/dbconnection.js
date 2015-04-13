@@ -23,11 +23,11 @@ var dbconnection = function($firebaseObject, articlesSrv, linksSrv) {
         data.articles = angular.copy(articlesSrv.getArticles());
         data.tags = angular.copy(articlesSrv.getTags());
         data.links = angular.copy(linksSrv.getLinks());
-        console.log('getTags', articlesSrv.getTags(), data.tags)
+        data['tags'] = [];
+        for(var i = 0, length = articlesSrv.getTags().length; i < length; i++) {
+            data.tags.push(_.omit(articlesSrv.getTags()[i], ['px', 'py', 'weight', 'x', 'y']))
+        }
 
-        _.forIn(data.tags, function(e) {
-            _.omit(e, ['px', 'py', 'weight', 'x', 'y'])
-        });
         _.forIn(data.links, function(e) {
             var source = e.source.id;
             var target = e.target.id;

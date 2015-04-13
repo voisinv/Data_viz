@@ -23,11 +23,23 @@
                     </md-input-container>
 
 
-                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()">Ajouter</md-button>
-                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState()">Changer de vue</md-button>
-                    <md-button flex class="md-raised md-warn" ng-click="main.connect(); $event.preventDefault()">connect</md-button>
-                    <md-button flex class="md-raised md-warn" ng-click="main.save(); $event.preventDefault()">Save</md-button>
+                    <md-button flex class="md-raised md-primary" ng-click="main.addArticle()" ng-disabled="main.tags.length == 0">
+                        Ajouter
+                    </md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.connect(); $event.preventDefault()" ng-disabled="main.request.connected">
+                        connect
+                        <md-tooltip>
+                            Se connecter à la base Datapizzz
+                        </md-tooltip>
+                    </md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.save(); $event.preventDefault()" ng-disabled="main.tags.length == 0">Save</md-button>
                     <md-button flex class="md-raised md-warn" ng-click="main.restore(); $event.preventDefault()">Restore</md-button>
+                    <md-button flex class="md-raised md-warn" ng-click="main.changeViewState(); $event.preventDefault()">
+                        Détails
+                        <md-tooltip>
+                            Voir plus d'informations
+                        </md-tooltip>
+                    </md-button>
 
                 </div>
             </form>
@@ -65,15 +77,19 @@
     </md-content>
 
     <div id="body">
-        <div layout="row" layout-wrap ng-if="main.viewState">
-            <div flex="80">
+        <div layout="row" layout-sm="column" layout-align="space-around" ng-if="main.request.load">
+            <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div layout="row" layout-wrap>
+            <div flex="80" ng-if="main.viewState">
                 <div id="graph" display-all-points></div>
             </div>
+
         </div>
 
     </div>
 
-    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.test()" ng-if="main.viewState" aria-label="">
+    <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.test()" ng-disabled="main.tags.length == 0" ng-if="main.viewState" aria-label="">
         <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
     </md-button>
 </div>

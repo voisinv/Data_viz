@@ -25,14 +25,10 @@ var dbconnection = function($firebaseObject, articlesSrv, linksSrv) {
         data.links = angular.copy(linksSrv.getLinks());
         console.log('getTags', articlesSrv.getTags(), data.tags)
 
-        data.tags.forEach(function(e) {
-            e.px = null;
-            e.py = null;
-            e.weight = null;
-            e.x = null;
-            e.y = null;
+        _.forIn(data.tags, function(e) {
+            _.omit(e, ['px', 'py', 'weight', 'x', 'y'])
         });
-        data.links.forEach(function(e) {
+        _.forIn(data.links, function(e) {
             var source = e.source.id;
             var target = e.target.id;
             e.source = source;

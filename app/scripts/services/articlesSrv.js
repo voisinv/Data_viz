@@ -104,7 +104,7 @@ function articlesSrv ($filter, $firebaseObject, linksSrv) {
                 o.articleIds.push(newArticle.id);
                 o.radius += 5;
             } else {
-                articlesSrv.tags.push({"id": articlesSrv.tags.length,value: tag, articleIds: [newArticle.id], radius: 5});
+                articlesSrv.tags.push({"id": articlesSrv.tags.length,"value": tag, "articleIds": [newArticle.id], "radius": 5});
             }
         });
     };

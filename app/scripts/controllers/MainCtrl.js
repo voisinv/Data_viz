@@ -1,4 +1,4 @@
-function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnection) {
+function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnection, $timeout) {
     var vm = this;
     _.extend(vm,
         {
@@ -43,7 +43,7 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
                 articlesSrv.addArticle(vm.article);
                 vm.tags = articlesSrv.getTags();
                 vm.links = linksSrv.getLinks();
-
+                console.log('links', vm.links)
                 $rootScope.$broadcast('newUrl');
 
                 vm.article = { title: '', url: '', tags: ''};
@@ -89,7 +89,6 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
             vm.articles= articlesSrv.getArticles();
             vm.tags= articlesSrv.getTags();
             vm.links= linksSrv.getLinks();
-            console.log(vm)
             $rootScope.$broadcast('dbconnection');
         });
     }
@@ -100,6 +99,7 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
         )
     }
     vm.restore = function() {
+
         dbconnection.restore();
     }
 

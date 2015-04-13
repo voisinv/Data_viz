@@ -55,7 +55,7 @@ function displayAll ($window, articlesSrv, linksSrv) {
             });
             scope.$on('stopForce', function() {
                 console.log('stopForce')
-                force = null;
+                //force.stop();
             })
 
             scope.$on('displayText', function(e, o) {
@@ -67,8 +67,6 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
             var node;
             function update() {
-
-
                 var link = svg.selectAll(".link")
                     .data(linksSrv.getLinks());
                 link.enter().append("line")
@@ -139,7 +137,6 @@ function displayAll ($window, articlesSrv, linksSrv) {
                  */
                 node.transition().duration(1000)
                     .attr('r', function(d) {
-                        console.log((d.radius - 1) * 0.4)
                         return (d.radius - 1) *  0.4;
                     });
 

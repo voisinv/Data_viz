@@ -4,9 +4,9 @@
 var dbconnection = function($firebaseObject, articlesSrv, linksSrv) {
 
     var ref = new Firebase("https://datapizzz.firebaseio.com/");
+    var data = $firebaseObject(ref);
     this.connect = function() {
         // download the data into a local object
-        var data = $firebaseObject(ref);
         console.log(data)
         return data.$loaded().then(function () {
             articlesSrv.set(data);
@@ -19,109 +19,165 @@ var dbconnection = function($firebaseObject, articlesSrv, linksSrv) {
         if(typeof articles == 'undefined' || typeof tags == 'undefined' || typeof links == 'undefined') return;
         var data = $firebaseObject(ref);
         var a = articlesSrv.getTags();
-        console.log(a)
-        data.articles = articlesSrv.getArticles();
-        data.tags = articlesSrv.getTags();
-        data.links = linksSrv.getLinks();
-        console.log(data)
-        data.$save().then(function(res){console.log(res)})
+
+        data.articles = angular.copy(articlesSrv.getArticles());
+        data.tags = angular.copy(articlesSrv.getTags());
+        data.links = angular.copy(linksSrv.getLinks());
+        console.log('getTags', articlesSrv.getTags(), data.tags)
+
+        data.tags.forEach(function(e) {
+            e.px = null;
+            e.py = null;
+            e.weight = null;
+            e.x = null;
+            e.y = null;
+        });
+        data.links.forEach(function(e) {
+            var source = e.source.id;
+            var target = e.target.id;
+            e.source = source;
+            e.target = target;
+        })
+        return data.$save().then(function(res){return;})
     };
 
     this.restore = function() {
-        var data = $firebaseObject(ref);
-        data.articles = [
-         {
-         "id": 0,
-         "title": "article0",
-         "url": "article0.fr",
-         "tags": ["tag1", "tag2", "tag3"]
-         },{
-         "id": 1,
-         "title": "article1",
-         "url": "article1.fr",
-         "tags": ["tag1", "tag4"]
-         },{
-         "id": 2,
-         "title": "article2",
-         "url": "article2.fr",
-         "tags": ["tag3"]
-         },{
-         "id": 3,
-         "title": "article3",
-         "url": "article3.fr",
-         "tags": ["tag1", "tag2", "tag3"]
-         },{
-         "id": 4,
-         "title": "article4",
-         "url": "article4.fr",
-         "tags": ["tag2", "tag4"]
-         },{
-         "id": 5,
-         "title": "article5",
-         "url": "article5.fr",
-         "tags": ["tag1", "tag2", "tag4"]
-         }
-         ];
-         data.tags = [
-         {
-         "id": 0,
-         "value": "",
-         "articleIds": [],
-         "radius": 1,
-         "fixed": true,
-         "x": -1,
-         "y": -1
-         },{
-         "id": 1,
-         "value": "tag1",
-         "articleIds": [0, 1, 3, 5],
-         "radius": 20
-         },
-         {
-         "id": 2,
-         "value": "tag2",
-         "articleIds": [0, 3, 4, 5],
-         "radius": 20
-         },
-         {
-         "id": 3,
-         "value": "tag3",
-         "articleIds": [0, 2, 3],
-         "radius": 15
-         },
-         {
-         "id": 4,
-         "value": "tag4",
-         "articleIds": [1, 4, 5],
-         "radius": 15
-         }
-         ];
-         data.links = [{
-         "id": 1,
-         "source": 1,
-         "target": 2,
-         "value": 3
-         },{
-         "id": 2,
-         "source": 1,
-         "target": 3,
-         "value": 2
-         },{
-         "id": 3,
-         "source": 1,
-         "target": 4,
-         "value": 2
-         },{
-         "id": 4,
-         "source": 2,
-         "target": 3,
-         "value": 2
-         },{
-         "id": 5,
-         "source": 2,
-         "target": 4,
-         "value": 2
-         }];
+        data.articles =  [ {
+                "id" : 0,
+                "tags" : [ "joistick", "moteur", "roue" ],
+                "title" : "avion",
+                "url" : "avion"
+            }, {
+                "id" : 1,
+                "tags" : [ "moteur", "roue", "volant" ],
+                "title" : "voiture",
+                "url" : "voiture"
+            }, {
+                "id" : 2,
+                "tags" : [ "guidon", "roue", "selle" ],
+                "title" : "velo",
+                "url" : "velo"
+            }, {
+                "id" : 3,
+                "tags" : [ "guidon", "moteur", "roue" ],
+                "title" : "moto",
+                "url" : "moto"
+            }, {
+                "id" : 4,
+                "tags" : [ "roue" ],
+                "title" : "roller",
+                "url" : "roller"
+            }, {
+                "id" : 5,
+                "tags" : [ "guidon", "roue" ],
+                "title" : "trottinette",
+                "url" : "trottinette"
+            }, {
+                "id" : 6,
+                "tags" : [ "moteur", "roue", "volant" ],
+                "title" : "tracteur",
+                "url" : "tracteur"
+            }, {
+                "id" : 7,
+                "tags" : [ "hélice", "moteur", "volant" ],
+                "title" : "bateau",
+                "url" : "bateau"
+            } ];
+
+            data.links = [ {
+                "id" : 0,
+                "source" : 0,
+                "target" : 1,
+                "value" : 1
+            }, {
+                "id" : 1,
+                "source" : 0,
+                "target" : 2,
+                "value" : 1
+            }, {
+                "id" : 2,
+                "source" : 1,
+                "target" : 2,
+                "value" : 4
+            }, {
+                "id" : 3,
+                "source" : 1,
+                "target" : 3,
+                "value" : 3
+            }, {
+                "id" : 4,
+                "source" : 2,
+                "target" : 3,
+                "value" : 2
+            }, {
+                "id" : 5,
+                "source" : 4,
+                "target" : 2,
+                "value" : 3
+            }, {
+                "id" : 6,
+                "source" :4,
+                "target" : 5,
+                "value" : 1
+            }, {
+                "id" : 7,
+                "source" : 2,
+                "target" : 5,
+                "value" : 1
+            }, {
+                "id" : 8,
+                "source" : 4,
+                "target" : 1,
+                "value" : 1
+            }, {
+                "id" : 9,
+                "source" : 6,
+                "target" : 1,
+                "value" : 1
+            }, {
+                "id" : 10,
+                "source" : 6,
+                "target" : 3,
+                "value" : 1
+            } ],
+            data.tags =  [ {
+                "articleIds" : [ 0 ],
+                "id" : 0,
+                "radius" : 5,
+                "value" : "joistick"
+            }, {
+                "articleIds" : [ 0, 1, 3, 6, 7 ],
+                "id" : 1,
+                "radius" : 25,
+                "value" : "moteur"
+            }, {
+                "articleIds" : [ 0, 1, 2, 3, 4, 5, 6 ],
+                "id" : 2,
+                "radius" : 35,
+                "value" : "roue"
+            }, {
+                "articleIds" : [ 1, 6, 7 ],
+                "id" : 3,
+                "radius" : 15,
+                "value" : "volant"
+            }, {
+                "articleIds" : [ 2, 3, 5 ],
+                "id" : 4,
+                "radius" : 15,
+                "value" : "guidon"
+            }, {
+                "articleIds" : [ 2 ],
+                "id" : 5,
+                "radius" : 5,
+                "value" : "selle"
+            }, {
+                "articleIds" : [ 7 ],
+                "fixed" : 0,
+                "id" : 6,
+                "radius" : 5,
+                "value" : "hélice"
+            } ]
+
 
         data.$save();
     }

@@ -37,7 +37,7 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
                 vm.erreurSaisie = true;
                 vm.msgErreur = 'Url d\'article déjà existante';
             } else {
-                vm.article.tags = vm.article.tags.split(' ');
+                vm.article.tags = _.uniq(_.words(vm.article.tags,  /[^, ]+/g));
                 vm.article.tags = deleteDoubleTags(vm.article.tags);
 
                 articlesSrv.addArticle(vm.article);

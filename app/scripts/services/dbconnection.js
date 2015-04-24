@@ -1,17 +1,22 @@
 /**
  * Created by Mac-Vincent on 08/04/15.
  */
-var dbconnection = function($firebaseObject, articlesSrv, linksSrv) {
+var dbconnection = function($http, $firebaseObject, articlesSrv, linksSrv) {
 
     var ref = new Firebase("https://datapizzz.firebaseio.com/");
     var data = $firebaseObject(ref);
     this.connect = function() {
         // download the data into a local object
         console.log(data)
-        return data.$loaded().then(function () {
+        /*return data.$loaded().then(function () {
             articlesSrv.set(data);
             linksSrv.set(data.links)
             return;
+        })*/
+        return $http.get('http://localhost:3000/').then(function(res){
+            articlesSrv.set(res.data);
+            linksSrv.set(res.data.links)
+            console.log('result', res)
         })
     };
 
@@ -34,7 +39,7 @@ var dbconnection = function($firebaseObject, articlesSrv, linksSrv) {
             e.source = source;
             e.target = target;
         })
-        return data.$save().then(function(res){return;})
+        //return data.$save().then(function(res){return;});
     };
 
     this.restore = function() {

@@ -26,7 +26,7 @@
                     <md-button flex class="md-raised md-primary" ng-click="main.addArticle()" ng-disabled="main.tags.length == 0">
                         Ajouter
                     </md-button>
-                    <md-button flex class="md-raised md-warn" ng-click="main.connect(); $event.preventDefault()" ng-disabled="main.request.connected">
+                    <md-button flex class="md-raised md-warn" ng-click="main.connect(); $event.preventDefault()" ng-disabled="false">
                         connect
                         <md-tooltip>
                             Se connecter à la base Datapizzz
@@ -83,10 +83,22 @@
         <div layout="row" layout-wrap>
             <div flex="80" ng-if="main.viewState">
                 <div id="graph" display-all-points></div>
+
             </div>
 
-        </div>
 
+        </div>
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Description</h1>
+            </md-toolbar>
+            <md-content ng-controller="toggleRightCtrl as ctrl" layout-padding>
+                <h1 class="md-display-4">{{main.articleSelected.value}}</h1>
+                <md-button ng-click="ctrl.close()" class="md-primary">
+                    Fermer
+                </md-button>
+            </md-content>
+        </md-sidenav>
     </div>
 
     <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="main.test()" ng-disabled="main.tags.length == 0" ng-if="main.viewState" aria-label="">

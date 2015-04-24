@@ -1,5 +1,5 @@
-
-function displayAll ($window, articlesSrv, linksSrv) {
+var nodeSelected = {};
+function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, $timeout) {
     function collide(node) {
         var r = node.radius + 16,
             nx1 = node.x - r,
@@ -101,6 +101,16 @@ function displayAll ($window, articlesSrv, linksSrv) {
                     })
                     .style("fill", function (d, i) {
                         return '#3498db'
+                    })
+                    .on('click', function(e) {
+                        /*
+                        scope.main.articleSelected = e;
+                        $mdSidenav('right').open()
+                            .then(function(i){
+                                console.log('i', e)
+                               i.node = e;
+                            });
+                            */
                     })
 
                 node.append("text")
@@ -209,7 +219,25 @@ function displayAll ($window, articlesSrv, linksSrv) {
 
 }
 
+var toggleRightCtrl;
+toggleRightCtrl = function ($scope, $mdSidenav, $log, $q) {
+    var self = this;
+    $q.when($mdSidenav('right').isOpen()).then(function () {
+        console.log('ok', nodeSelected)
+        self.node = nodeSelected;
+    });
+
+    self.node = $scope.articleSelected;
+    self.close = function () {
+        $mdSidenav('right').close()
+            .then(function () {
+                console.log(self.node)
+                $log.debug("close RIGHT is done");
+            });
+    }
+};
 
 angular
     .module('directives')
-    .directive('displayAllPoints', displayAll);
+    .directive('displayAllPoints', displayAll)
+    .controller('toggleRightCtrl', toggleRightCtrl);

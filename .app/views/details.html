@@ -1,0 +1,62 @@
+
+<div layout="" layout-margin="" ng-controller="DetailsCtrl as ctrl">
+  <div flex="">
+    <md-toolbar class="md-theme-light">
+      <h2 class="md-toolbar-tools">
+        <p flex="">Liste d&apos;articles</p>|
+        <md-switch flex="30" ng-disabled="false" aria-label="Disabled active switch right" ng-model="ctrl.modeByArticles" class="md-warn">Par article</md-switch>
+      </h2>
+    </md-toolbar>
+    <md-content flex="">
+      <md-list>
+        <div ng-if="ctrl.modeByArticles">
+          <h2></h2>|
+          <md-item ng-repeat="article in ctrl.articles">
+            <md-item-content>
+              <h1 class="md-tile-left">
+                <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+              </h1>
+              <div class="md-tile-content">
+                <h3>{{article.title}}</h3>
+                <p ng-repeat="tag in article.tags">{{tag}}</p>
+              </div>
+            </md-item-content>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-item>
+        </div>
+        <div ng-if="!ctrl.modeByArticles">
+          <md-item ng-repeat="tag in ctrl.tags">
+            <md-item-content>
+              <h1 class="md-tile-left">
+                <md-icon md-svg-icon="../img/action/ic_list_24px.svg"></md-icon>
+              </h1>|
+              <div class="md-tile-content">
+                <h3>{{tag.value}}</h3>|
+                <p ng-repeat="articleId in tag.articleIds">{{ctrl.getArticleTitle(articleId)}}</p>
+              </div>
+            </md-item-content>|
+            <md-divider ng-if="!$last"></md-divider>
+          </md-item>
+        </div>
+      </md-list>
+    </md-content>
+    <div flex="">
+      <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">Liste des liens entre les tags</h2>
+      </md-toolbar>|
+      <md-content>
+        <md-list>
+          <md-item ng-repeat="link in ctrl.links">
+            <md-item-content>
+              <h1 class="md-tile-left">
+                <md-icon md-svg-icon="../img/action/ic_stars_24px.svg"></md-icon>
+              </h1>|
+              <div class="md-tile-content">{{link.source.value + &apos; -&gt; &apos; + link.target.value + &apos; = poids de &apos; + link.value}}</div>
+            </md-item-content>|
+            <md-divider ng-if="!$last"></md-divider>
+          </md-item>
+        </md-list>
+      </md-content>
+    </div>
+  </div>
+</div>

@@ -81,6 +81,7 @@ function articlesSrv ($filter, $firebaseObject, linksSrv) {
         return _.findWhere(articlesSrv.articles, {id: articleId});
     };
     articlesSrv.addArticle = function(article) {
+        // TODO trier les tags depuis le client
         var newArticle = {
             "id": articlesSrv.articles.length,
             "title": article.title,

@@ -18,7 +18,8 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
             request : {
                 load : false,
                 connected: false
-            }
+            },
+            articleSelected : {}
         }
     )
 
@@ -41,12 +42,11 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
                 vm.erreurSaisie = true;
                 vm.msgErreur = 'Url d\'article déjà existante';
             } else {
-                vm.article.tags = _.uniq(_.words(vm.article.tags,  /[^, ]+/g));
-                vm.article.tags = deleteDoubleTags(vm.article.tags);
+                vm.article.tags = deleteDoubleTags(_.uniq(_.words(vm.article.tags,  /[^, ]+/g)));
 
                 articlesSrv.addArticle(vm.article);
-                vm.tags = articlesSrv.getTags();
-                vm.links = linksSrv.getLinks();
+                //vm.tags = articlesSrv.getTags();
+                //vm.links = linksSrv.getLinks();
                 $rootScope.$broadcast('newUrl');
 
                 vm.article = { title: '', url: '', tags: ''};

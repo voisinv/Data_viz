@@ -13,17 +13,18 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
             displayname: true,
             links: linksSrv.getLinks(),
             linkdistance: 10,
-            gravity: 3,
-            charge: 500,
+            gravity: 7,
+            charge: 170,
             request : {
                 load : false,
                 connected: false
             },
-            articleSelected : {}
+            articleSelected : {},
+            listArticles: []
         }
     )
 
-
+    console.log('self', vm)
     vm.hoverTag = function(tag) {
         vm.tagHovered = tag;
         $scope.$apply();
@@ -106,7 +107,6 @@ function MainCtrl($scope, $rootScope, $state, articlesSrv, linksSrv, dbconnectio
         )
     }
     vm.restore = function() {
-
         dbconnection.restore();
     }
 

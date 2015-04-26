@@ -81,10 +81,13 @@
             <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
         </div>
         <div layout="row" layout-wrap>
-            <div flex="80" ng-if="main.viewState">
+            <div flex="70" ng-if="main.viewState">
                 <div id="graph" display-all-points></div>
 
             </div>
+            <ul flex>
+                <li ng-repeat="article in main.listArticles"><a href="{{article.url}}">{{article.title}}</a></li>
+            </ul>
 
 
         </div>

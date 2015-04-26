@@ -1,5 +1,5 @@
 var nodeSelected = {};
-function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, $timeout) {
+function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, dbconnection) {
     function collide(node) {
         var r = node.radius + 16,
             nx1 = node.x - r,
@@ -49,6 +49,7 @@ function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, $timeout) {
             });
             var force = d3.layout.force();
             scope.$on('dbconnection', function() {
+                console.log('dbconnection 2', main)
                 force.nodes(main.tags)
                     .links(main.links);
                 update();
@@ -102,7 +103,7 @@ function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, $timeout) {
                     .style("fill", function (d, i) {
                         return '#3498db'
                     })
-                    .on('click', function(e) {
+                    .on('mouseup', function(e) {
                         /*
                         scope.main.articleSelected = e;
                         $mdSidenav('right').open()
@@ -111,6 +112,10 @@ function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, $timeout) {
                                i.node = e;
                             });
                             */
+                        console.log(e)
+                        dbconnection.articles(e.value).then(function(list) {
+                            main.listArticles = list;
+                        })
                     })
 
                 node.append("text")
@@ -188,6 +193,7 @@ function displayAll ($window, $mdSidenav, articlesSrv, linksSrv, $timeout) {
                     .charge(function (d) {
                         return -1 * main.charge * d.radius;
                     })
+
                     /*
                     .gravity(.01)
                     .charge(-80000)

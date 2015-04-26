@@ -19,7 +19,9 @@ var dbconnection = function($http, $firebaseObject, articlesSrv, linksSrv) {
             console.log('result', res)
         })
     };
-
+    this.articles = function(value) {
+      return $http.get("http://localhost:3000/tags/" + value).then(function(res){ return res.data});
+    };
     this.save = function(articles, tags, links) {
         if(typeof articles == 'undefined' || typeof tags == 'undefined' || typeof links == 'undefined') return;
         var data = $firebaseObject(ref);
